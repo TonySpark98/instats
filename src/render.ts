@@ -58,9 +58,28 @@ export function renderAll(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 export function renderSummary(){
-  const d=STATE.data; const nf=(d.followers||[]).length, ng=(d.following||[]).length;
+  const d:any=STATE.data, x:any=STATE.derived;
+  const nf=(d.followers||[]).length, ng=(d.following||[]).length;
   const ratio = (nf&&ng)?(nf/ng).toFixed(2):'—';
   $('#summaryMeta').innerHTML = `<b>${fmtNum(nf)}</b> ${t('m_followers')} · <b>${fmtNum(ng)}</b> ${t('m_following')} · ${t('m_ratio')} <b>${ratio}</b>`;
+  const el=$('#summaryChart');
+  if(el){
+    const mutual=(x&&x.mutuals?x.mutuals.length:0), notfb=(x&&x.notFollowingBack?x.notFollowingBack.length:0);
+    el.innerHTML = donutChart([
+      {v:mutual,c:'#22c55e',l:t('stat_mutual')},
+      {v:notfb, c:'#ef4444',l:t('stat_notfb')}
+    ], ng, fmtNum(ng), t('m_following'));
+  }
+}
+/* Donut SVG riusabile (segmenti impilati via stroke-dasharray) */
+function donutChart(segs:any[], total:number, centerN:string, centerL:string){
+  const R=54, SW=15, C=2*Math.PI*R; let off=0;
+  const arcs = total>0 ? segs.map((s:any)=>{
+    const len=(s.v/total)*C; const rot=(off/C)*360-90; off+=len;
+    return `<circle cx="70" cy="70" r="${R}" fill="none" stroke="${s.c}" stroke-width="${SW}" stroke-dasharray="${len} ${C-len}" transform="rotate(${rot} 70 70)"/>`;
+  }).join('') : `<circle cx="70" cy="70" r="${R}" fill="none" stroke="rgba(128,128,128,.25)" stroke-width="${SW}"/>`;
+  const legend = segs.map((s:any)=>`<span class="lg"><i style="background:${s.c}"></i>${s.l} <b>${fmtNum(s.v)}</b></span>`).join('');
+  return `<div class="donutwrap"><svg viewBox="0 0 140 140" class="donut" role="img" aria-hidden="true">${arcs}<text x="70" y="66" text-anchor="middle" class="dt-n">${centerN}</text><text x="70" y="86" text-anchor="middle" class="dt-l">${centerL}</text></svg><div class="donut-legend">${legend}</div></div>`;
 }
 export function renderStats(){
   const d=STATE.data, x=STATE.derived;

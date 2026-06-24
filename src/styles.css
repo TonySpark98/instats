@@ -337,3 +337,14 @@
   body.dark .row a.open:hover{ background:#7c4dff; color:#fff; border-color:transparent }
   body.dark .empty,body.dark .note,body.dark .listhead .desc{ color:#98989d }
   body.dark .tg-btn{ background:rgba(58,58,60,.7); border-color:rgba(255,255,255,.14) }
+
+  /* Grafico donut riepilogo (mobile-first) */
+  .sumchart{margin:14px 0 6px}
+  .donutwrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .donut{width:128px;height:128px;flex:none}
+  .donut .dt-n{font-size:23px;font-weight:800;fill:var(--text)}
+  .donut .dt-l{font-size:11px;fill:var(--muted)}
+  .donut-legend{display:flex;flex-direction:column;gap:7px;min-width:140px}
+  .donut-legend .lg{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--text)}
+  .donut-legend .lg i{width:12px;height:12px;border-radius:4px;display:inline-block;flex:none}
+  .donut-legend .lg b{margin-left:auto;font-variant-numeric:tabular-nums}
