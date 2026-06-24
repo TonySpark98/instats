@@ -72,4 +72,5 @@ export interface AppState {
   _scanSorted?: ScanItem[];
   hideOpened?: boolean;
   interactions?: Interactions;
+  view?: string;
 }

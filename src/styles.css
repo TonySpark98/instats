@@ -678,3 +678,24 @@
 
   .int-note{ margin:14px 0 0; font-size:12px; line-height:1.5; color:var(--muted); background:rgba(124,58,237,.06); border:1px solid rgba(124,58,237,.14); border-radius:12px; padding:10px 12px }
   body.dark .int-note{ background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.10) }
+
+  /* ===================== NAVIGAZIONE A SEZIONI ===================== */
+  .view-hidden{ display:none !important }
+  .snav-bar{ position:sticky; top:0; z-index:40; display:flex; gap:8px; overflow-x:auto; -webkit-overflow-scrolling:touch;
+    scrollbar-width:none; padding:10px 4px; margin:0 -4px 10px;
+    background:rgba(255,255,255,.55); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-radius:0 0 16px 16px }
+  .snav-bar::-webkit-scrollbar{ display:none }
+  body.dark .snav-bar{ background:rgba(18,16,26,.6) }
+  body:not(.dark) .snav-bar{ background:rgba(255,255,255,.55) }
+  .snav{ flex:0 0 auto; white-space:nowrap; min-height:44px; display:inline-flex; align-items:center;
+    border:1.5px solid rgba(124,58,237,.22); background:rgba(255,255,255,.7); color:var(--text);
+    border-radius:999px; padding:9px 16px; font-size:14px; font-weight:700; cursor:pointer;
+    transition:transform .15s ease, background .2s, color .2s, box-shadow .2s }
+  body.dark .snav{ background:rgba(44,44,46,.7); border-color:rgba(255,255,255,.12); color:#f5f5f7 }
+  .snav:hover{ transform:translateY(-1px) }
+  .snav.active{ background:linear-gradient(120deg,var(--g1),var(--g4)); color:#fff; border-color:transparent; box-shadow:0 8px 20px -6px rgba(88,40,160,.5) }
+  /* spazio a destra per non finire sotto ai toggle lingua/tema (fixed) su schermi stretti */
+  @media(max-width:900px){ .snav-bar{ padding-right:158px } }
+  @media(max-width:560px){ .snav{ font-size:13.5px; padding:9px 14px } }
+  /* azioni globali in alto */
+  #globalActions{ margin:0 0 4px }

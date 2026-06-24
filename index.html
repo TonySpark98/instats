@@ -87,28 +87,36 @@
 
     <div id="warnBanner" class="warn hidden"></div>
 
+    <div class="hdr-actions" id="globalActions">
+      <a class="btn ghost sm" href="https://accountscenter.instagram.com/info_and_permissions/dyi/" target="_blank" rel="noopener" data-i18n="get_export">📥 Ottieni un nuovo export</a>
+      <button class="btn sm" id="resetBtn" data-i18n="reset_btn">↺ Nuovo file</button>
+    </div>
+    <nav id="sectionNav" class="snav-bar" role="tablist">
+      <button class="snav active" data-v="overview" role="tab" data-i18n="nav_overview">📊 Panoramica</button>
+      <button class="snav" data-v="relations" role="tab" data-i18n="nav_relations">👥 Relazioni</button>
+      <button class="snav" data-v="interactions" role="tab" data-i18n="nav_interactions">💞 Interazioni</button>
+      <button class="snav" data-v="changes" role="tab" data-i18n="nav_changes">🔄 Cambiamenti</button>
+      <button class="snav" data-v="data" role="tab" data-i18n="nav_data">🗂️ Dati</button>
+    </nav>
 
-      <div class="card hidden collapsible collapsed" id="profileCard">
+
+      <div class="card hidden collapsible collapsed" id="profileCard" data-view="data">
       <h2 class="ch" data-i18n="profile_title">👤 Il tuo profilo</h2>
       <div class="pfgrid" id="profileBody"></div>
     </div>
 
-    <div class="card hidden collapsible collapsed" id="statsAllCard">
+    <div class="card hidden collapsible collapsed" id="statsAllCard" data-view="data">
       <h2 class="ch" data-i18n="statsall_title">📊 Tutte le statistiche</h2>
       <p class="sub" data-i18n="statsall_sub">Ogni dato trovato nel tuo export, raggruppato per categoria.</p>
       <div id="statsAllBody"></div>
     </div>
 
-    <div class="card">
+    <div class="card" id="summaryCard" data-view="overview">
       <div class="listhead">
         <div>
           <h2 style="margin-bottom:2px" data-i18n="summary_title">Riepilogo</h2>
           <p class="sub" style="margin:0" id="summaryMeta"></p>
           <div id="diag" class="diag"></div>
-        </div>
-        <div class="hdr-actions">
-          <a class="btn ghost sm" href="https://accountscenter.instagram.com/info_and_permissions/dyi/" target="_blank" rel="noopener" data-i18n="get_export">📥 Ottieni un nuovo export</a>
-          <button class="btn sm" id="resetBtn" data-i18n="reset_btn">↺ Nuovo file</button>
         </div>
       </div>
       <div style="height:8px"></div>
@@ -117,8 +125,8 @@
       <div class="stats" id="statsGrid"></div>
     </div>
 
-    <div class="card hidden collapsible collapsed" id="compareCard">
-      <h2 class="ch" data-i18n="compare_title">📈 Cambiamenti nel tempo</h2>
+    <div class="card hidden" id="compareCard" data-view="changes">
+      <h2 data-i18n="compare_title">📈 Cambiamenti nel tempo</h2>
       <p class="sub" data-i18n="compare_sub">Confronto tra l'export attuale e uno snapshot salvato in precedenza su questo browser.</p>
       <div class="howbox" data-i18n="compare_how"></div>
       <div class="selrow">
@@ -133,7 +141,7 @@
       <div class="note" id="cmpHint"></div>
     </div>
 
-    <div class="card">
+    <div class="card" id="relCard" data-view="relations">
       <div class="tabs" id="tabs"></div>
       <div class="listhead">
         <div class="desc" id="listDesc"></div>
@@ -156,7 +164,7 @@
       <div class="list" id="list"></div>
     </div>
 
-    <div class="card hidden" id="interactCard">
+    <div class="card hidden" id="interactCard" data-view="interactions">
       <h2 data-i18n="int_title">💞 Interazioni</h2>
       <p class="sub" data-i18n="int_sub">Con chi interagisci davvero — calcolato dal tuo export. Tutto sul tuo dispositivo.</p>
       <div class="intstat" id="interactStat"></div>
@@ -169,7 +177,7 @@
       <p class="int-note" data-i18n="int_note"></p>
     </div>
 
-    <div class="card hidden collapsible collapsed" id="exploreCard">
+    <div class="card hidden collapsible collapsed" id="exploreCard" data-view="data">
       <h2 class="ch" data-i18n="explore_title">🔍 Esplora tutto l'export</h2>
       <p class="sub" data-i18n="explore_sub">Ogni singolo file trovato nel tuo ZIP, con quante voci contiene. Niente è nascosto.</p>
       <div class="search" style="margin:6px 0 12px">

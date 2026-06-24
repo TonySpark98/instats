@@ -50,11 +50,18 @@ export function tabsDef(): TabDef[]{
   return L;
 }
 export function currentTab(){ return tabsDef().find(x=>x.id===STATE.active) || tabsDef()[0]; }
+export const SECTION_VIEWS=['overview','relations','interactions','changes','data'];
+export function setView(v:string){
+  if(SECTION_VIEWS.indexOf(v)<0) v='overview';
+  (STATE as any).view=v;
+  document.querySelectorAll('#results [data-view]').forEach((el:any)=>{ el.classList.toggle('view-hidden', el.getAttribute('data-view')!==v); });
+  document.querySelectorAll('#sectionNav .snav').forEach((el:any)=>{ el.classList.toggle('active', el.getAttribute('data-v')===v); });
+}
 
 /* ---------- Render ---------- */
 export function renderAll(){
   $('#results').classList.remove('hidden'); $('#setupCard').classList.add('hidden');
-  renderSummary(); renderStats(); renderCompare(); renderTabs(); renderList();
+  renderSummary(); renderStats(); renderCompare(); renderTabs(); renderList(); setView('overview');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 export function renderSummary(){
@@ -95,7 +102,7 @@ export function renderStats(){
   ];
   $('#statsGrid').innerHTML = cells.map(s=>`<div class="stat ${s.c}" data-tab="${s.tab}"><div class="ic">${s.ic}</div><div class="n">${fmtNum(s.n)}</div><div class="l">${s.l}</div></div>`).join('');
   animateCounts();
-  document.querySelectorAll('.stat').forEach((el:any)=>el.onclick=()=>{ STATE._virtual=null; STATE.active=el.dataset.tab; STATE.query=''; $('#searchInput').value=''; renderTabs(); renderList(); document.querySelector('.tabs').scrollIntoView({behavior:'smooth',block:'start'}); });
+  document.querySelectorAll('.stat').forEach((el:any)=>el.onclick=()=>{ STATE._virtual=null; STATE.active=el.dataset.tab; STATE.query=''; $('#searchInput').value=''; renderTabs(); renderList(); setView('relations'); document.querySelector('.tabs').scrollIntoView({behavior:'smooth',block:'start'}); });
 }
 export function renderTabs(){
   const def=tabsDef();
@@ -214,7 +221,7 @@ export function showCmpList(key,names){
   const labels={newFollowers:t('vlabel_newFollowers'),lostFollowers:t('vlabel_lostFollowers'),youFollowed:t('vlabel_youFollowed'),youUnfollowed:t('vlabel_youUnfollowed')};
   STATE._virtual={id:'_v',label:labels[key],items:names.map(u=>({username:u,href:'https://www.instagram.com/'+u,ts:0})),desc:t('vdesc')};
   STATE.active='_v'; STATE.query=''; $('#searchInput').value='';
-  renderTabsWithVirtual(); renderListVirtual(); document.querySelector('.tabs').scrollIntoView({behavior:'smooth',block:'start'});
+  setView('relations'); renderTabsWithVirtual(); renderListVirtual(); document.querySelector('.tabs').scrollIntoView({behavior:'smooth',block:'start'});
 }
 export function renderTabsWithVirtual(){
   const def=tabsDef(); def.unshift(STATE._virtual as TabDef);
@@ -405,5 +412,5 @@ function interRow(s:any){
 }
 function showInteractionVirtual(items:any[], label:string, desc:string){
   STATE._virtual={id:'_v',label,items,desc} as any; STATE.active='_v'; STATE.query=''; const si=$('#searchInput'); if(si) si.value='';
-  renderTabsWithVirtual(); renderListVirtual(); const tb=document.querySelector('.tabs'); if(tb) tb.scrollIntoView({behavior:'smooth',block:'start'});
+  setView('relations'); renderTabsWithVirtual(); renderListVirtual(); const tb=document.querySelector('.tabs'); if(tb) tb.scrollIntoView({behavior:'smooth',block:'start'});
 }

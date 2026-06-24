@@ -5,7 +5,7 @@ import {
   SNAP_KEY, pushSnapshot, renderAll, renderWarn, renderDiag,
   renderProfile, renderStatsAll, renderExplore, renderInteractions, renderCompare,
   renderList, renderListVirtual, renderTabs, exportCSV, fmtNum,
-  setupOpenedDelegation, downloadSnapshot, importSnapshotFile
+  setupOpenedDelegation, downloadSnapshot, importSnapshotFile, setView
 } from './render';
 import type { Lang } from './types';
 
@@ -64,6 +64,7 @@ function init(){
   { const hb=$('#hideOpenedBtn'); if(hb) hb.onclick=()=>{ STATE.hideOpened=!STATE.hideOpened; renderList(); }; }
   $('#csvBtn').onclick=exportCSV;
   $('#resetBtn').onclick=()=>{ STATE.data=null; STATE._virtual=null; $('#results').classList.add('hidden'); $('#setupCard').classList.remove('hidden'); $('#file').value=''; goToStep(3); window.scrollTo({top:0,behavior:'smooth'}); };
+  document.querySelectorAll('#sectionNav .snav').forEach((el:any)=>el.onclick=()=>{ setView(el.dataset.v); const n=$('#sectionNav'); if(n) n.scrollIntoView({behavior:'smooth',block:'start'}); });
   $('#clearSnaps').onclick=()=>{ if(confirm(t('confirm_clear'))){ localStorage.removeItem(SNAP_KEY); renderCompare(); toast(t('toast_histcleared')); } };
   $('#snapDownload').onclick=()=>downloadSnapshot();
   $('#snapUpload').onclick=()=>($('#snapFile') as any).click();
