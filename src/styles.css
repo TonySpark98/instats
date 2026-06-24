@@ -38,15 +38,6 @@
   .card.collapsible.collapsed > .ch{margin-bottom:0}
   .card.collapsible.collapsed > .ch::after{transform:rotate(-90deg)}
   .card.collapsible.collapsed > *:not(.ch){display:none !important}
-  /* Profilo + Tutte le statistiche: due grandi pulsanti affiancati (mobile-first) */
-  .duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0;align-items:start}
-  .duo > .card{margin:0}
-  .duo > .card.collapsed{cursor:pointer;transition:transform .16s,box-shadow .16s}
-  .duo > .card.collapsed .ch{justify-content:center;text-align:center;font-size:16px;padding:8px 4px}
-  .duo > .card.collapsed .ch::after{display:none}
-  .duo > .card.collapsed:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(70,40,130,.22)}
-  .duo > .card:not(.collapsed){grid-column:1 / -1}
-  @media(min-width:721px){ .duo{gap:16px} .duo > .card.collapsed .ch{font-size:18px;padding:12px 4px} }
   .card p.sub{margin:0 0 16px;color:var(--muted);font-size:14px;line-height:1.5}
 
   .privacy{display:flex;gap:10px;align-items:flex-start;background:rgba(22,163,74,.10);border:1px solid rgba(22,163,74,.30);color:#0f5132;border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.5}
@@ -214,7 +205,7 @@
   .lang-switch .ls-opt{position:relative;z-index:1;width:44px;text-align:center;font-weight:800;font-size:13px;color:#fff;transition:color .2s;letter-spacing:.5px}
   .lang-switch .ls-knob{position:absolute;top:4px;left:4px;width:44px;height:36px;border-radius:18px;background:#fff;
     box-shadow:0 2px 8px rgba(0,0,0,.22);transition:left .24s cubic-bezier(.34,1.4,.5,1)}
-  .lang-switch.en .ls-knob{left:48px}
+  .lang-switch.it .ls-knob{left:48px}
   .lang-switch.it .ls-opt[data-l="it"],.lang-switch.en .ls-opt[data-l="en"]{color:#9c2bd6}
   /* ===================== WIZARD GUIDATO ===================== */
   .wiz-steps{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}
@@ -340,7 +331,7 @@
 
   /* Grafico donut riepilogo (mobile-first) */
   .sumchart{margin:14px 0 6px}
-  .donutwrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .donutwrap{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
   .donut{width:128px;height:128px;flex:none}
   .donut .dt-n{font-size:23px;font-weight:800;fill:var(--text)}
   .donut .dt-l{font-size:11px;fill:var(--muted)}
@@ -348,3 +339,15 @@
   .donut-legend .lg{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--text)}
   .donut-legend .lg i{width:12px;height:12px;border-radius:4px;display:inline-block;flex:none}
   .donut-legend .lg b{margin-left:auto;font-variant-numeric:tabular-nums}
+
+  /* Testo lungo del wizard su pannello bianco (card resta vetro) */
+  p.sub[data-i18n="wiz1_body"], .wiz-guide, p.sub[data-i18n="upload_sub"]{
+    background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:14px;padding:14px 16px;color:#322b4d;margin:6px 0 16px}
+  body.dark p.sub[data-i18n="wiz1_body"], body.dark .wiz-guide, body.dark p.sub[data-i18n="upload_sub"]{
+    background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.10);color:#ece8f6}
+  /* Link brandizzati (no blu classico) */
+  #setupCard a, footer a, .runstep a, .howbox a, .wiz-guide a, p.sub a{color:#9c2bd6;font-weight:600;text-decoration:underline;text-underline-offset:2px}
+  body.dark #setupCard a, body.dark footer a, body.dark .runstep a, body.dark .howbox a, body.dark .wiz-guide a, body.dark p.sub a{color:#d8b4fe}
+  /* Knob lingua allineato su mobile */
+  @media(max-width:640px){ .lang-switch .ls-knob{width:38px} .lang-switch.it .ls-knob{left:42px} }
+  @media(max-width:400px){ .lang-switch .ls-knob{width:32px} .lang-switch.it .ls-knob{left:36px} }
