@@ -631,3 +631,20 @@
   /* Azioni header riepilogo: "Ottieni export" + "Nuovo file" (evidente) */
   .hdr-actions{ display:flex; gap:8px; flex-wrap:wrap; align-items:center }
   @media(max-width:560px){ .hdr-actions{ width:100% } .hdr-actions .btn{ flex:1; justify-content:center; display:inline-flex; align-items:center } }
+
+  /* ============ Fix mobile + leggibilità (giu 2026) ============ */
+  /* Avviso "dati in memoria": era display:flex → testo+<b>+testo diventavano colonne */
+  .refreshnote{ display:block }
+  @media(max-width:560px){
+    /* Toolbar impilata: ricerca a TUTTA riga + pulsanti grandi app-like */
+    .toolbar{ flex-direction:column; align-items:stretch; gap:10px }
+    .toolbar .search{ flex:none; width:100%; min-width:0 }
+    .toolbar #hideOpenedBtn, .toolbar select#sortSelect{ width:100% }
+    .row a.open{ min-height:46px }
+  }
+  /* Gruppo azioni header (Ottieni export + Nuovo file) full-width già da tablet */
+  @media(max-width:640px){ .hdr-actions{ width:100% } .hdr-actions .btn{ flex:1 } }
+  /* Tema chiaro: toggle lingua/tema leggibili, stile glass mantenuto */
+  body:not(.dark) .lang-switch, body:not(.dark) .tg-btn{ background:rgba(255,255,255,.82); border-color:rgba(20,16,40,.12); box-shadow:0 6px 18px rgba(20,16,40,.16) }
+  body:not(.dark) .lang-switch .ls-opt{ color:#4a4470 }
+  body:not(.dark) #themeToggle{ color:#5b21b6 }
