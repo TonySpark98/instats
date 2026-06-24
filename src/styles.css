@@ -697,8 +697,20 @@
   .snav:hover{ transform:translateY(-1px) }
   .snav.active{ background:linear-gradient(120deg,var(--g1),var(--g4)); color:#fff; border-color:transparent; box-shadow:none }
   body.dark .snav.active{ background:linear-gradient(120deg,var(--g1),var(--g4)); color:#fff; border-color:transparent }
-  /* su mobile/tablet la barra si fissa SOTTO i toggle lingua/tema (fixed), senza sovrapporsi */
-  @media(max-width:900px){ .snav-bar{ top:calc(52px + env(safe-area-inset-top)) } }
+  /* Striscia di blur fissa in cima (stile iOS): di base nascosta */
+  #topblur{ display:none }
+  /* su mobile/tablet: barra sotto i toggle, logo nascosto in vista risultati, blur a tutta larghezza in cima */
+  @media(max-width:900px){
+    .snav-bar{ top:calc(54px + env(safe-area-inset-top)) }
+    .snav-bar::before{ display:none }            /* il blur lo fa #topblur, a tutta larghezza */
+    body.results-on header.app{ display:none }    /* niente logo sotto la striscia sfocata */
+    body.results-on .wrap{ padding-top:calc(62px + env(safe-area-inset-top)) }  /* la barra parte sotto i toggle anche da fermi */
+    body.results-on #topblur{ display:block; position:fixed; top:0; left:0; right:0; z-index:35; pointer-events:none;
+      height:calc(116px + env(safe-area-inset-top));
+      -webkit-backdrop-filter:blur(15px); backdrop-filter:blur(15px);
+      -webkit-mask:linear-gradient(to bottom,#000 0%,#000 60%,transparent 100%);
+      mask:linear-gradient(to bottom,#000 0%,#000 60%,transparent 100%) }
+  }
   @media(max-width:560px){ .snav{ font-size:13.5px; padding:9px 14px } }
   /* azioni globali in fondo: grandi e centrate */
   .btn{ text-decoration:none }

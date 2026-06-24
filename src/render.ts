@@ -60,7 +60,7 @@ export function setView(v:string){
 
 /* ---------- Render ---------- */
 export function renderAll(){
-  $('#results').classList.remove('hidden'); $('#setupCard').classList.add('hidden');
+  $('#results').classList.remove('hidden'); $('#setupCard').classList.add('hidden'); document.body.classList.add('results-on');
   renderSummary(); renderStats(); renderCompare(); renderTabs(); renderList(); setView('overview');
   window.scrollTo({top:0,behavior:'smooth'});
 }

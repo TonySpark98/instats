@@ -63,8 +63,8 @@ function init(){
   $('#sortSelect').addEventListener('change',e=>{ STATE.sort=e.target.value; renderList(); });
   { const hb=$('#hideOpenedBtn'); if(hb) hb.onclick=()=>{ STATE.hideOpened=!STATE.hideOpened; renderList(); }; }
   $('#csvBtn').onclick=exportCSV;
-  $('#resetBtn').onclick=()=>{ STATE.data=null; STATE._virtual=null; $('#results').classList.add('hidden'); $('#setupCard').classList.remove('hidden'); $('#file').value=''; goToStep(3); window.scrollTo({top:0,behavior:'smooth'}); };
-  document.querySelectorAll('#sectionNav .snav').forEach((el:any)=>el.onclick=()=>{ setView(el.dataset.v); const n=$('#sectionNav'); if(n) n.scrollIntoView({behavior:'smooth',block:'start'}); });
+  $('#resetBtn').onclick=()=>{ STATE.data=null; STATE._virtual=null; $('#results').classList.add('hidden'); $('#setupCard').classList.remove('hidden'); $('#file').value=''; document.body.classList.remove('results-on'); goToStep(3); window.scrollTo({top:0,behavior:'smooth'}); };
+  document.querySelectorAll('#sectionNav .snav').forEach((el:any)=>el.onclick=()=>{ setView(el.dataset.v); window.scrollTo({top:0,behavior:'smooth'}); });
   $('#clearSnaps').onclick=()=>{ if(confirm(t('confirm_clear'))){ localStorage.removeItem(SNAP_KEY); renderCompare(); toast(t('toast_histcleared')); } };
   $('#snapDownload').onclick=()=>downloadSnapshot();
   $('#snapUpload').onclick=()=>($('#snapFile') as any).click();

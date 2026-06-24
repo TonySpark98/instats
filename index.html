@@ -25,6 +25,7 @@
   </div>
   <button id="themeToggle" class="tg-btn" title="Tema chiaro/scuro">🌙</button>
 </div>
+<div id="topblur" aria-hidden="true"></div>
 <div class="wrap">
 
   <header class="app">
@@ -83,10 +84,6 @@
   </section>
 
   <section id="results" class="hidden">
-    <div class="refreshnote" data-i18n="refresh_warn"></div>
-
-    <div id="warnBanner" class="warn hidden"></div>
-
     <nav id="sectionNav" class="snav-bar" role="tablist">
       <div class="snav-scroll">
         <button class="snav active" data-v="overview" role="tab" data-i18n="nav_overview">📊 Panoramica</button>
@@ -100,6 +97,8 @@
       <button class="btn" id="resetBtn" data-i18n="reset_btn">↺ Nuovo file</button>
       <a class="btn ghost" href="https://accountscenter.instagram.com/info_and_permissions/dyi/" target="_blank" rel="noopener" data-i18n="get_export">📥 Ottieni un nuovo export</a>
     </div>
+    <div class="refreshnote" data-i18n="refresh_warn"></div>
+    <div id="warnBanner" class="warn hidden"></div>
 
 
       <div class="card hidden collapsible collapsed" id="profileCard" data-view="data">
