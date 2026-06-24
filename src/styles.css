@@ -572,3 +572,11 @@
     border-radius:0 0 16px 16px; font-size:14px; line-height:1.65 }
   body.dark .riskbody{ background:rgba(28,28,30,.92) }
   @media(prefers-reduced-motion:reduce){ .riskcard > .ch{ animation:none } }
+
+  /* === Fix tab scrollabili su mobile: spazio per le ombre, no taglio ai lati === */
+  .tab.active{ box-shadow:0 6px 16px -7px rgba(124,58,237,.55) }
+  body.dark .tab.active{ box-shadow:0 7px 18px -7px rgba(124,58,237,.6) }
+  @media(max-width:640px){
+    .tabs{ padding:8px 14px 12px; margin:0 -14px; scroll-padding-left:14px }
+    .tabs::-webkit-scrollbar{ height:0; display:none }
+  }
