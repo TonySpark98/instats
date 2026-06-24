@@ -720,3 +720,6 @@
   .global-actions .btn{ min-height:54px; padding:15px 30px; font-size:15.5px; min-width:240px; justify-content:center; display:inline-flex; align-items:center }
   .global-actions a.btn{ text-decoration:none }
   @media(max-width:560px){ .global-actions{ flex-direction:column; gap:12px } .global-actions .btn{ width:100% } }
+
+  /* Cambio tema: durante lo switch niente transizioni/animazioni (Safari iOS non ri-sfoca le card 60 volte → niente lag) */
+  body.theming, body.theming *, body.theming *::before, body.theming *::after{ transition:none !important; animation:none !important }
