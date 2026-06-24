@@ -580,3 +580,6 @@
     .tabs{ padding:8px 14px 12px; margin:0 -14px; scroll-padding-left:14px }
     .tabs::-webkit-scrollbar{ height:0; display:none }
   }
+
+  .sumbars{ margin-bottom:22px }
+  .sumchart{ margin-bottom:18px }
