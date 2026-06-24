@@ -84,5 +84,6 @@ function init(){
     h.addEventListener('click',()=> h.parentElement.classList.toggle('collapsed'));
   });
 
+  window.addEventListener('beforeunload',(e:any)=>{ if(STATE.data){ e.preventDefault(); e.returnValue=''; } });
 }
 document.addEventListener('DOMContentLoaded', init);

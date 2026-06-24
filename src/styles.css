@@ -433,3 +433,34 @@
   .card.collapsible:not(.collapsed) > *:not(.ch){ animation:rise .35s ease both }
 
   @media(prefers-reduced-motion:reduce){ *,*::before,*::after{ animation:none !important; transition:none !important } }
+
+  /* Avviso "i dati si perdono al refresh" */
+  .refreshnote{ display:flex;gap:9px;align-items:flex-start;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.32);color:#fff;border-radius:14px;padding:11px 14px;
+    font-size:13px;line-height:1.5;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    margin:0 0 16px;box-shadow:0 8px 20px -8px rgba(0,0,0,.3) }
+  .refreshnote b{font-weight:800}
+  body.dark .refreshnote{ background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14) }
+
+  /* ==================== FLUIDITÀ & PREMIUM EXTRA ==================== */
+  html{ scroll-behavior:smooth }
+  /* Gradiente più lento e morbido (più premium) */
+  body::before{ animation-duration:30s; animation-timing-function:ease-in-out }
+  /* Righe lista: hover fluido */
+  .row{ transition:transform .16s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease }
+  .row:hover{ transform:translateY(-2px); box-shadow:0 12px 26px -10px rgba(60,30,110,.4) }
+  /* Avatar premium */
+  .av{ box-shadow:0 4px 12px -2px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.3) }
+  /* Donut: reveal animato */
+  @keyframes donutIn{ from{opacity:0;transform:rotate(-26deg) scale(.92)} to{opacity:1;transform:none} }
+  .donut{ animation:donutIn .75s cubic-bezier(.22,1,.36,1) both; transform-origin:50% 50% }
+  /* Card confronto: hover */
+  .cmp{ transition:transform .18s ease, box-shadow .2s ease }
+  .cmp:hover{ transform:translateY(-3px) }
+  /* Badge gratis premium */
+  .freebadge{ box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 8px 20px -8px rgba(0,0,0,.3) }
+  .pill,.dchip,.badge{ transition:all .18s ease }
+  /* Drop zone: hover fluido */
+  .drop{ transition:transform .2s ease, border-color .2s, background .2s, box-shadow .2s }
+  .drop:hover{ box-shadow:0 14px 30px -12px rgba(88,40,160,.4) }
+  @media(prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .donut{animation:none} }
