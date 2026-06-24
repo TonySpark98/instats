@@ -601,3 +601,23 @@
   .list{ grid-template-columns:minmax(0,1fr); overflow-x:hidden }
   .row{ min-width:0 }
   .row .info{ overflow:hidden }
+
+  /* === Mobile: pulsanti grandi e distanziati (stile app) === */
+  @media(max-width:560px){
+    .btn{ padding:14px 18px; min-height:50px; font-size:15px; border-radius:14px }
+    .btn.sm{ padding:12px 16px; min-height:46px; font-size:14px; border-radius:12px }
+    .row a.open{ padding:11px 15px; min-height:42px; font-size:13.5px; border-radius:11px }
+    .row .revert{ width:42px; height:42px; font-size:17px; border-radius:11px }
+    .row{ padding:12px; gap:12px }
+    .list{ gap:12px }
+    .tab{ padding:12px 16px; font-size:14px }
+    .wiz-nav{ gap:14px; margin-top:20px }
+    .wiz-nav .btn{ flex:1 }
+    .toolbar{ gap:12px }
+    .listhead{ gap:12px }
+    .stats{ gap:12px }
+    .drop{ padding:32px 18px }
+    select#sortSelect{ min-height:48px; padding:12px 14px; font-size:14px }
+    .search{ padding:4px 4px 4px 12px }
+    .search input{ font-size:15px; padding:11px 0 }
+  }
