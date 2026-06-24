@@ -84,11 +84,5 @@ function init(){
     h.addEventListener('click',()=> h.parentElement.classList.toggle('collapsed'));
   });
 
-  // Deterrenti anti-copia (deterrente leggero: il codice client è sempre accessibile)
-  document.addEventListener('contextmenu',e=>e.preventDefault());
-  document.addEventListener('keydown',e=>{
-    const k=(e.key||'').toLowerCase();
-    if(e.key==='F12' || (e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(k)) || (e.ctrlKey&&k==='u') || (e.metaKey&&e.altKey&&['i','j','c'].includes(k))){ e.preventDefault(); return false; }
-  });
 }
 document.addEventListener('DOMContentLoaded', init);

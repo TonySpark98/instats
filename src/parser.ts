@@ -152,6 +152,26 @@ export const FILE_MAP = {
   logout_activity:['🚪','Disconnessioni','Logouts','sicurezza'],
   devices:['📱','Dispositivi','Devices','sicurezza'],
   password_change_activity:['🔑','Cambi password','Password changes','sicurezza'],
+  signup_information:['📝','Dati di registrazione','Signup information','profilo'],
+  account_information:['🪪','Informazioni account','Account information','profilo'],
+  personal_information:['🪪','Informazioni personali','Personal information','profilo'],
+  profile_changes:['✏️','Modifiche al profilo','Profile changes','profilo'],
+  professional_information:['💼','Informazioni professionali','Professional info','profilo'],
+  account_privacy_changes:['🔒','Modifiche privacy','Privacy changes','sicurezza'],
+  two_factor_authentication:['🔐','Autenticazione a due fattori','Two-factor auth','sicurezza'],
+  camera_information:['📷','Fotocamera','Camera information','sicurezza'],
+  last_known_location:['📍','Ultima posizione nota','Last known location','sicurezza'],
+  apps_and_websites:['🧩','App e siti collegati','Connected apps & sites','sicurezza'],
+  your_activity_off_meta_technologies:['🌐','Attività off-Meta','Off-Meta activity','sicurezza'],
+  recommended_topics:['🎯','Argomenti consigliati','Recommended topics','interessi'],
+  subscription_for_no_ads:['💳','Abbonamento senza pubblicità','No-ads subscription','ads'],
+  other_categories_used_to_reach_you:['🏷️','Categorie per raggiungerti','Ad categories','ads'],
+  comments_on_others_media:['💬','Commenti su post altrui','Comments on others','attivita'],
+  quizzes:['🧠','Quiz delle storie','Story quizzes','attivita'],
+  recently_viewed_items:['🛍️','Prodotti visti di recente','Recently viewed items','attivita'],
+  wishlist:['💖','Lista desideri','Wishlist','attivita'],
+  music_recently_used:['🎵','Musica usata di recente','Recently used music','attivita'],
+  events:['📅','Eventi','Events','attivita'],
 };
 export const GROUP_ORDER=['profilo','relazioni','contenuti','attivita','interessi','ads','sicurezza','altro'];
 export function normBase(name){ return (name.toLowerCase().split('/').pop()||'').replace(/\.(json|html?)$/,'').replace(/['’]/g,'').replace(/_\d+$/,''); }
@@ -189,7 +209,7 @@ export async function readFiles(fileList: any): Promise<ReadResult>{
     const arr=primaryArray(json); const count=arr?arr.length:null;
     scan.push({file:base(name), nb, emoji:meta?meta[0]:'📄', label:meta?{it:meta[1],en:meta[2]}:{it:humanize(nb),en:humanize(nb)}, group:meta?meta[3]:'altro', count});
     // dati profilo / creazione account
-    if(/personal_information|account_information|profile|signup|registration/.test(name.toLowerCase())){
+    if(/personal_information|account_information|profile|signup|registration|based_in|professional|information_about_you|contact|email|phone/.test(name.toLowerCase())){
       const sm=collectStringMap(json); for(const k in sm){ if(profile[k]==null) profile[k]=sm[k]; }
     }
   };

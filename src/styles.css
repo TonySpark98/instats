@@ -346,8 +346,8 @@
   body.dark p.sub[data-i18n="wiz1_body"], body.dark .wiz-guide, body.dark p.sub[data-i18n="upload_sub"]{
     background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.10);color:#ece8f6}
   /* Link brandizzati (no blu classico) */
-  #setupCard a, footer a, .runstep a, .howbox a, .wiz-guide a, p.sub a{color:#9c2bd6;font-weight:600;text-decoration:underline;text-underline-offset:2px}
-  body.dark #setupCard a, body.dark footer a, body.dark .runstep a, body.dark .howbox a, body.dark .wiz-guide a, body.dark p.sub a{color:#d8b4fe}
+  #setupCard a:not(.btn), footer a:not(.btn), .runstep a:not(.btn), .howbox a:not(.btn), .wiz-guide a:not(.btn), p.sub a:not(.btn){color:#9c2bd6;font-weight:600;text-decoration:underline;text-underline-offset:2px}
+  body.dark #setupCard a:not(.btn), body.dark footer a:not(.btn), body.dark .runstep a:not(.btn), body.dark .howbox a:not(.btn), body.dark .wiz-guide a:not(.btn), body.dark p.sub a:not(.btn){color:#d8b4fe}
   /* Knob lingua allineato su mobile */
   @media(max-width:640px){ .lang-switch .ls-knob{width:38px} .lang-switch.it .ls-knob{left:42px} }
   @media(max-width:400px){ .lang-switch .ls-knob{width:32px} .lang-switch.it .ls-knob{left:36px} }
