@@ -27,6 +27,7 @@ export interface InteractionStat {
   comment: number;
   likedComment: number;
   storyLike: number;
+  storyReact: number;
   total: number;
   ts: number;
 }

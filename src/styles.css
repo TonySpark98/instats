@@ -675,3 +675,6 @@
       linear-gradient(135deg, rgba(110,32,188,.06), rgba(80,185,226,.06) 100%),
       rgba(255,255,255,.66);
   }
+
+  .int-note{ margin:14px 0 0; font-size:12px; line-height:1.5; color:var(--muted); background:rgba(124,58,237,.06); border:1px solid rgba(124,58,237,.14); border-radius:12px; padding:10px 12px }
+  body.dark .int-note{ background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.10) }

@@ -217,6 +217,7 @@ export function parseHtmlUsernames(text){
 
 const STORY_RX=/\/stories\/([A-Za-z0-9._]{1,40})/i;
 const IGPROF_RX=/instagram\.com\\?\/(?:_u\/)?([A-Za-z0-9._]{1,40})/i;
+const RESERVED=new Set(['p','reel','reels','explore','stories','accounts','direct','s','tv']);
 function smdFind(e:any, rx:RegExp){ const smd=e&&e.string_map_data; if(!smd) return null; for(const k in smd){ if(rx.test(k)) return smd[k]; } return null; }
 
 export async function readFiles(fileList: any): Promise<ReadResult>{
@@ -233,8 +234,8 @@ export async function readFiles(fileList: any): Promise<ReadResult>{
     }
   };
   const bumpI=(u:string,kind:string,ts:number)=>{
-    const k=normU(u); if(!k||k.length>40||/[\/\s@]/.test(k)) return;
-    const d=interactions[k]||(interactions[k]={username:k,comment:0,likedComment:0,storyLike:0,total:0,ts:0});
+    const k=normU(u); if(!k||k.length>40||/[\/\s@]/.test(k)||RESERVED.has(k)) return;
+    const d=interactions[k]||(interactions[k]={username:k,comment:0,likedComment:0,storyLike:0,storyReact:0,total:0,ts:0});
     d[kind]++; d.total++; if(ts && ts>d.ts) d.ts=ts;
   };
   const recordInteractions=(json:any,name:string)=>{
@@ -245,9 +246,10 @@ export async function readFiles(fileList: any): Promise<ReadResult>{
     } else if(nb==='liked_comments'){
       const w=json&&json.likes_comment_likes;
       if(Array.isArray(w)) for(const e of w){ if(e&&e.title){ const s=Array.isArray(e.string_list_data)&&e.string_list_data[0]; bumpI(String(e.title),'likedComment',(s&&s.timestamp)||0); } }
-    } else if(nb==='story_likes'){
+    } else if(nb==='story_likes' || nb==='polls' || nb==='emoji_sliders' || nb==='avatar_story_reactions'){
+      const kind = nb==='story_likes' ? 'storyLike' : 'storyReact';
       const arr=primaryArray(json)||[];
-      for(const e of arr){ let u=''; try{ const blob=JSON.stringify(e); const m=blob.match(STORY_RX)||blob.match(IGPROF_RX); if(m) u=m[1]; }catch(x){} if(!u && e && e.title) u=String(e.title); if(u) bumpI(u,'storyLike',(e&&e.timestamp)||0); }
+      for(const e of arr){ let u=''; try{ const blob=JSON.stringify(e); const m=blob.match(STORY_RX)||blob.match(IGPROF_RX); if(m) u=m[1]; }catch(x){} if(!u && kind==='storyLike' && e && e.title) u=String(e.title); if(u) bumpI(u,kind,(e&&e.timestamp)||0); }
     }
   };
   const handleJson=(txt,name)=>{

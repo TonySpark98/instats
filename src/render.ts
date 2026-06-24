@@ -396,7 +396,11 @@ export function renderInteractions(interactions:any, buckets:any){
 }
 function interRow(s:any){
   const href='https://www.instagram.com/'+encodeURIComponent(s.username);
-  const parts:string[]=[]; if(s.storyLike)parts.push(s.storyLike+' ❤️'); if(s.comment)parts.push(s.comment+' 💬'); if(s.likedComment)parts.push(s.likedComment+' 👍');
+  const parts:string[]=[];
+  if(s.storyLike)parts.push('❤️ '+fmtNum(s.storyLike)+' '+t('int_lbl_storyLike'));
+  if(s.storyReact)parts.push('🎯 '+fmtNum(s.storyReact)+' '+t('int_lbl_storyReact'));
+  if(s.comment)parts.push('💬 '+fmtNum(s.comment)+' '+t('int_lbl_comment'));
+  if(s.likedComment)parts.push('👍 '+fmtNum(s.likedComment)+' '+t('int_lbl_likedComment'));
   return `<div class="row" data-u="${escapeHtml(s.username)}">${avatar(s.username)}<div class="info"><div class="u">@${escapeHtml(s.username)}</div><div class="meta">${parts.join(' · ')}</div></div><span class="intbadge" title="${escapeHtml(t('int_count'))}">${fmtNum(s.total)}</span><a class="open" href="${escapeHtml(href)}" target="_blank" rel="noopener">${t('open_btn')}</a></div>`;
 }
 function showInteractionVirtual(items:any[], label:string, desc:string){
