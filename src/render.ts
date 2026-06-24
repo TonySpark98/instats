@@ -92,6 +92,7 @@ export function renderStats(){
     {c:'s-pend',ic:'⏳',n:(d.pending||[]).length,l:t('stat_pending'),tab:'pending'},
   ];
   $('#statsGrid').innerHTML = cells.map(s=>`<div class="stat ${s.c}" data-tab="${s.tab}"><div class="ic">${s.ic}</div><div class="n">${fmtNum(s.n)}</div><div class="l">${s.l}</div></div>`).join('');
+  animateCounts();
   document.querySelectorAll('.stat').forEach((el:any)=>el.onclick=()=>{ STATE._virtual=null; STATE.active=el.dataset.tab; STATE.query=''; $('#searchInput').value=''; renderTabs(); renderList(); document.querySelector('.tabs').scrollIntoView({behavior:'smooth',block:'start'}); });
 }
 export function renderTabs(){
@@ -316,4 +317,18 @@ export function importSnapshotFile(file:any, done?:()=>void){
     saveSnaps(snaps); toast(t('snap_loaded')); if(done) done();
   }catch(e){ toast(t('snap_err')); } };
   r.readAsText(file);
+}
+
+/* Count-up elegante dei numeri delle stat card */
+function animateCounts(){
+  try{ if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; }catch(e){}
+  document.querySelectorAll('#statsGrid .stat .n').forEach((el:any)=>{
+    const target=parseInt(String(el.textContent||'0').replace(/[^0-9]/g,''),10)||0;
+    if(target<=0) return;
+    const dur=900, t0=performance.now();
+    el.textContent='0';
+    const tick=(now:number)=>{ const p=Math.min((now-t0)/dur,1); const e=1-Math.pow(1-p,3);
+      el.textContent=fmtNum(Math.round(target*e)); if(p<1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  });
 }

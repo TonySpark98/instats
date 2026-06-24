@@ -324,7 +324,7 @@
   body.dark .pill,body.dark code{ background:rgba(255,255,255,.10); color:#d6d6da }
   body.dark .btn.ghost{ background:rgba(58,58,60,.85); color:#e5e5ea; border-color:rgba(255,255,255,.12) }
   body.dark .tab{ background:rgba(44,44,46,.8); color:#c7c7cc; border-color:rgba(255,255,255,.10) }
-  body.dark .tab.active{ color:#fff }
+  body.dark .tab.active{ background:linear-gradient(120deg,var(--g1),var(--g4)); border-color:transparent; color:#fff; box-shadow:0 8px 22px -6px rgba(124,58,237,.7) }
   body.dark .search,body.dark select{ background:rgba(44,44,46,.75); border-color:rgba(255,255,255,.10); color:#f5f5f7 }
   body.dark .search input{ color:#f5f5f7 }
   body.dark .search input::placeholder{ color:#8e8e93 }
@@ -485,3 +485,32 @@
   body:not(.dark) .lang-switch{ background:rgba(20,16,40,.06); border-color:rgba(20,16,40,.12) }
   body:not(.dark) .lang-switch .ls-opt{ color:#6b6486 }
   body:not(.dark) .tg-btn{ background:rgba(20,16,40,.06); border-color:rgba(20,16,40,.12) }
+
+  /* ==================== BELLISSIMA: rifiniture & animazioni ==================== */
+  /* Logo in gradiente */
+  .logo{ background:linear-gradient(110deg,#7c3aed,#ec4899 55%,#4f46e5);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-shadow:none;
+    animation:rise .6s cubic-bezier(.22,1,.36,1) both }
+  body.dark .logo{ background:linear-gradient(110deg,#a78bfa,#f472b6 55%,#60a5fa);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent }
+  header.app .tag{ animation:rise .6s .08s both }
+  /* Freebadge: entrata + shimmer */
+  .freebadge{ position:relative; overflow:hidden; animation:pop .6s .18s both }
+  .freebadge::after{ content:''; position:absolute; inset:0;
+    background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);
+    transform:translateX(-130%); animation:shimmer 4s ease-in-out 1s infinite }
+  @keyframes shimmer{ 0%,55%{transform:translateX(-130%)} 100%{transform:translateX(130%)} }
+  /* Liste: righe a cascata */
+  #list .row{ animation:rise .42s cubic-bezier(.22,1,.36,1) both }
+  #list .row:nth-child(1){animation-delay:.02s} #list .row:nth-child(2){animation-delay:.05s}
+  #list .row:nth-child(3){animation-delay:.08s} #list .row:nth-child(4){animation-delay:.11s}
+  #list .row:nth-child(5){animation-delay:.14s} #list .row:nth-child(6){animation-delay:.17s}
+  #list .row:nth-child(7){animation-delay:.20s} #list .row:nth-child(8){animation-delay:.23s}
+  #list .row:nth-child(9){animation-delay:.26s} #list .row:nth-child(10){animation-delay:.29s}
+  #list .row:nth-child(n+11){animation-delay:.32s}
+  .stat .n{ font-feature-settings:"tnum" 1 }
+  @media(prefers-reduced-motion:reduce){ .freebadge::after,.logo{animation:none} #list .row{animation:none} }
+
+  /* Scroll: lascia spazio sotto i controlli fissi in alto */
+  .tabs, #tabs{ scroll-margin-top:84px }
+  #exploreCard, #compareCard{ scroll-margin-top:84px }
