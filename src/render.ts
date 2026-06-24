@@ -70,6 +70,8 @@ export function renderSummary(){
       {v:notfb, c:'#ef4444',l:t('stat_notfb')}
     ], ng, fmtNum(ng), t('m_following'));
   }
+  const bel=$('#summaryBars');
+  if(bel) bel.innerHTML = barChart(STATE.data, STATE.derived);
 }
 /* Donut SVG riusabile (segmenti impilati via stroke-dasharray) */
 function donutChart(segs:any[], total:number, centerN:string, centerL:string){
@@ -331,4 +333,22 @@ function animateCounts(){
       el.textContent=fmtNum(Math.round(target*e)); if(p<1) requestAnimationFrame(tick); };
     requestAnimationFrame(tick);
   });
+}
+
+/* Bar chart orizzontale delle categorie principali (barre animate) */
+function barChart(d:any, x:any){
+  const rows=[
+    {l:t('stat_followers'), v:(d.followers||[]).length, c:'#6366f1'},
+    {l:t('stat_following'), v:(d.following||[]).length, c:'#a855f7'},
+    {l:t('stat_mutual'),    v:(x&&x.mutuals?x.mutuals.length:0), c:'#22c55e'},
+    {l:t('stat_notfb'),     v:(x&&x.notFollowingBack?x.notFollowingBack.length:0), c:'#ef4444'},
+    {l:t('stat_fans'),      v:(x&&x.fans?x.fans.length:0), c:'#06b6d4'},
+    {l:t('stat_pending'),   v:(d.pending||[]).length, c:'#f59e0b'},
+  ].filter((r:any)=>r.v>0);
+  const max=Math.max(1, ...rows.map((r:any)=>r.v));
+  return '<div class="bars">'+rows.map((r:any,i:number)=>
+    '<div class="bar-row"><span class="bar-label">'+r.l+'</span>'+
+    '<div class="bar-track"><div class="bar-fill" style="width:'+(r.v/max*100).toFixed(1)+'%;background:'+r.c+';animation-delay:'+(i*0.08).toFixed(2)+'s"></div></div>'+
+    '<span class="bar-val">'+fmtNum(r.v)+'</span></div>'
+  ).join('')+'</div>';
 }

@@ -514,3 +514,20 @@
   /* Scroll: lascia spazio sotto i controlli fissi in alto */
   .tabs, #tabs{ scroll-margin-top:84px }
   #exploreCard, #compareCard{ scroll-margin-top:84px }
+
+  /* ===== Bar chart categorie ===== */
+  .sumbars{ margin-top:14px }
+  .bars{ display:flex; flex-direction:column; gap:9px }
+  .bar-row{ display:grid; grid-template-columns:minmax(86px,1.1fr) 2.2fr auto; align-items:center; gap:10px; font-size:13px }
+  .bar-label{ color:var(--muted); font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+  .bar-track{ height:10px; background:rgba(120,90,180,.12); border-radius:6px; overflow:hidden }
+  body.dark .bar-track{ background:rgba(255,255,255,.08) }
+  .bar-fill{ height:100%; border-radius:6px; transform-origin:left; box-shadow:0 1px 5px rgba(0,0,0,.22);
+    animation:barGrow .9s cubic-bezier(.22,1,.36,1) both }
+  .bar-val{ font-weight:800; font-variant-numeric:tabular-nums; color:var(--text); min-width:40px; text-align:right }
+  @keyframes barGrow{ from{transform:scaleX(0)} to{transform:scaleX(1)} }
+
+  /* Donut: reveal a sweep (ruota entrando) */
+  @keyframes donutIn{ from{opacity:0; transform:rotate(-150deg) scale(.85)} to{opacity:1; transform:rotate(0) scale(1)} }
+  .donut{ animation:donutIn .9s cubic-bezier(.22,1,.36,1) both }
+  @media(prefers-reduced-motion:reduce){ .bar-fill,.donut{animation:none} }
