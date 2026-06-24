@@ -724,3 +724,6 @@
 
   /* Cambio tema: durante lo switch niente transizioni/animazioni (Safari iOS non ri-sfoca le card 60 volte → niente lag) */
   body.theming, body.theming *, body.theming *::before, body.theming *::after{ transition:none !important; animation:none !important }
+
+  /* Standalone/PWA + Safari mobile: l'header iniziale deve stare SOTTO i toggle (no overlap col titolo) */
+  @media(max-width:640px){ .wrap{ padding-top:calc(48px + env(safe-area-inset-top)) } }
