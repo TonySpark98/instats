@@ -2,6 +2,7 @@ export interface Entry {
   username: string;
   href: string;
   ts: number;
+  count?: number;
 }
 
 export type Buckets = Record<string, Entry[]>;
@@ -21,11 +22,23 @@ export interface ScanItem {
   count: number | null;
 }
 
+export interface InteractionStat {
+  username: string;
+  comment: number;
+  likedComment: number;
+  storyLike: number;
+  total: number;
+  ts: number;
+}
+
+export type Interactions = Record<string, InteractionStat>;
+
 export interface ReadResult {
   buckets: Buckets;
   log: LogItem[];
   scan: ScanItem[];
   profile: Record<string, string>;
+  interactions: Interactions;
 }
 
 export interface Derived {
@@ -57,4 +70,5 @@ export interface AppState {
   profile?: Record<string, string>;
   _scanSorted?: ScanItem[];
   hideOpened?: boolean;
+  interactions?: Interactions;
 }

@@ -3,7 +3,7 @@ import { t, LANG, setLangValue, applyI18n } from './i18n';
 import { readFiles, computeDerived } from './parser';
 import {
   SNAP_KEY, pushSnapshot, renderAll, renderWarn, renderDiag,
-  renderProfile, renderStatsAll, renderExplore, renderCompare,
+  renderProfile, renderStatsAll, renderExplore, renderInteractions, renderCompare,
   renderList, renderListVirtual, renderTabs, exportCSV, fmtNum,
   setupOpenedDelegation, downloadSnapshot, importSnapshotFile
 } from './render';
@@ -16,12 +16,13 @@ async function handleFiles(fileList){
   if(!fileList||!fileList.length) return;
   showLoading();
   try{
-    const {buckets,log,scan,profile}=await readFiles([...fileList]);
+    const {buckets,log,scan,profile,interactions}=await readFiles([...fileList]);
     const hasRel = buckets.followers||buckets.following||buckets.pending;
     if(!hasRel && !(scan&&scan.length)){ toast(t('toast_nodata')); return; }
     STATE.data=buckets; STATE._log=log; STATE.scan=scan||[]; STATE.profile=profile||{}; STATE.derived=computeDerived(buckets); STATE._virtual=null; pushSnapshot(buckets);
     STATE.active='notfb'; renderAll(); renderWarn(buckets, STATE.derived); renderDiag(log, !((buckets.followers||[]).length));
     renderProfile(STATE.profile); renderStatsAll(STATE.scan, buckets); renderExplore(STATE.scan);
+    STATE.interactions=interactions; renderInteractions(interactions, buckets);
     toast(t('toast_done'));
   }catch(err){ console.error(err); toast(t('toast_readerr')); }
   finally{ hideLoading(); }

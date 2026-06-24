@@ -215,8 +215,12 @@ export function parseHtmlUsernames(text){
   }catch(e){ return []; }
 }
 
+const STORY_RX=/\/stories\/([A-Za-z0-9._]{1,40})/i;
+const IGPROF_RX=/instagram\.com\\?\/(?:_u\/)?([A-Za-z0-9._]{1,40})/i;
+function smdFind(e:any, rx:RegExp){ const smd=e&&e.string_map_data; if(!smd) return null; for(const k in smd){ if(rx.test(k)) return smd[k]; } return null; }
+
 export async function readFiles(fileList: any): Promise<ReadResult>{
-  const buckets:any={}; const log:any[]=[]; const scan:any[]=[]; const profile:any={};
+  const buckets:any={}; const log:any[]=[]; const scan:any[]=[]; const profile:any={}; const interactions:any={};
   const base=(p)=>p.split('/').pop();
   const add=(cat,entries,name)=>{ if(cat&&entries.length){ (buckets[cat]=buckets[cat]||[]).push(...entries); } log.push({name:base(name),cat:cat||'?',count:entries?entries.length:0}); };
   const recordScan=(json,name)=>{
@@ -228,11 +232,30 @@ export async function readFiles(fileList: any): Promise<ReadResult>{
       const sm=collectStringMap(json); for(const k in sm){ if(profile[k]==null) profile[k]=sm[k]; }
     }
   };
+  const bumpI=(u:string,kind:string,ts:number)=>{
+    const k=normU(u); if(!k||k.length>40||/[\/\s@]/.test(k)) return;
+    const d=interactions[k]||(interactions[k]={username:k,comment:0,likedComment:0,storyLike:0,total:0,ts:0});
+    d[kind]++; d.total++; if(ts && ts>d.ts) d.ts=ts;
+  };
+  const recordInteractions=(json:any,name:string)=>{
+    const nb=normBase(name);
+    if(/post_comments|reels_comments|comments_on_others/.test(nb)){
+      const arr=primaryArray(json)||[];
+      for(const e of arr){ const v=smdFind(e,/media owner|owner|proprietario|autore/i); const tv=smdFind(e,/^(time|ora|data)$/i); if(v&&v.value) bumpI(String(v.value),'comment',(tv&&tv.timestamp)||0); }
+    } else if(nb==='liked_comments'){
+      const w=json&&json.likes_comment_likes;
+      if(Array.isArray(w)) for(const e of w){ if(e&&e.title){ const s=Array.isArray(e.string_list_data)&&e.string_list_data[0]; bumpI(String(e.title),'likedComment',(s&&s.timestamp)||0); } }
+    } else if(nb==='story_likes'){
+      const arr=primaryArray(json)||[];
+      for(const e of arr){ let u=''; try{ const blob=JSON.stringify(e); const m=blob.match(STORY_RX)||blob.match(IGPROF_RX); if(m) u=m[1]; }catch(x){} if(!u && e && e.title) u=String(e.title); if(u) bumpI(u,'storyLike',(e&&e.timestamp)||0); }
+    }
+  };
   const handleJson=(txt,name)=>{
     let json; try{ json=JSON.parse(txt); }catch(e){ log.push({name:base(name),cat:'errore',count:0}); return; }
     const cat = categorize(name) || categorizeByContent(json, name);
     add(cat, extractEntries(json), name);
     recordScan(json,name);
+    recordInteractions(json,name);
   };
   const handleHtml=(txt,name)=>{ add(categorize(name), parseHtmlUsernames(txt), name); };
   for(const f of fileList){
@@ -257,7 +280,7 @@ export async function readFiles(fileList: any): Promise<ReadResult>{
     for(const e of buckets[k]){ const key=normU(e.username); if(!seen.has(key)){ seen.add(key); dd.push(e); } }
     buckets[k]=dd;
   }
-  return {buckets, log, scan, profile};
+  return {buckets, log, scan, profile, interactions};
 }
 
 /* ---------- Operazioni su insiemi ---------- */

@@ -22,6 +22,10 @@ browser **block any network egress**, turning the promise into a guarantee.
 - **Search**, sort (A→Z, Z→A, newest, oldest) and **CSV export** per list
 - Mark profiles as **seen** (persists locally) and open them on Instagram
 
+**Interactions & ghost followers**
+- Computes **who you actually interact with** from your export (comments, comment likes, story likes) and ranks the top accounts
+- **Ghost followers**: followers you never interact with, plus a "followers reached" percentage — all on-device, nothing inferred from the network
+
 **Changes over time (snapshots)**
 - Local snapshots compare a new export with a previous one: **who unfollowed you**, new followers, who you started/stopped following
 - **Export/import snapshots as files** — keep previous versions and compare across browsers/devices

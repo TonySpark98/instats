@@ -648,3 +648,17 @@
   body:not(.dark) .lang-switch, body:not(.dark) .tg-btn{ background:rgba(255,255,255,.82); border-color:rgba(20,16,40,.12); box-shadow:0 6px 18px rgba(20,16,40,.16) }
   body:not(.dark) .lang-switch .ls-opt{ color:#4a4470 }
   body:not(.dark) #themeToggle{ color:#5b21b6 }
+
+  /* ===================== INTERAZIONI / GHOST FOLLOWER ===================== */
+  #interactCard h2{ margin-bottom:2px }
+  .intstat{ display:flex; gap:10px; flex-wrap:wrap; margin:14px 0 4px }
+  .intstat .ist{ flex:1 1 120px; background:rgba(124,58,237,.07); border:1px solid rgba(124,58,237,.16); border-radius:14px; padding:12px 14px; text-align:center }
+  body.dark .intstat .ist{ background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.12) }
+  .intstat .ist .n{ font-size:22px; font-weight:800; color:var(--g1) }
+  body.dark .intstat .ist .n{ color:#c4b5fd }
+  .intstat .ist .l{ font-size:12px; color:var(--muted); margin-top:2px; line-height:1.25 }
+  .int-h{ font-size:15px; margin:18px 0 8px }
+  .intbadge{ flex:none; min-width:30px; text-align:center; font-weight:800; font-size:13px; color:#fff; background:linear-gradient(120deg,var(--g1),var(--g4)); border-radius:999px; padding:5px 11px; margin-right:8px }
+  .int-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px }
+  .int-actions .btn{ flex:1 }
+  @media(max-width:560px){ .int-actions{ flex-direction:column } .int-actions .btn{ width:100% } .intstat .ist{ flex:1 1 30% } }
