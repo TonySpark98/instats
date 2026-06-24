@@ -275,3 +275,26 @@ export function drawExplore(q){
   $('#exploreCount').textContent=fmtNum(rows.length);
   $('#exploreBody').innerHTML=rows.map(s=>`<div class="exrow"><span class="exi">${s.emoji}</span><span class="exl">${s.label[LANG]||s.label.it}</span><span class="exf">${escapeHtml(s.file)}</span><span class="exc">${s.count==null?'·':fmtNum(s.count)}</span></div>`).join('');
 }
+
+/* ---------- Snapshot come file: scarica / carica ---------- */
+export function downloadSnapshot(){
+  const snaps=loadSnaps(); const snap=snaps[snaps.length-1];
+  if(!snap){ toast(t('snap_none')); return; }
+  const data=JSON.stringify({ _instats_snapshot:1, date:snap.date, followers:snap.followers, following:snap.following }, null, 2);
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([data],{type:'application/json'}));
+  a.download='instats_snapshot_'+String(snap.date).slice(0,10)+'.json'; a.click();
+  toast(t('snap_saved'));
+}
+export function importSnapshotFile(file:any, done?:()=>void){
+  const r=new FileReader();
+  r.onload=()=>{ try{
+    const o:any=JSON.parse(String(r.result));
+    if(!o||!Array.isArray(o.followers)||!Array.isArray(o.following)) throw 0;
+    const snap={ date:o.date||new Date().toISOString(), followers:o.followers.map(String), following:o.following.map(String) };
+    const snaps=loadSnaps(); const cur=snaps.length?snaps.pop():null;
+    snaps.push(snap); if(cur) snaps.push(cur); while(snaps.length>15) snaps.shift();
+    saveSnaps(snaps); toast(t('snap_loaded')); if(done) done();
+  }catch(e){ toast(t('snap_err')); } };
+  r.readAsText(file);
+}

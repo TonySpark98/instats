@@ -5,7 +5,7 @@ import {
   SNAP_KEY, pushSnapshot, renderAll, renderWarn, renderDiag,
   renderProfile, renderStatsAll, renderExplore, renderCompare,
   renderList, renderListVirtual, renderTabs, exportCSV, fmtNum,
-  setupOpenedDelegation
+  setupOpenedDelegation, downloadSnapshot, importSnapshotFile
 } from './render';
 import type { Lang } from './types';
 
@@ -63,6 +63,9 @@ function init(){
   $('#csvBtn').onclick=exportCSV;
   $('#resetBtn').onclick=()=>{ STATE.data=null; STATE._virtual=null; $('#results').classList.add('hidden'); $('#setupCard').classList.remove('hidden'); $('#file').value=''; goToStep(3); window.scrollTo({top:0,behavior:'smooth'}); };
   $('#clearSnaps').onclick=()=>{ if(confirm(t('confirm_clear'))){ localStorage.removeItem(SNAP_KEY); renderCompare(); toast(t('toast_histcleared')); } };
+  $('#snapDownload').onclick=()=>downloadSnapshot();
+  $('#snapUpload').onclick=()=>($('#snapFile') as any).click();
+  $('#snapFile').onchange=(e:any)=>{ const f=e.target.files&&e.target.files[0]; if(f) importSnapshotFile(f, ()=>renderCompare()); e.target.value=''; };
 
   // Tema chiaro/scuro
   const THEME_KEY='instats_theme';
