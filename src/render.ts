@@ -107,12 +107,20 @@ export function renderList(){
   let items=tab.items.slice();
   const q=STATE.query.trim().toLowerCase();
   if(q) items=items.filter(e=>e.username.toLowerCase().includes(q));
+  const total=items.length, openedN=items.filter(e=>isOpened(e.username)).length;
+  setListProgress(openedN, total);
+  const hb=$('#hideOpenedBtn'); if(hb) hb.classList.toggle('active', !!STATE.hideOpened);
+  if(STATE.hideOpened) items=items.filter(e=>!isOpened(e.username));
   const s=STATE.sort;
   items.sort((a,b)=> s==='az'?a.username.toLowerCase().localeCompare(b.username.toLowerCase()):
     s==='za'?b.username.toLowerCase().localeCompare(a.username.toLowerCase()):
     s==='new'?(b.ts||0)-(a.ts||0):(a.ts||0)-(b.ts||0));
   const wrap=$('#list');
-  if(!items.length){ wrap.innerHTML=`<div class="empty"><div class="big">🙌</div><div><b>${t('empty_none_title')}</b><br>${q?t('empty_search'):t('empty_list')}</div></div>`; return; }
+  if(!items.length){
+    const done=STATE.hideOpened && total>0;
+    wrap.innerHTML=`<div class="empty"><div class="big">${done?'🎉':'🙌'}</div><div><b>${done?t('empty_allopened'):t('empty_none_title')}</b><br>${done?'':(q?t('empty_search'):t('empty_list'))}</div></div>`;
+    return;
+  }
   const actLabel = tab.action || t('open_btn');
   const actClass = (tab.id==='pending'||tab.id==='recentReq') ? 'open cancel' : 'open';
   wrap.innerHTML = items.map(e=>{
@@ -120,6 +128,17 @@ export function renderList(){
     const meta = dd?`<div class="meta">${t('row_since').replace('{date}',dd)}</div>`:'';
     return rowHtml(e, actClass, actLabel, meta);
   }).join('');
+}
+function setListProgress(o:number,total:number){
+  const el=$('#listProgress'); if(!el) return;
+  if(!total){ el.innerHTML=''; return; }
+  const pct=Math.round(o/Math.max(1,total)*100);
+  el.innerHTML=`<span class="lp-txt">${t('list_progress').replace('{o}',fmtNum(o)).replace('{t}',fmtNum(total))}</span><span class="lp-bar"><span class="lp-fill" style="width:${pct}%"></span></span>`;
+}
+function updateProgress(){
+  const tab=currentTab(); let items=tab.items.slice();
+  const q=STATE.query.trim().toLowerCase(); if(q) items=items.filter(e=>e.username.toLowerCase().includes(q));
+  setListProgress(items.filter(e=>isOpened(e.username)).length, items.length);
 }
 /* costruisce una riga; segna visivamente i profili già aperti */
 export function rowHtml(e:any, actClass:string, actLabel:string, meta:string){
@@ -138,12 +157,12 @@ export function setupOpenedDelegation(){
     // pulsante ripristina → torna "non aperto"
     if(ev.target.closest && ev.target.closest('.revert')){
       ev.preventDefault();
-      setOpened(u,false); refreshRow(row,u);
+      setOpened(u,false); if(STATE.hideOpened) renderList(); else { refreshRow(row,u); updateProgress(); }
       return;
     }
     // click sul link "Apri/Annulla" → segna come aperto (NON impedire l'apertura)
     if(ev.target.closest && ev.target.closest('a.open')){
-      setOpened(u,true); refreshRow(row,u);
+      setOpened(u,true); if(STATE.hideOpened) renderList(); else { refreshRow(row,u); updateProgress(); }
     }
   });
 }

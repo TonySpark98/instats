@@ -56,4 +56,5 @@ export interface AppState {
   scan?: ScanItem[];
   profile?: Record<string, string>;
   _scanSorted?: ScanItem[];
+  hideOpened?: boolean;
 }

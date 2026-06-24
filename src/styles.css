@@ -583,3 +583,21 @@
 
   .sumbars{ margin-bottom:22px }
   .sumchart{ margin-bottom:18px }
+
+  /* === Progresso lista + nascondi aperti === */
+  .listprog{ display:inline-flex; align-items:center; gap:8px; font-size:12.5px; color:var(--muted); font-weight:700 }
+  .lp-bar{ width:84px; height:7px; background:rgba(120,90,180,.15); border-radius:4px; overflow:hidden; flex:none }
+  body.dark .lp-bar{ background:rgba(255,255,255,.1) }
+  .lp-fill{ display:block; height:100%; border-radius:4px; background:linear-gradient(90deg,#22c55e,#16a34a); transition:width .45s cubic-bezier(.22,1,.36,1) }
+  #hideOpenedBtn.active{ background:linear-gradient(120deg,var(--g1),var(--g4)); color:#fff !important; border-color:transparent }
+  .listhead{ flex-wrap:wrap; gap:8px }
+  .toolbar{ flex-wrap:wrap }
+
+  /* === Pulsanti disabilitati: stile chiaro === */
+  .btn:disabled, .btn[disabled]{ opacity:.45; cursor:not-allowed; box-shadow:none !important; filter:grayscale(.25) }
+  .btn:disabled:hover, .btn[disabled]:hover{ transform:none !important; filter:grayscale(.25); box-shadow:none !important }
+
+  /* === Fix righe lista: nessuno scroll orizzontale, pulsante sempre visibile, nome troncato === */
+  .list{ grid-template-columns:minmax(0,1fr); overflow-x:hidden }
+  .row{ min-width:0 }
+  .row .info{ overflow:hidden }

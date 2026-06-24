@@ -60,6 +60,7 @@ function init(){
 
   $('#searchInput').addEventListener('input',e=>{ STATE.query=e.target.value; (STATE._virtual&&STATE.active==='_v')?renderListVirtual():renderList(); });
   $('#sortSelect').addEventListener('change',e=>{ STATE.sort=e.target.value; renderList(); });
+  { const hb=$('#hideOpenedBtn'); if(hb) hb.onclick=()=>{ STATE.hideOpened=!STATE.hideOpened; renderList(); }; }
   $('#csvBtn').onclick=exportCSV;
   $('#resetBtn').onclick=()=>{ STATE.data=null; STATE._virtual=null; $('#results').classList.add('hidden'); $('#setupCard').classList.remove('hidden'); $('#file').value=''; goToStep(3); window.scrollTo({top:0,behavior:'smooth'}); };
   $('#clearSnaps').onclick=()=>{ if(confirm(t('confirm_clear'))){ localStorage.removeItem(SNAP_KEY); renderCompare(); toast(t('toast_histcleared')); } };
