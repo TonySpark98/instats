@@ -387,7 +387,6 @@ export function renderInteractions(interactions:any, buckets:any){
   const sorted=all.slice().sort((a:any,b:any)=>b.total-a.total);
   const followers=buckets.followers||[];
   const interactedF=followers.filter((e:any)=>interactions[normU(e.username)]);
-  const ghost=followers.filter((e:any)=>!interactions[normU(e.username)]);
   const pct=followers.length?Math.round(100*interactedF.length/followers.length):0;
   const totalInt=all.reduce((s:number,d:any)=>s+d.total,0);
   card.classList.remove('hidden');
@@ -396,10 +395,6 @@ export function renderInteractions(interactions:any, buckets:any){
     `<div class="ist"><div class="n">${fmtNum(totalInt)}</div><div class="l">${t('int_total')}</div></div>`+
     (followers.length?`<div class="ist"><div class="n">${pct}%</div><div class="l">${t('int_reach').replace('{n}',fmtNum(interactedF.length)).replace('{m}',fmtNum(followers.length))}</div></div>`:'');
   $('#interactTop').innerHTML = sorted.slice(0,12).map(interRow).join('');
-  const ab=$('#intAllBtn'); if(ab){ ab.textContent=t('int_all_btn').replace('{n}',fmtNum(all.length));
-    ab.onclick=()=>showInteractionVirtual(sorted.map((s:any)=>({username:s.username,href:'https://www.instagram.com/'+encodeURIComponent(s.username),ts:s.ts,count:s.total})), t('int_all_label'), t('int_all_desc')); }
-  const gb=$('#intGhostBtn'); if(gb){ gb.textContent=t('int_ghost_btn').replace('{n}',fmtNum(ghost.length));
-    gb.onclick=()=>showInteractionVirtual(ghost.map((e:any)=>({username:e.username,href:e.href,ts:e.ts||0})).sort((a:any,b:any)=>a.username.localeCompare(b.username)), t('int_ghost_label'), t('int_ghost_desc').replace('{m}',fmtNum(followers.length))); }
 }
 function interRow(s:any){
   const href='https://www.instagram.com/'+encodeURIComponent(s.username);
@@ -409,8 +404,4 @@ function interRow(s:any){
   if(s.comment)parts.push('💬 '+fmtNum(s.comment)+' '+t('int_lbl_comment'));
   if(s.likedComment)parts.push('👍 '+fmtNum(s.likedComment)+' '+t('int_lbl_likedComment'));
   return `<div class="row" data-u="${escapeHtml(s.username)}">${avatar(s.username)}<div class="info"><div class="u">@${escapeHtml(s.username)}</div><div class="meta">${parts.join(' · ')}</div></div><span class="intbadge" title="${escapeHtml(t('int_count'))}">${fmtNum(s.total)}</span><a class="open" href="${escapeHtml(href)}" target="_blank" rel="noopener">${t('open_btn')}</a></div>`;
-}
-function showInteractionVirtual(items:any[], label:string, desc:string){
-  STATE._virtual={id:'_v',label,items,desc} as any; STATE.active='_v'; STATE.query=''; const si=$('#searchInput'); if(si) si.value='';
-  setView('relations'); renderTabsWithVirtual(); renderListVirtual(); const tb=document.querySelector('.tabs'); if(tb) tb.scrollIntoView({behavior:'smooth',block:'start'});
 }
