@@ -11,7 +11,7 @@ export const I18N = {
     tagline:`Scopri chi non ti segue, i tuoi fan e i profili reciproci — dal tuo export di Instagram`,
     free_badge:`✨ Gratis e open source`,
     upload_title:`1 · Carica i tuoi dati Instagram`,
-    upload_sub:`<b>Consigliato:</b> carica direttamente il file <b>.zip</b> esportato da Instagram — è il modo più semplice e completo. In alternativa puoi caricare i singoli file <b>JSON</b> (anche più di uno insieme). Nessun login, nessuna password: i dati restano sul tuo computer.`,
+    upload_sub:`<b>Consigliato:</b> carica direttamente il file <b>.zip</b> esportato da Instagram — è il modo più semplice e completo. In alternativa puoi caricare i singoli file <b>JSON</b> (anche più di uno insieme). Nessun login, nessuna password: i dati restano sul tuo dispositivo.`,
     privacy_text:`<b>100% privato.</b> L'analisi avviene interamente nel tuo browser. I tuoi file <b>non vengono caricati su nessun server</b>. Niente da installare, niente account da collegare.`,
     drop_t1:`Trascina qui lo <b>.ZIP</b> di Instagram <span class="reco">consigliato</span> — o clicca per scegliere`,
     drop_t2:`Accetta: archivio <b>.zip</b> (consigliato) · file <b>.json</b> (anche più insieme) · file <b>.html</b>`,
@@ -23,7 +23,7 @@ export const I18N = {
         <li>Vai su <b>Le tue informazioni e autorizzazioni</b> → <b>Scarica le tue informazioni</b>.</li>
         <li>Tocca <b>Scarica o trasferisci le informazioni</b> → scegli il tuo profilo.</li>
         <li>Seleziona <b>Parte delle tue informazioni</b> → spunta solo <b>Follower e profili seguiti</b> (così è veloce).</li>
-        <li>In <b>Formato</b> scegli <span class="pill">JSON</span> (consigliato), intervallo <b>Tutto</b>, poi <b>Crea file</b>.</li>
+        <li>In <b>Formato</b> scegli <span class="pill">JSON</span> (consigliato): è il formato dell'export ufficiale di Instagram. Intervallo <b>Tutto</b>, poi <b>Crea file</b>.</li>
         <li>Instagram ti invia il file (di solito in pochi minuti). Scaricalo: è un <b>.zip</b>.</li>
         <li>Torna qui e caricalo. Fatto. 🎉</li>
       </ol>
@@ -110,7 +110,7 @@ export const I18N = {
     tagline:`See who doesn't follow you back, your fans and mutuals — from your own Instagram export`,
     free_badge:`✨ Free & open source`,
     upload_title:`1 · Upload your Instagram data`,
-    upload_sub:`<b>Recommended:</b> upload the <b>.zip</b> exported from Instagram directly — it's the easiest and most complete way. Alternatively you can upload the individual <b>JSON</b> files (several at once). No login, no password: your data stays on your computer.`,
+    upload_sub:`<b>Recommended:</b> upload the <b>.zip</b> exported from Instagram directly — it's the easiest and most complete way. Alternatively you can upload the individual <b>JSON</b> files (several at once). No login, no password: your data stays on your device.`,
     privacy_text:`<b>100% private.</b> Everything runs entirely in your browser. Your files <b>are never uploaded to any server</b>. Nothing to install, no account to connect.`,
     drop_t1:`Drag your Instagram <b>.ZIP</b> here <span class="reco">recommended</span> — or click to choose`,
     drop_t2:`Accepts: <b>.zip</b> archive (recommended) · <b>.json</b> files (several at once) · <b>.html</b> files`,
@@ -122,7 +122,7 @@ export const I18N = {
         <li>Go to <b>Your information and permissions</b> → <b>Download your information</b>.</li>
         <li>Tap <b>Download or transfer information</b> → choose your profile.</li>
         <li>Select <b>Some of your information</b> → tick only <b>Followers and following</b> (so it's fast).</li>
-        <li>For <b>Format</b> choose <span class="pill">JSON</span> (recommended), date range <b>All time</b>, then <b>Create files</b>.</li>
+        <li>For <b>Format</b> choose <span class="pill">JSON</span> (recommended): it's the format of Instagram's official export. Date range <b>All time</b>, then <b>Create files</b>.</li>
         <li>Instagram emails you the file (usually within minutes). Download it: it's a <b>.zip</b>.</li>
         <li>Come back here and upload it. Done. 🎉</li>
       </ol>

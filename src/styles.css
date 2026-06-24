@@ -38,6 +38,15 @@
   .card.collapsible.collapsed > .ch{margin-bottom:0}
   .card.collapsible.collapsed > .ch::after{transform:rotate(-90deg)}
   .card.collapsible.collapsed > *:not(.ch){display:none !important}
+  /* Profilo + Tutte le statistiche: due grandi pulsanti affiancati (mobile-first) */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0;align-items:start}
+  .duo > .card{margin:0}
+  .duo > .card.collapsed{cursor:pointer;transition:transform .16s,box-shadow .16s}
+  .duo > .card.collapsed .ch{justify-content:center;text-align:center;font-size:16px;padding:8px 4px}
+  .duo > .card.collapsed .ch::after{display:none}
+  .duo > .card.collapsed:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(70,40,130,.22)}
+  .duo > .card:not(.collapsed){grid-column:1 / -1}
+  @media(min-width:721px){ .duo{gap:16px} .duo > .card.collapsed .ch{font-size:18px;padding:12px 4px} }
   .card p.sub{margin:0 0 16px;color:var(--muted);font-size:14px;line-height:1.5}
 
   .privacy{display:flex;gap:10px;align-items:flex-start;background:rgba(22,163,74,.10);border:1px solid rgba(22,163,74,.30);color:#0f5132;border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.5}
