@@ -241,7 +241,7 @@ export function escapeHtml(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp
 export function renderProfile(p){
   const card=$('#profileCard'), el=$('#profileBody'); const keys=Object.keys(p||{});
   if(!keys.length){ card.classList.add('hidden'); return; }
-  const pri=['Username','Nome utente','Name','Nome','Bio','Biografia','Email','Email address','Indirizzo email','Phone Number','Numero di telefono','Phone Confirmation','Gender','Sesso','Date of birth','Data di nascita','Private Account','Account privato','Based In Local','Based In','Registration Time','Data di registrazione','Time','Ora','Date','IP Address'];
+  const pri=['Username','Nome utente','Name','Nome','Bio','Biografia','Genere','Email','E-mail','Email address','Indirizzo email','Sito web','Phone Number','Numero di telefono','Numero di telefono confermato','Phone Confirmation','Gender','Sesso','Date of birth','Data di nascita','Private Account','Account privato','Based In Local','Based In','Registration Time','Data di registrazione','Time','Ora','Date','IP Address'];
   const order=[...pri.filter(k=>p[k]!=null), ...keys.filter(k=>!pri.includes(k))];
   el.innerHTML=order.map(k=>`<div class="pf"><div class="pk">${escapeHtml(k)}</div><div class="pv">${escapeHtml(p[k])}</div></div>`).join('');
   card.classList.remove('hidden');
