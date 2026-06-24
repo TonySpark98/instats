@@ -282,9 +282,7 @@
     .toolbar{gap:8px}
     .search{min-width:0;width:100%}
     .toolbar select{width:100%}
-    .tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;
-      -webkit-mask:linear-gradient(to right,transparent 0,#000 18px,#000 calc(100% - 18px),transparent 100%);
-      mask:linear-gradient(to right,transparent 0,#000 18px,#000 calc(100% - 18px),transparent 100%)}
+    .tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;scroll-padding:0 16px}
     .tab{flex:none}
     .list,.exlist{max-height:60vh}
     .row{padding:9px 10px;gap:10px}
@@ -691,9 +689,7 @@
     -webkit-mask-composite:source-in;
     mask-image:linear-gradient(to bottom,transparent 0,#000 16%,#000 56%,transparent 100%),linear-gradient(to right,transparent 0,#000 7%,#000 93%,transparent 100%);
     mask-composite:intersect }
-  .snav-scroll{ position:relative; z-index:1; display:flex; gap:8px; justify-content:safe center; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:10px 4px;
-    -webkit-mask:linear-gradient(to right,transparent 0,#000 20px,#000 calc(100% - 20px),transparent 100%);
-    mask:linear-gradient(to right,transparent 0,#000 20px,#000 calc(100% - 20px),transparent 100%) }
+  .snav-scroll{ position:relative; z-index:1; display:flex; gap:8px; justify-content:safe center; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:10px 6px; scroll-padding:0 16px }
   .snav-scroll::-webkit-scrollbar{ display:none }
   .snav{ flex:0 0 auto; white-space:nowrap; min-height:44px; display:inline-flex; align-items:center;
     border:1.5px solid rgba(124,58,237,.22); background:rgba(255,255,255,.7); color:var(--text);

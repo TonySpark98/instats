@@ -56,7 +56,9 @@ export function setView(v:string){
   (STATE as any).view=v;
   document.querySelectorAll('#results [data-view]').forEach((el:any)=>{ el.classList.toggle('view-hidden', el.getAttribute('data-view')!==v); });
   document.querySelectorAll('#sectionNav .snav').forEach((el:any)=>{ el.classList.toggle('active', el.getAttribute('data-v')===v); });
+  const a:any=document.querySelector('#sectionNav .snav.active'); if(a&&a.scrollIntoView) a.scrollIntoView({block:'nearest',inline:'center'});
 }
+function scrollActiveTabIntoView(){ const a:any=document.querySelector('#tabs .tab.active'); if(a&&a.scrollIntoView) a.scrollIntoView({block:'nearest',inline:'center'}); }
 
 /* ---------- Render ---------- */
 export function renderAll(){
@@ -108,6 +110,7 @@ export function renderTabs(){
   const def=tabsDef();
   $('#tabs').innerHTML = def.map(x=>`<div class="tab ${x.id===STATE.active?'active':''}" data-tab="${x.id}">${x.label}<span class="badge">${fmtNum(x.items.length)}</span></div>`).join('');
   document.querySelectorAll('.tab').forEach((el:any)=>el.onclick=()=>{ STATE._virtual=null; STATE.active=el.dataset.tab; STATE.query=''; $('#searchInput').value=''; renderTabs(); renderList(); });
+  scrollActiveTabIntoView();
 }
 export function renderList(){
   const tab=currentTab(); $('#listDesc').innerHTML=tab.desc;
@@ -228,6 +231,7 @@ export function renderTabsWithVirtual(){
   $('#tabs').innerHTML = def.map(x=>`<div class="tab ${x.id===STATE.active?'active':''}" data-tab="${x.id}">${x.label}<span class="badge">${fmtNum(x.items.length)}</span></div>`).join('');
   document.querySelectorAll('.tab').forEach((el:any)=>el.onclick=()=>{ STATE.active=el.dataset.tab; STATE.query=''; $('#searchInput').value='';
     if(el.dataset.tab==='_v'){ renderTabsWithVirtual(); renderListVirtual(); } else { STATE._virtual=null; renderTabs(); renderList(); } });
+  scrollActiveTabIntoView();
 }
 export function renderListVirtual(){
   const tab=STATE._virtual; $('#listDesc').innerHTML=tab.desc;
