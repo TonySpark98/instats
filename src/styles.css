@@ -573,9 +573,9 @@
   body.dark .riskbody{ background:rgba(28,28,30,.92) }
   @media(prefers-reduced-motion:reduce){ .riskcard > .ch{ animation:none } }
 
-  /* === Fix tab scrollabili su mobile: spazio per le ombre, no taglio ai lati === */
-  .tab.active{ box-shadow:0 6px 16px -7px rgba(124,58,237,.55) }
-  body.dark .tab.active{ box-shadow:0 7px 18px -7px rgba(124,58,237,.6) }
+  /* === Tab attivo: niente alone/ombra ai lati (gradiente pulito) === */
+  .tab.active{ box-shadow:none }
+  body.dark .tab.active{ box-shadow:none }
   @media(max-width:640px){
     .tabs{ padding:8px 14px 12px; margin:0 -14px; scroll-padding-left:14px }
     .tabs::-webkit-scrollbar{ height:0; display:none }
@@ -683,11 +683,11 @@
   .view-hidden{ display:none !important }
   .snav-bar{ position:sticky; top:0; z-index:40; margin:0 0 10px; background:transparent }
   /* progressive blur dietro la barra: maschera che sfuma verso il basso, così il testo che scorre sotto non disturba */
-  .snav-bar::before{ content:''; position:absolute; left:-16px; right:-16px; top:-12px; bottom:-18px; z-index:-1; pointer-events:none;
+  .snav-bar::before{ content:''; position:absolute; left:-16px; right:-16px; top:-12px; bottom:-18px; z-index:0; pointer-events:none;
     -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
     -webkit-mask:linear-gradient(to bottom,#000 0%,#000 60%,transparent 100%);
     mask:linear-gradient(to bottom,#000 0%,#000 60%,transparent 100%) }
-  .snav-scroll{ display:flex; gap:8px; justify-content:safe center; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:10px 4px }
+  .snav-scroll{ position:relative; z-index:1; display:flex; gap:8px; justify-content:safe center; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:10px 4px }
   .snav-scroll::-webkit-scrollbar{ display:none }
   .snav{ flex:0 0 auto; white-space:nowrap; min-height:44px; display:inline-flex; align-items:center;
     border:1.5px solid rgba(124,58,237,.22); background:rgba(255,255,255,.7); color:var(--text);
