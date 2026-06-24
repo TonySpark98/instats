@@ -8,8 +8,8 @@ import {
 /* ---------- Traduzioni IT / EN ---------- */
 export const I18N = {
   it:{
-    tagline:`Tutte le statistiche del tuo Instagram — privato, sul tuo dispositivo`,
-    free_badge:`✨ 100% Gratis · nessun costo, nessuna pubblicità`,
+    tagline:`Scopri chi non ti segue, i tuoi fan e i profili reciproci — dal tuo export di Instagram`,
+    free_badge:`✨ Gratis e open source`,
     upload_title:`1 · Carica i tuoi dati Instagram`,
     upload_sub:`<b>Consigliato:</b> carica direttamente il file <b>.zip</b> esportato da Instagram — è il modo più semplice e completo. In alternativa puoi caricare i singoli file <b>JSON</b> (anche più di uno insieme). Nessun login, nessuna password: i dati restano sul tuo computer.`,
     privacy_text:`<b>100% privato.</b> L'analisi avviene interamente nel tuo browser. I tuoi file <b>non vengono caricati su nessun server</b>. Niente da installare, niente account da collegare.`,
@@ -40,15 +40,15 @@ export const I18N = {
     search_ph:`Cerca un username…`,
     sort_az:`Ordine: A → Z`, sort_za:`Ordine: Z → A`, sort_new:`Più recenti prima`, sort_old:`Più vecchi prima`,
     footer_made:`Realizzato da Antonio Villanacci`,
-    footer_free:`📊 Instats · 100% gratis · funziona offline · i tuoi dati non lasciano mai il tuo dispositivo`,
+    footer_free:`📊 Instats · open source · funziona offline`,
     footer_disc:`Strumento indipendente, non affiliato a Instagram / Meta.`,
-    run_title:`📥 Come usarlo sul tuo PC o telefono`,
+    run_title:`📲 Usalo come app · esegui il codice`,
     run_body:`<div class="runsteps">
-      <div class="runstep"><div class="ri">💻</div><div class="rt"><b>Su computer (Windows / Mac):</b><br>1) Scarica il file <code>instats.html</code>.<br>2) Fai <b>doppio clic</b>: si apre nel tuo browser.<br>Funziona anche <b>offline</b>, senza internet.</div></div>
-      <div class="runstep"><div class="ri">📱</div><div class="rt"><b>Su iPhone / Android:</b><br>1) Salva <code>instats.html</code> sul telefono.<br>2) Aprilo con il browser (Safari o Chrome).<br>3) Per usarlo come app aggiungilo alla Home: <b>iPhone</b> → Condividi <span class="pill">⬆️</span> → «Aggiungi a Home»; <b>Android</b> → menu <span class="pill">⋮</span> → «Aggiungi a schermata Home».</div></div>
-      <div class="runstep"><div class="ri">🌐</div><div class="rt"><b>Sul tuo sito web:</b><br>Carica il file sul tuo sito: chiunque potrà usarlo dal proprio browser. <b>Nessun dato viene raccolto</b> — l'analisi avviene solo nel browser di chi lo usa, senza server né database.</div></div>
+      <div class="runstep"><div class="ri">📱</div><div class="rt"><b>Installalo come app — telefono:</b><br><b>iPhone (Safari):</b> apri il sito, tocca Condividi <span class="pill">⬆️</span> → «Aggiungi a Home».<br><b>Android (Chrome):</b> apri il sito, tocca il menu <span class="pill">⋮</span> → «Aggiungi a schermata Home» (o «Installa app»).</div></div>
+      <div class="runstep"><div class="ri">💻</div><div class="rt"><b>Installalo come app — desktop:</b><br>In <b>Chrome</b> o <b>Edge</b> apri il sito e clicca l'icona di installazione <span class="pill">⊕</span> nella barra degli indirizzi (oppure menu → «Installa Instats»). Si apre in una finestra dedicata e funziona offline.</div></div>
+      <div class="runstep"><div class="ri">⌨️</div><div class="rt"><b>Scaricalo da GitHub ed eseguilo in locale:</b><br>1) Scarica il codice da <a href="https://github.com/TonySpark98/instats" target="_blank" rel="noopener">GitHub</a> (pulsante verde «Code» → «Download ZIP», oppure <code>git clone</code>).<br>2) Nella cartella esegui <code>npm install</code>.<br>3) Poi <code>npm run dev</code> e apri l'indirizzo locale che compare. Per la versione di produzione: <code>npm run build</code>.</div></div>
     </div>
-    <div class="note">🔒 Privacy garantita: i file di Instagram non vengono mai inviati a nessuno, restano sul dispositivo di chi usa l'app.</div>`,
+    <div class="note">🔒 Comunque tu lo usi, i file di Instagram restano sul tuo dispositivo: niente viene inviato da nessuna parte.</div>`,
     stat_followers:`Follower`, stat_following:`Seguiti`, stat_notfb:`Non ti seguono`, stat_fans:`Non li segui tu`, stat_mutual:`Reciproci`, stat_pending:`Richieste inviate`,
     m_followers:`follower`, m_following:`seguiti`, m_ratio:`rapporto follower/seguiti`,
     tab_notfb:`❌ Non ti seguono`, desc_notfb:`Account che <b>tu segui</b> ma che <b>non ti seguono</b>. I candidati a uno “smetti di seguire”.`,
@@ -87,12 +87,12 @@ export const I18N = {
     toast_analyzing:`Analisi in corso…`, toast_done:`Fatto! ✔`, toast_csv:`CSV esportato ✔`,
     loading_text:`Analisi dei tuoi dati in corso…`, loading_sub:`Tutto avviene sul tuo dispositivo, niente viene caricato online.`,
     consent_title:`🔒 La tua privacy viene prima di tutto`,
-    consent_body:`Instats funziona <b>interamente nel tuo browser</b>. I tuoi dati Instagram <b>non lasciano mai il tuo dispositivo</b>: nessun file viene inviato a server, nessun account da collegare, nessun tracciamento e nessuna pubblicità.<br><br>Per qualsiasi problema o segnalazione puoi scrivere a <a href="mailto:antonio.villanacci@outlook.com">antonio.villanacci@outlook.com</a>.`,
+    consent_body:`Instats funziona <b>interamente nel tuo browser</b>. I tuoi dati Instagram <b>non lasciano mai il tuo dispositivo</b>: nessun file viene inviato a server, nessun account da collegare, nessun tracciamento e nessuna pubblicità.<br><br>Per qualsiasi problema o segnalazione puoi scrivere a <a href="mailto:antonio.villanacci@icloud.com">antonio.villanacci@icloud.com</a>.`,
     consent_accept:`Ho capito e accetto`,
     wiz_step1:`Privacy`, wiz_step2:`Il file`, wiz_step3:`Carica`,
     wiz_back:`← Indietro`,
-    wiz1_title:`🔒 Termini e privacy`,
-    wiz1_body:`Instats funziona <b>interamente nel tuo browser</b>. I tuoi dati Instagram <b>non lasciano mai il tuo dispositivo</b>: nessun file viene caricato, nessun account da collegare, nessun tracciamento e nessuna pubblicità.<br><br>Per qualsiasi problema o segnalazione scrivi a <a href="mailto:antonio.villanacci@outlook.com">antonio.villanacci@outlook.com</a>.`,
+    wiz1_title:`🔒 Termini e condizioni`,
+    wiz1_body:`<b>Cos'è Instats.</b> Uno strumento gratuito e open source che analizza l'export ufficiale dei tuoi dati Instagram e ti mostra follower, chi non ti segue, profili reciproci, richieste e altro.<br><br><b>Dove finiscono i tuoi dati.</b> Da nessuna parte. L'elaborazione avviene solo nel tuo browser: l'export non viene mai caricato, non serve alcun account o login, e non ci sono pubblicità, tracciatori, cookie o analytics.<br><br><b>Cosa resta su questo dispositivo.</b> Facoltativamente, gli snapshot (per confrontare i cambiamenti nel tempo) e i profili che segni come "visti" vengono salvati solo nella memoria locale del browser. Non lasciano mai il dispositivo e puoi cancellarli quando vuoi svuotando i dati del sito.<br><br><b>Accuratezza e responsabilità.</b> I risultati dipendono interamente dai dati che Instagram include nell'export e sono forniti "così come sono", senza garanzie. Usa le informazioni con responsabilità: Instats non è responsabile delle decisioni prese sulla loro base.<br><br><b>Indipendenza.</b> Instats è un progetto indipendente, non affiliato né approvato da Instagram o Meta. Rispetta i Termini d'uso di Instagram.<br><br><b>Open source e contatti.</b> Il codice è pubblico su <a href="https://github.com/TonySpark98/instats" target="_blank" rel="noopener">GitHub</a>. Domande o segnalazioni: <a href="mailto:antonio.villanacci@icloud.com">antonio.villanacci@icloud.com</a>.`,
     wiz1_checkbox:`Accetto i Termini e l'informativa sulla privacy`,
     wiz1_continue:`Continua`,
     wiz2_title:`📥 Come ottenere il file`,
@@ -107,8 +107,8 @@ export const I18N = {
     csv_username:`username`, csv_profile:`profilo`, csv_date:`data`,
   },
   en:{
-    tagline:`All your Instagram stats — private, on your device`,
-    free_badge:`✨ 100% Free · no cost, no ads`,
+    tagline:`See who doesn't follow you back, your fans and mutuals — from your own Instagram export`,
+    free_badge:`✨ Free & open source`,
     upload_title:`1 · Upload your Instagram data`,
     upload_sub:`<b>Recommended:</b> upload the <b>.zip</b> exported from Instagram directly — it's the easiest and most complete way. Alternatively you can upload the individual <b>JSON</b> files (several at once). No login, no password: your data stays on your computer.`,
     privacy_text:`<b>100% private.</b> Everything runs entirely in your browser. Your files <b>are never uploaded to any server</b>. Nothing to install, no account to connect.`,
@@ -139,15 +139,15 @@ export const I18N = {
     search_ph:`Search a username…`,
     sort_az:`Sort: A → Z`, sort_za:`Sort: Z → A`, sort_new:`Newest first`, sort_old:`Oldest first`,
     footer_made:`Made by Antonio Villanacci`,
-    footer_free:`📊 Instats · 100% free · works offline · your data never leaves your device`,
+    footer_free:`📊 Instats · open source · works offline`,
     footer_disc:`Independent tool, not affiliated with Instagram / Meta.`,
-    run_title:`📥 How to use it on your PC or phone`,
+    run_title:`📲 Use it as an app · run the code`,
     run_body:`<div class="runsteps">
-      <div class="runstep"><div class="ri">💻</div><div class="rt"><b>On a computer (Windows / Mac):</b><br>1) Download the <code>instats.html</code> file.<br>2) <b>Double-click</b> it: it opens in your browser.<br>It works <b>offline</b> too, no internet needed.</div></div>
-      <div class="runstep"><div class="ri">📱</div><div class="rt"><b>On iPhone / Android:</b><br>1) Save <code>instats.html</code> to your phone.<br>2) Open it with your browser (Safari or Chrome).<br>3) To use it like an app, add it to the Home Screen: <b>iPhone</b> → Share <span class="pill">⬆️</span> → "Add to Home Screen"; <b>Android</b> → menu <span class="pill">⋮</span> → "Add to Home screen".</div></div>
-      <div class="runstep"><div class="ri">🌐</div><div class="rt"><b>On your website:</b><br>Upload the file to your site and anyone can use it from their own browser. <b>No data is collected</b> — the analysis happens only in each user's browser, with no server or database.</div></div>
+      <div class="runstep"><div class="ri">📱</div><div class="rt"><b>Install as an app — phone:</b><br><b>iPhone (Safari):</b> open the site, tap Share <span class="pill">⬆️</span> → "Add to Home Screen".<br><b>Android (Chrome):</b> open the site, tap the menu <span class="pill">⋮</span> → "Add to Home screen" (or "Install app").</div></div>
+      <div class="runstep"><div class="ri">💻</div><div class="rt"><b>Install as an app — desktop:</b><br>In <b>Chrome</b> or <b>Edge</b>, open the site and click the install icon <span class="pill">⊕</span> in the address bar (or menu → "Install Instats"). It opens in its own window and works offline.</div></div>
+      <div class="runstep"><div class="ri">⌨️</div><div class="rt"><b>Download from GitHub and run it locally:</b><br>1) Get the code from <a href="https://github.com/TonySpark98/instats" target="_blank" rel="noopener">GitHub</a> (green "Code" button → "Download ZIP", or <code>git clone</code>).<br>2) In the folder run <code>npm install</code>.<br>3) Then <code>npm run dev</code> and open the local URL it prints. For a production build: <code>npm run build</code>.</div></div>
     </div>
-    <div class="note">🔒 Privacy guaranteed: Instagram files are never sent to anyone, they stay on the device of whoever uses the app.</div>`,
+    <div class="note">🔒 However you run it, your Instagram files stay on your device — nothing is sent anywhere.</div>`,
     stat_followers:`Followers`, stat_following:`Following`, stat_notfb:`Don't follow you back`, stat_fans:`You don't follow back`, stat_mutual:`Mutual`, stat_pending:`Sent requests`,
     m_followers:`followers`, m_following:`following`, m_ratio:`follower/following ratio`,
     tab_notfb:`❌ Don't follow you back`, desc_notfb:`Accounts <b>you follow</b> but who <b>don't follow you back</b>. Candidates to unfollow.`,
@@ -186,12 +186,12 @@ export const I18N = {
     toast_analyzing:`Analyzing…`, toast_done:`Done! ✔`, toast_csv:`CSV exported ✔`,
     loading_text:`Analyzing your data…`, loading_sub:`Everything happens on your device, nothing is uploaded online.`,
     consent_title:`🔒 Your privacy comes first`,
-    consent_body:`Instats runs <b>entirely in your browser</b>. Your Instagram data <b>never leaves your device</b>: no file is sent to any server, no account to connect, no tracking and no ads.<br><br>For any issue or report you can write to <a href="mailto:antonio.villanacci@outlook.com">antonio.villanacci@outlook.com</a>.`,
+    consent_body:`Instats runs <b>entirely in your browser</b>. Your Instagram data <b>never leaves your device</b>: no file is sent to any server, no account to connect, no tracking and no ads.<br><br>For any issue or report you can write to <a href="mailto:antonio.villanacci@icloud.com">antonio.villanacci@icloud.com</a>.`,
     consent_accept:`I understand and accept`,
     wiz_step1:`Privacy`, wiz_step2:`The file`, wiz_step3:`Upload`,
     wiz_back:`← Back`,
-    wiz1_title:`🔒 Terms & privacy`,
-    wiz1_body:`Instats runs <b>entirely in your browser</b>. Your Instagram data <b>never leaves your device</b>: no file is uploaded, no account to connect, no tracking and no ads.<br><br>For any issue or report write to <a href="mailto:antonio.villanacci@outlook.com">antonio.villanacci@outlook.com</a>.`,
+    wiz1_title:`🔒 Terms & conditions`,
+    wiz1_body:`<b>What Instats is.</b> A free, open-source tool that analyzes the official export of your Instagram data and shows your followers, who doesn't follow you back, mutuals, requests and more.<br><br><b>Where your data goes.</b> Nowhere. All processing happens only in your browser: your export is never uploaded, no account or login is required, and there are no ads, trackers, cookies or analytics.<br><br><b>What stays on this device.</b> Optionally, snapshots (to compare changes over time) and the profiles you mark as "seen" are saved only in your browser's local storage. They never leave your device and you can erase them anytime by clearing the site data.<br><br><b>Accuracy &amp; responsibility.</b> Results depend entirely on the data Instagram includes in your export and are provided "as is", without warranty. Use the information responsibly: Instats is not liable for decisions you make based on it.<br><br><b>Independence.</b> Instats is an independent project, not affiliated with or endorsed by Instagram or Meta. Please respect Instagram's Terms of Use.<br><br><b>Open source &amp; contact.</b> The source code is public on <a href="https://github.com/TonySpark98/instats" target="_blank" rel="noopener">GitHub</a>. Questions or reports: <a href="mailto:antonio.villanacci@icloud.com">antonio.villanacci@icloud.com</a>.`,
     wiz1_checkbox:`I accept the Terms and the privacy policy`,
     wiz1_continue:`Continue`,
     wiz2_title:`📥 How to get the file`,
@@ -207,7 +207,7 @@ export const I18N = {
   }
 };
 
-export let LANG: Lang = (localStorage.getItem('instats_lang') as Lang) || (((navigator.language||'it').slice(0,2)==='en')?'en':'it');
+export let LANG: Lang = (localStorage.getItem('instats_lang') as Lang) || 'en';
 export function setLangValue(l: Lang){ LANG = l; }
 export const t = (k: string): string => ((I18N as any)[LANG] && (I18N as any)[LANG][k]!=null) ? (I18N as any)[LANG][k] : ((I18N as any).it[k]!=null?(I18N as any).it[k]:k);
 export const LOC = (): string => LANG==='it' ? 'it-IT' : 'en-US';

@@ -11,12 +11,29 @@
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     color:var(--text);min-height:100vh;overflow-x:hidden;
   }
-  /* Tema semplice: sfondo soft, calmo, quasi statico nei colori del brand */
+  /* Sfondo gradiente animato premium (chiaro + scuro) */
   body::before{
     content:'';position:fixed;inset:0;z-index:-1;
-    background:linear-gradient(160deg,#7b6cd6 0%,#8f7fe0 40%,#b8a9e8 100%);
+    background:linear-gradient(-45deg,#6a5acd,#8e6fe0,#b06ab3,#5b7cf5,#a18cd1);
+    background-size:320% 320%;
+    animation:flow 24s ease-in-out infinite;
+  }
+  body::after{
+    content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(60% 50% at 18% 12%,rgba(255,255,255,.22),transparent 60%),
+               radial-gradient(55% 45% at 85% 88%,rgba(255,120,200,.18),transparent 60%);
+  }
+  body.dark::before{
+    background:linear-gradient(-45deg,#0d0a18,#241a3d,#13213c,#2a1430,#0b1224);
+    background-size:320% 320%;
+    animation:flow 30s ease-in-out infinite;
+  }
+  body.dark::after{
+    background:radial-gradient(55% 45% at 15% 10%,rgba(124,92,255,.22),transparent 60%),
+               radial-gradient(55% 45% at 88% 90%,rgba(244,114,182,.14),transparent 60%);
   }
   @keyframes flow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  @media (prefers-reduced-motion: reduce){ body::before,body.dark::before{animation:none} }
   .wrap{max-width:1200px;margin:0 auto;padding:28px 18px 80px}
 
   header.app{text-align:center;color:#fff;padding:18px 0 8px}
@@ -114,7 +131,7 @@
   .stat:hover{transform:translateY(-3px);filter:brightness(1.04)}
   .stat .n{font-size:25px;font-weight:800;line-height:1}
   .stat .l{font-size:12px;font-weight:600;margin-top:5px;opacity:.97}
-  .stat .ic{position:absolute;right:10px;top:8px;font-size:26px;opacity:.35}
+  .stat .ic{font-size:23px;line-height:1;margin-bottom:7px;opacity:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.30))}
   .stat.has-detail::after{content:'›';position:absolute;right:13px;bottom:6px;font-size:22px;font-weight:800;opacity:.65}
   .s-foll{background:linear-gradient(135deg,#405de6,#5851db)}
   .s-fing{background:linear-gradient(135deg,#833ab4,#c13584)}
