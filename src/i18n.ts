@@ -45,6 +45,7 @@ export const I18N = {
     footer_made:`Realizzato da Antonio Villanacci`,
     footer_free:`📊 Instats · open source · funziona offline`,
     footer_disc:`Strumento indipendente, non affiliato a Instagram / Meta.`,
+    footer_source:`Codice sorgente su GitHub`, footer_support:`Sostieni il progetto`,
     run_title:`📲 Usalo come app · esegui il codice`,
     run_body:`<div class="runsteps">
       <div class="runstep"><div class="ri">📱</div><div class="rt"><b>Installalo come app — telefono:</b><br><b>iPhone (Safari):</b> apri il sito, tocca Condividi <span class="pill">⬆️</span> → «Aggiungi a Home».<br><b>Android (Chrome):</b> apri il sito, tocca il menu <span class="pill">⋮</span> → «Aggiungi a schermata Home» (o «Installa app»).</div></div>
@@ -147,6 +148,7 @@ export const I18N = {
     footer_made:`Made by Antonio Villanacci`,
     footer_free:`📊 Instats · open source · works offline`,
     footer_disc:`Independent tool, not affiliated with Instagram / Meta.`,
+    footer_source:`Source code on GitHub`, footer_support:`Support the project`,
     run_title:`📲 Use it as an app · run the code`,
     run_body:`<div class="runsteps">
       <div class="runstep"><div class="ri">📱</div><div class="rt"><b>Install as an app — phone:</b><br><b>iPhone (Safari):</b> open the site, tap Share <span class="pill">⬆️</span> → "Add to Home Screen".<br><b>Android (Chrome):</b> open the site, tap the menu <span class="pill">⋮</span> → "Add to Home screen" (or "Install app").</div></div>
