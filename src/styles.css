@@ -12,14 +12,21 @@
     color:var(--text);min-height:100vh;overflow-x:hidden;
   }
   /* Sfondo gradiente animato a 5 colori (stile juangarcia) — chiaro + scuro */
+  /* Tema chiaro: sfondo bianco, soft, poco animato */
   body::before{
     content:'';position:fixed;inset:0;z-index:-1;
+    background:linear-gradient(-45deg,#ffffff,#f3f0fb,#eef3ff,#fdf2f8,#ffffff);
+    background-size:300% 300%;
+    animation:flow 34s ease-in-out infinite;
+  }
+  /* Tema scuro: gradiente vivido */
+  body.dark::before{
     background:linear-gradient(-45deg,#50B9E2,#6E20BC,#023047,#FF00F8,#1700FB);
     background-size:400% 400%;
-    animation:flow 18s ease infinite;
+    animation:flow 30s ease-in-out infinite;
   }
   @keyframes flow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-  @media (prefers-reduced-motion: reduce){ body::before{animation:none} }
+  @media (prefers-reduced-motion: reduce){ body::before,body.dark::before{animation:none} }
   .wrap{max-width:1200px;margin:0 auto;padding:28px 18px 80px}
 
   header.app{text-align:center;color:#fff;padding:18px 0 8px}
@@ -361,8 +368,10 @@
 
   /* Profondità: vignette sottile sopra il gradiente */
   body::after{ content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background:radial-gradient(120% 90% at 50% -10%, rgba(255,255,255,.10), transparent 42%),
-               radial-gradient(120% 120% at 50% 118%, rgba(0,0,0,.24), transparent 55%) }
+    background:radial-gradient(120% 90% at 50% -5%, rgba(124,58,237,.06), transparent 45%) }
+  body.dark::after{ content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(120% 90% at 50% -10%, rgba(255,255,255,.08), transparent 42%),
+               radial-gradient(120% 120% at 50% 118%, rgba(0,0,0,.30), transparent 55%) }
 
   /* Card premium */
   .card{ border-radius:22px; border:1px solid rgba(255,255,255,.38);
@@ -464,3 +473,15 @@
   .drop{ transition:transform .2s ease, border-color .2s, background .2s, box-shadow .2s }
   .drop:hover{ box-shadow:0 14px 30px -12px rgba(88,40,160,.4) }
   @media(prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .donut{animation:none} }
+
+  /* ===== Tema chiaro: chrome scura leggibile su bianco ===== */
+  body:not(.dark) header.app, body:not(.dark) .logo{ color:#1b1430; text-shadow:none }
+  body:not(.dark) .tag{ color:#6b6486 }
+  body:not(.dark) .freebadge{ background:rgba(124,58,237,.10); border-color:rgba(124,58,237,.28); color:#6d28d9 }
+  body:not(.dark) footer{ color:#4a4068 }
+  body:not(.dark) footer a:not(.btn){ color:#7c3aed; opacity:1 }
+  body:not(.dark) .refreshnote{ background:rgba(124,58,237,.08); border-color:rgba(124,58,237,.22); color:#3a2f5c }
+  body:not(.dark) .refreshnote b{ color:#5b21b6 }
+  body:not(.dark) .lang-switch{ background:rgba(20,16,40,.06); border-color:rgba(20,16,40,.12) }
+  body:not(.dark) .lang-switch .ls-opt{ color:#6b6486 }
+  body:not(.dark) .tg-btn{ background:rgba(20,16,40,.06); border-color:rgba(20,16,40,.12) }
