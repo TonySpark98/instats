@@ -24,13 +24,13 @@ export const I18N = {
         <li>Tocca <b>Scarica o trasferisci le informazioni</b> → scegli il tuo profilo.</li>
         <li>Seleziona <b>Parte delle tue informazioni</b> → spunta solo <b>Follower e profili seguiti</b> (così è veloce).</li>
         <li>In <b>Formato</b> scegli <span class="pill">JSON</span> (consigliato): è il formato dell'export ufficiale di Instagram. Intervallo <b>Tutto</b>, poi <b>Crea file</b>.</li>
-        <li>Instagram ti invia il file (di solito in pochi minuti). Scaricalo: è un <b>.zip</b>.</li>
+        <li>Instagram <b>prepara il file sui suoi server</b>: può richiedere da <b>pochi minuti a qualche ora</b> (export grandi anche di più). Riceverai un'email/notifica quando è pronto, poi scaricalo: è un <b>.zip</b>.</li>
         <li>Torna qui e caricalo. Fatto. 🎉</li>
       </ol>
       <div style="margin-top:12px"><a class="btn sm" href="https://help.instagram.com/181231772500920" target="_blank" rel="noopener" style="text-decoration:none;display:inline-flex;align-items:center;gap:7px">📖 Guida ufficiale Instagram ↗</a></div>
       <div class="note">Suggerimento: per vedere <b>chi ti ha tolto il follow</b>, ripeti l'export ogni tanto e ricaricalo qui: l'app confronta automaticamente con la volta precedente.</div>`,
     summary_title:`Riepilogo`,
-    reset_btn:`↺ Nuovo file`,
+    reset_btn:`↺ Nuovo file`, get_export:`📥 Ottieni un nuovo export`,
     compare_title:`📈 Cambiamenti nel tempo`,
     compare_sub:`Confronto tra l'export attuale e uno snapshot salvato in precedenza su questo browser.`,
     compare_how:`<b>Come funziona il confronto:</b> ogni volta che carichi un export, l'app salva una “fotografia” (snapshot) di follower e seguiti nella memoria di <b>questo</b> browser. Al caricamento <b>successivo</b> confronta il nuovo export con quello salvato e ti mostra <b>chi ti ha tolto il follow</b>, i nuovi follower e i tuoi cambiamenti.<br>👉 Il primo caricamento non ha nulla con cui confrontarsi: rifai l'export tra qualche giorno o settimana e ricaricalo qui. Gli snapshot restano solo sul tuo dispositivo (se cambi browser o cancelli i dati del sito, la cronologia si azzera).`,
@@ -129,13 +129,13 @@ export const I18N = {
         <li>Tap <b>Download or transfer information</b> → choose your profile.</li>
         <li>Select <b>Some of your information</b> → tick only <b>Followers and following</b> (so it's fast).</li>
         <li>For <b>Format</b> choose <span class="pill">JSON</span> (recommended): it's the format of Instagram's official export. Date range <b>All time</b>, then <b>Create files</b>.</li>
-        <li>Instagram emails you the file (usually within minutes). Download it: it's a <b>.zip</b>.</li>
+        <li>Instagram <b>prepares the file on its servers</b>: it can take from <b>a few minutes to a few hours</b> (longer for large exports). You'll get an email/notification when it's ready, then download it: it's a <b>.zip</b>.</li>
         <li>Come back here and upload it. Done. 🎉</li>
       </ol>
       <div style="margin-top:12px"><a class="btn sm" href="https://help.instagram.com/181231772500920" target="_blank" rel="noopener" style="text-decoration:none;display:inline-flex;align-items:center;gap:7px">📖 Official Instagram guide ↗</a></div>
       <div class="note">Tip: to see <b>who unfollowed you</b>, repeat the export now and then and re-upload it here: the app automatically compares with the previous time.</div>`,
     summary_title:`Summary`,
-    reset_btn:`↺ New file`,
+    reset_btn:`↺ New file`, get_export:`📥 Get a new export`,
     compare_title:`📈 Changes over time`,
     compare_sub:`Comparison between the current export and a snapshot previously saved in this browser.`,
     compare_how:`<b>How the comparison works:</b> each time you upload an export, the app saves a “snapshot” of your followers and following in <b>this</b> browser's memory. On the <b>next</b> upload it compares the new export with the saved one and shows <b>who unfollowed you</b>, new followers and your changes.<br>👉 The first upload has nothing to compare against: redo the export in a few days or weeks and re-upload it here. Snapshots stay only on your device (if you change browser or clear site data, the history resets).`,

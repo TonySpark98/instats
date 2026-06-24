@@ -627,3 +627,7 @@
     .listhead .desc{ flex:1; max-width:none }
     .listprog{ margin-left:auto }
   }
+
+  /* Azioni header riepilogo: "Ottieni export" + "Nuovo file" (evidente) */
+  .hdr-actions{ display:flex; gap:8px; flex-wrap:wrap; align-items:center }
+  @media(max-width:560px){ .hdr-actions{ width:100% } .hdr-actions .btn{ flex:1; justify-content:center; display:inline-flex; align-items:center } }
