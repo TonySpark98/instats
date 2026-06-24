@@ -355,3 +355,81 @@
   /* Link del footer: bianchi (sono sul gradiente, non su card) */
   footer a:not(.btn){color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px;opacity:.92;transition:opacity .15s}
   footer a:not(.btn):hover{opacity:1}
+
+  /* ==================== PREMIUM POLISH & ANIMAZIONI ==================== */
+  html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility }
+
+  /* Profondità: vignette sottile sopra il gradiente */
+  body::after{ content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(120% 90% at 50% -10%, rgba(255,255,255,.10), transparent 42%),
+               radial-gradient(120% 120% at 50% 118%, rgba(0,0,0,.24), transparent 55%) }
+
+  /* Card premium */
+  .card{ border-radius:22px; border:1px solid rgba(255,255,255,.38);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.55), 0 20px 44px -16px rgba(40,15,80,.5), 0 4px 12px rgba(40,15,80,.10);
+    transition:box-shadow .28s ease, transform .28s ease }
+  body.dark .card{ border-color:rgba(255,255,255,.10); box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 26px 54px -18px rgba(0,0,0,.62) }
+
+  /* Stat card premium */
+  .stat{ border-radius:17px; cursor:pointer;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.30), 0 12px 24px -8px rgba(60,30,110,.5);
+    transition:transform .2s cubic-bezier(.34,1.3,.5,1), box-shadow .2s }
+  .stat:hover{ transform:translateY(-4px); box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 18px 32px -8px rgba(60,30,110,.62) }
+  .stat .n{ font-variant-numeric:tabular-nums; letter-spacing:-.6px }
+  .stat .ic{ filter:drop-shadow(0 3px 6px rgba(0,0,0,.35)) }
+
+  /* Bottoni premium */
+  .btn{ box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 10px 24px -6px rgba(88,40,160,.5);
+    transition:transform .15s ease, box-shadow .2s ease, filter .2s ease }
+  .btn:hover{ transform:translateY(-2px); filter:brightness(1.07) saturate(1.05);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 16px 30px -6px rgba(88,40,160,.6) }
+  .btn:active{ transform:translateY(0) }
+  .btn.ghost{ box-shadow:none } .btn.ghost:hover{ box-shadow:0 6px 16px -6px rgba(88,40,160,.3) }
+
+  /* Tab / pill premium */
+  .tab{ transition:transform .15s ease, background .2s, color .2s, box-shadow .2s }
+  .tab:hover{ transform:translateY(-1px) }
+  .tab.active{ box-shadow:0 8px 20px -6px rgba(88,40,160,.5) }
+  .pill{ box-shadow:inset 0 1px 0 rgba(255,255,255,.4) }
+
+  .card h2,.ch,.logo{ letter-spacing:-.022em }
+
+  /* Search vetro premium */
+  .search{ border-radius:14px; transition:border-color .2s, box-shadow .2s }
+  .search:focus-within{ border-color:var(--g1); box-shadow:0 0 0 4px rgba(131,58,180,.14) }
+
+  /* Step indicator animato */
+  .wiz-step .wiz-num{ transition:transform .25s, background .25s, color .25s, box-shadow .25s }
+  .wiz-step.active .wiz-num{ transform:scale(1.12); box-shadow:0 8px 20px -4px rgba(88,40,160,.55) }
+
+  /* Scrollbar raffinata */
+  *::-webkit-scrollbar{width:11px;height:11px}
+  *::-webkit-scrollbar-thumb{background:rgba(120,90,180,.45);border-radius:9px;border:3px solid transparent;background-clip:content-box}
+  *::-webkit-scrollbar-thumb:hover{background:rgba(120,90,180,.7);background-clip:content-box}
+  body.dark *::-webkit-scrollbar-thumb{background:rgba(255,255,255,.20);background-clip:content-box}
+
+  /* Focus accessibile */
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{
+    outline:2.5px solid rgba(255,255,255,.9); outline-offset:2px; border-radius:10px }
+
+  /* ===== ANIMAZIONI sezioni & step ===== */
+  @keyframes rise{ from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+  @keyframes stepIn{ from{opacity:0;transform:translateY(12px) scale(.985)} to{opacity:1;transform:none} }
+  @keyframes pop{ from{opacity:0;transform:scale(.96)} to{opacity:1;transform:none} }
+
+  .wiz-panel:not(.hidden){ animation:stepIn .42s cubic-bezier(.22,1,.36,1) both }
+
+  #results:not(.hidden) > .card, #results:not(.hidden) > section{ animation:rise .55s cubic-bezier(.22,1,.36,1) both }
+  #results > *:nth-child(1){animation-delay:.03s} #results > *:nth-child(2){animation-delay:.09s}
+  #results > *:nth-child(3){animation-delay:.15s} #results > *:nth-child(4){animation-delay:.21s}
+  #results > *:nth-child(5){animation-delay:.27s} #results > *:nth-child(6){animation-delay:.33s}
+  #results > *:nth-child(n+7){animation-delay:.38s}
+
+  .stats .stat{ animation:pop .45s ease both }
+  .stats .stat:nth-child(1){animation-delay:.04s} .stats .stat:nth-child(2){animation-delay:.09s}
+  .stats .stat:nth-child(3){animation-delay:.14s} .stats .stat:nth-child(4){animation-delay:.19s}
+  .stats .stat:nth-child(5){animation-delay:.24s} .stats .stat:nth-child(6){animation-delay:.29s}
+
+  .card.collapsible:not(.collapsed) > *:not(.ch){ animation:rise .35s ease both }
+
+  @media(prefers-reduced-motion:reduce){ *,*::before,*::after{ animation:none !important; transition:none !important } }
