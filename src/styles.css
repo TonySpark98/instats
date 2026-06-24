@@ -662,3 +662,16 @@
   .int-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px }
   .int-actions .btn{ flex:1 }
   @media(max-width:560px){ .int-actions{ flex-direction:column } .int-actions .btn{ width:100% } .intstat .ist{ flex:1 1 30% } }
+
+  /* Tema chiaro: leggero gradiente colorato sulle card → effetto vetro/glass */
+  body:not(.dark) .card{
+    background:
+      linear-gradient(135deg, rgba(110,32,188,.07), rgba(255,0,248,.045) 42%, rgba(80,185,226,.07) 100%),
+      rgba(255,255,255,.60);
+    border-color:rgba(255,255,255,.62);
+  }
+  body:not(.dark) .loading .box, body:not(.dark) .modal .box, body:not(.dark) .riskbody{
+    background:
+      linear-gradient(135deg, rgba(110,32,188,.06), rgba(80,185,226,.06) 100%),
+      rgba(255,255,255,.66);
+  }
