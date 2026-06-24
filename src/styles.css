@@ -691,6 +691,7 @@
   body.dark .snav{ background:rgba(44,44,46,.7); border-color:rgba(255,255,255,.12); color:#f5f5f7 }
   .snav:hover{ transform:translateY(-1px) }
   .snav.active{ background:linear-gradient(120deg,var(--g1),var(--g4)); color:#fff; border-color:transparent; box-shadow:0 8px 20px -6px rgba(88,40,160,.5) }
+  body.dark .snav.active{ background:linear-gradient(120deg,var(--g1),var(--g4)); color:#fff; border-color:transparent }
   /* spazio a destra per non finire sotto ai toggle lingua/tema (fixed) su schermi stretti */
   @media(max-width:900px){ .snav-bar{ padding-right:158px } }
   @media(max-width:560px){ .snav{ font-size:13.5px; padding:9px 14px } }
