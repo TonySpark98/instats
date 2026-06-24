@@ -621,3 +621,9 @@
     .search{ padding:4px 4px 4px 12px }
     .search input{ font-size:15px; padding:11px 0 }
   }
+
+  /* Desktop: barra di progresso attaccata al pulsante Export CSV */
+  @media(min-width:561px){
+    .listhead .desc{ flex:1; max-width:none }
+    .listprog{ margin-left:auto }
+  }
