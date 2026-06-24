@@ -87,3 +87,5 @@ function init(){
   window.addEventListener('beforeunload',(e:any)=>{ if(STATE.data){ e.preventDefault(); e.returnValue=''; } });
 }
 document.addEventListener('DOMContentLoaded', init);
+
+console.info('%cInstats','font:800 14px sans-serif;color:#7c3aed','· open source · github.com/TonySpark98/instats');
