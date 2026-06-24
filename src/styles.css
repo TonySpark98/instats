@@ -11,29 +11,15 @@
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     color:var(--text);min-height:100vh;overflow-x:hidden;
   }
-  /* Sfondo gradiente animato premium (chiaro + scuro) */
+  /* Sfondo gradiente animato a 5 colori (stile juangarcia) — chiaro + scuro */
   body::before{
     content:'';position:fixed;inset:0;z-index:-1;
-    background:linear-gradient(-45deg,#6a5acd,#8e6fe0,#b06ab3,#5b7cf5,#a18cd1);
-    background-size:320% 320%;
-    animation:flow 24s ease-in-out infinite;
-  }
-  body::after{
-    content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background:radial-gradient(60% 50% at 18% 12%,rgba(255,255,255,.22),transparent 60%),
-               radial-gradient(55% 45% at 85% 88%,rgba(255,120,200,.18),transparent 60%);
-  }
-  body.dark::before{
-    background:linear-gradient(-45deg,#0d0a18,#241a3d,#13213c,#2a1430,#0b1224);
-    background-size:320% 320%;
-    animation:flow 30s ease-in-out infinite;
-  }
-  body.dark::after{
-    background:radial-gradient(55% 45% at 15% 10%,rgba(124,92,255,.22),transparent 60%),
-               radial-gradient(55% 45% at 88% 90%,rgba(244,114,182,.14),transparent 60%);
+    background:linear-gradient(-45deg,#50B9E2,#6E20BC,#023047,#FF00F8,#1700FB);
+    background-size:400% 400%;
+    animation:flow 18s ease infinite;
   }
   @keyframes flow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-  @media (prefers-reduced-motion: reduce){ body::before,body.dark::before{animation:none} }
+  @media (prefers-reduced-motion: reduce){ body::before{animation:none} }
   .wrap{max-width:1200px;margin:0 auto;padding:28px 18px 80px}
 
   header.app{text-align:center;color:#fff;padding:18px 0 8px}
