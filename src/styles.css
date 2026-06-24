@@ -683,10 +683,12 @@
   .view-hidden{ display:none !important }
   .snav-bar{ position:sticky; top:0; z-index:40; margin:0 0 10px; background:transparent }
   /* progressive blur dietro la barra: maschera che sfuma verso il basso, così il testo che scorre sotto non disturba */
-  .snav-bar::before{ content:''; position:absolute; left:-16px; right:-16px; top:-12px; bottom:-18px; z-index:0; pointer-events:none;
+  .snav-bar::before{ content:''; position:absolute; left:-26px; right:-26px; top:-14px; bottom:-24px; z-index:0; pointer-events:none;
     -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
-    -webkit-mask:linear-gradient(to bottom,#000 0%,#000 60%,transparent 100%);
-    mask:linear-gradient(to bottom,#000 0%,#000 60%,transparent 100%) }
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 16%,#000 56%,transparent 100%),linear-gradient(to right,transparent 0,#000 7%,#000 93%,transparent 100%);
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(to bottom,transparent 0,#000 16%,#000 56%,transparent 100%),linear-gradient(to right,transparent 0,#000 7%,#000 93%,transparent 100%);
+    mask-composite:intersect }
   .snav-scroll{ position:relative; z-index:1; display:flex; gap:8px; justify-content:safe center; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:10px 4px }
   .snav-scroll::-webkit-scrollbar{ display:none }
   .snav{ flex:0 0 auto; white-space:nowrap; min-height:44px; display:inline-flex; align-items:center;
@@ -708,8 +710,10 @@
     body.results-on #topblur{ display:block; position:fixed; top:0; left:0; right:0; z-index:35; pointer-events:none;
       height:calc(116px + env(safe-area-inset-top));
       -webkit-backdrop-filter:blur(15px); backdrop-filter:blur(15px);
-      -webkit-mask:linear-gradient(to bottom,#000 0%,#000 60%,transparent 100%);
-      mask:linear-gradient(to bottom,#000 0%,#000 60%,transparent 100%) }
+      -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 58%,transparent 100%),linear-gradient(to right,transparent 0,#000 5%,#000 95%,transparent 100%);
+      -webkit-mask-composite:source-in;
+      mask-image:linear-gradient(to bottom,#000 0,#000 58%,transparent 100%),linear-gradient(to right,transparent 0,#000 5%,#000 95%,transparent 100%);
+      mask-composite:intersect }
   }
   @media(max-width:560px){ .snav{ font-size:13.5px; padding:9px 14px } }
   /* azioni globali in fondo: grandi e centrate */
