@@ -104,7 +104,7 @@ export function rowHtml(e:any, actClass:string, actLabel:string, meta:string){
   const opened=isOpened(e.username);
   const seen = opened?`<span class="seen-badge">${t('seen_badge')}</span>`:'';
   const revert = opened?`<button class="revert" type="button" title="${escapeHtml(t('unseen_title'))}" data-u="${escapeHtml(e.username)}">↩</button>`:'';
-  return `<div class="row${opened?' opened':''}" data-u="${escapeHtml(e.username)}">${avatar(e.username)}<div class="info"><div class="u">@${e.username}${seen}</div>${meta}</div>${revert}<a class="${actClass}" href="${e.href}" target="_blank" rel="noopener">${actLabel}</a></div>`;
+  return `<div class="row${opened?' opened':''}" data-u="${escapeHtml(e.username)}">${avatar(e.username)}<div class="info"><div class="u">@${escapeHtml(e.username)}${seen}</div>${meta}</div>${revert}<a class="${actClass}" href="${escapeHtml(e.href)}" target="_blank" rel="noopener">${actLabel}</a></div>`;
 }
 
 /* ---------- Delega eventi lista: segna/ripristina "già aperto" ---------- */

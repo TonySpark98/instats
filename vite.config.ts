@@ -10,7 +10,7 @@ import { VitePWA } from 'vite-plugin-pwa';
    https://<user>.github.io/<repo>/, set VITE_BASE=/<repo>/ — the deploy
    workflow does this automatically. */
 // Relative base by default → the built app works dropped into ANY subfolder
-// (e.g. .../MySite/instats/) without knowing the path in advance. Override
+// (e.g. .../your-site/instats/) without knowing the path in advance. Override
 // with VITE_BASE=/some/path/ if you deploy at a fixed absolute path.
 const base = process.env.VITE_BASE || './';
 
