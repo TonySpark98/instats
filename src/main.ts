@@ -72,7 +72,11 @@ function init(){
 
   // Tema chiaro/scuro
   const THEME_KEY='instats_theme';
-  const applyTheme=(th)=>{ const dark=(th==='dark'); document.body.classList.add('theming'); document.body.classList.toggle('dark',dark); $('#themeToggle').textContent=dark?'☀️':'🌙'; requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.remove('theming'))); };
+  const applyTheme=(th)=>{ const dark=(th==='dark'); document.body.classList.add('theming'); document.body.classList.toggle('dark',dark); $('#themeToggle').textContent=dark?'☀️':'🌙';
+    const col = dark ? '#160a26' : '#f4f1fb';
+    document.documentElement.style.background = col;                 // evita il bianco nell'overscroll iOS
+    const tc=document.querySelector('meta[name="theme-color"]'); if(tc) tc.setAttribute('content', col);  // tinta UI Safari
+    requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.remove('theming'))); };
   applyTheme(localStorage.getItem(THEME_KEY)||'gradient');
   $('#themeToggle').onclick=()=>{ const th=document.body.classList.contains('dark')?'gradient':'dark'; localStorage.setItem(THEME_KEY,th); applyTheme(th); };
 
