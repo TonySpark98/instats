@@ -80,7 +80,7 @@ body{
 body.theming *,body.theming *::before,body.theming *::after{transition:none!important}
 ::selection{background:color-mix(in srgb,var(--c-pink) 22%,transparent)}
 a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline;text-underline-offset:3px}
+@media (hover:hover){a:hover{text-decoration:underline;text-underline-offset:3px}}
 b,strong{font-weight:620;color:var(--text)}
 code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);border:1px solid var(--line);padding:.1em .4em;border-radius:6px;color:var(--text)}
 h1,h2,h3{margin:0;letter-spacing:-.02em;color:var(--text)}
@@ -155,7 +155,7 @@ body.dark .lang-switch .ls-knob{background:var(--surface-3);box-shadow:none}
   background:var(--surface-2);border:1px solid var(--line);color:var(--text-2);
   transition:background .2s,transform .2s var(--ease);
 }
-.tg-btn:hover{background:var(--surface-3)}
+@media (hover:hover){.tg-btn:hover{background:var(--surface-3)}}
 .tg-btn:active{transform:scale(.94)}
 .tg-btn .i{width:17px;height:17px}
 .tg-btn .i:nth-of-type(2){display:none}
@@ -174,7 +174,7 @@ body.results-on .snav-bar{
   transition:color .2s,background .25s var(--ease),box-shadow .25s;
 }
 .snav .i{width:16px;height:16px}
-.snav:hover{color:var(--text)}
+@media (hover:hover){.snav:hover{color:var(--text)}}
 .snav.active{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.1),0 0 0 .5px rgba(0,0,0,.04)}
 body.dark .snav.active{background:var(--surface-3);box-shadow:none}
 
@@ -236,15 +236,15 @@ body.results-on .hero{display:none}
   transition:transform .2s var(--ease),background .2s,opacity .2s,box-shadow .2s,border-color .2s;
 }
 .btn .i{width:16px;height:16px}
-.btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px -8px rgba(0,0,0,.45)}
+@media (hover:hover){.btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px -8px rgba(0,0,0,.45)}}
 .btn:active{transform:translateY(0) scale(.98)}
 .btn:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none}
 .btn.ghost{background:var(--surface);color:var(--text);border-color:var(--line-strong)}
-.btn.ghost:hover{background:var(--surface-2);box-shadow:none}
+@media (hover:hover){.btn.ghost:hover{background:var(--surface-2);box-shadow:none}}
 .btn.sm{height:34px;padding:0 13px;font-size:13px;gap:6px}
 .btn.sm .i{width:15px;height:15px}
 .btn.danger{background:transparent;color:var(--c-red);border-color:color-mix(in srgb,var(--c-red) 32%,transparent)}
-.btn.danger:hover{background:color-mix(in srgb,var(--c-red) 9%,transparent);box-shadow:none}
+@media (hover:hover){.btn.danger:hover{background:color-mix(in srgb,var(--c-red) 9%,transparent);box-shadow:none}}
 .btn.ghost.active{background:var(--ink);color:var(--on-ink);border-color:transparent}
 
 /* ---------- Wizard ---------- */
@@ -280,7 +280,7 @@ body.results-on .hero{display:none}
   border-radius:var(--r);border:1px solid var(--line-strong);font-size:14px;font-weight:550;
   transition:border-color .2s,background .2s;
 }
-.wiz-check:hover{background:var(--surface-2)}
+@media (hover:hover){.wiz-check:hover{background:var(--surface-2)}}
 .wiz-check input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
 .cbox{
   width:22px;height:22px;border-radius:7px;flex:none;display:grid;place-items:center;
@@ -316,7 +316,7 @@ body.results-on .hero{display:none}
   border:1.5px dashed var(--line-strong);background:var(--surface-2);
   transition:border-color .25s,background .25s,transform .25s var(--ease);
 }
-.drop:hover,.drop.over{border-color:color-mix(in srgb,var(--c-pink) 60%,transparent);background:color-mix(in srgb,var(--c-pink) 5%,var(--surface-2))}
+@media (hover:hover){.drop:hover,.drop.over{border-color:color-mix(in srgb,var(--c-pink) 60%,transparent);background:color-mix(in srgb,var(--c-pink) 5%,var(--surface-2))}}
 .drop.over{transform:scale(1.01)}
 .drop-ic{
   width:56px;height:56px;border-radius:18px;margin:0 auto 16px;display:grid;place-items:center;color:#fff;
@@ -334,7 +334,7 @@ body.results-on .hero{display:none}
 .collapsible:not(.collapsed)>.ch>.i:last-child{transform:rotate(180deg)}
 .collapsible.collapsed>:not(.ch){display:none}
 .collapsible{padding:18px 22px}
-.collapsible:hover{border-color:var(--line-strong)}
+@media (hover:hover){.collapsible:hover{border-color:var(--line-strong)}}
 .riskbody{font-size:14px;line-height:1.65;color:var(--text-2)}
 .riskbody p{margin:0 0 10px}
 .riskbody ul{margin:8px 0 12px;padding-left:20px}
@@ -374,7 +374,7 @@ body:not(.results-on) #runCard{max-width:720px;margin-inline:auto}
 }
 .kpis .stat:nth-child(2){animation-delay:.04s}.kpis .stat:nth-child(3){animation-delay:.08s}
 .kpis .stat:nth-child(4){animation-delay:.12s}.kpis .stat:nth-child(5){animation-delay:.16s}.kpis .stat:nth-child(6){animation-delay:.2s}
-.stat:hover{transform:translateY(-2px);border-color:var(--line-strong);box-shadow:var(--shadow-lg)}
+@media (hover:hover){.stat:hover{transform:translateY(-2px);border-color:var(--line-strong);box-shadow:var(--shadow-lg)}}
 .stat .ic{
   width:36px;height:36px;border-radius:11px;display:grid;place-items:center;margin-bottom:18px;
   color:var(--tone);background:color-mix(in srgb,var(--tone) 12%,transparent);
@@ -382,7 +382,7 @@ body:not(.results-on) #runCard{max-width:720px;margin-inline:auto}
 .stat .ic .i{width:18px;height:18px}
 .stat .go{position:absolute;top:18px;right:16px;color:var(--faint);opacity:0;transform:translate(-3px,3px);transition:opacity .25s,transform .3s var(--ease)}
 .stat .go .i{width:16px;height:16px}
-.stat:hover .go{opacity:1;transform:none}
+@media (hover:hover){.stat:hover .go{opacity:1;transform:none}}
 .stat .n{font-size:32px;font-weight:680;letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums;color:var(--text)}
 .stat .l{margin-top:7px;font-size:13px;font-weight:550;color:var(--muted)}
 
@@ -427,7 +427,7 @@ body:not(.results-on) #runCard{max-width:720px;margin-inline:auto}
   background:var(--surface);border:1px solid var(--line-strong);font-size:13.5px;font-weight:600;color:var(--text-2);white-space:nowrap;
   transition:background .2s,color .2s,border-color .2s;
 }
-.tab:hover{background:var(--surface-2)}
+@media (hover:hover){.tab:hover{background:var(--surface-2)}}
 .tab .badge{
   min-width:24px;height:22px;padding:0 7px;border-radius:999px;display:grid;place-items:center;
   font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums;background:var(--surface-2);color:var(--muted);
@@ -468,7 +468,7 @@ body:not(.results-on) #runCard{max-width:720px;margin-inline:auto}
   transition:background .15s;
 }
 .row:first-child{border-top:0}
-.row:hover{background:var(--surface-2)}
+@media (hover:hover){.row:hover{background:var(--surface-2)}}
 .av{
   width:40px;height:40px;border-radius:999px;flex:none;display:grid;place-items:center;
   color:#fff;font-size:15px;font-weight:650;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
@@ -486,7 +486,7 @@ body:not(.results-on) #runCard{max-width:720px;margin-inline:auto}
   width:32px;height:32px;border-radius:999px;flex:none;display:grid;place-items:center;cursor:pointer;
   background:transparent;border:1px solid var(--line-strong);color:var(--muted);transition:color .2s,background .2s;
 }
-.row .revert:hover{color:var(--text);background:var(--surface-3)}
+@media (hover:hover){.row .revert:hover{color:var(--text);background:var(--surface-3)}}
 .row .revert .i{width:15px;height:15px}
 .row a.open{
   display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 10px 0 13px;border-radius:999px;flex:none;
@@ -494,10 +494,10 @@ body:not(.results-on) #runCard{max-width:720px;margin-inline:auto}
   text-decoration:none;transition:background .2s,color .2s,border-color .2s;
 }
 .row a.open .i{width:14px;height:14px;transition:transform .25s var(--ease)}
-.row a.open:hover{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
-.row a.open:hover .i{transform:translate(1px,-1px)}
+@media (hover:hover){.row a.open:hover{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}}
+@media (hover:hover){.row a.open:hover .i{transform:translate(1px,-1px)}}
 .row a.open.cancel{color:var(--c-red);border-color:color-mix(in srgb,var(--c-red) 32%,transparent)}
-.row a.open.cancel:hover{background:var(--c-red);color:#fff;border-color:var(--c-red)}
+@media (hover:hover){.row a.open.cancel:hover{background:var(--c-red);color:#fff;border-color:var(--c-red)}}
 .intbadge{
   min-width:34px;height:26px;padding:0 9px;border-radius:999px;display:grid;place-items:center;flex:none;
   font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--c-pink);
@@ -537,7 +537,7 @@ body:not(.results-on) #runCard{max-width:720px;margin-inline:auto}
   background:var(--surface);border:1px solid var(--line);transition:transform .3s var(--ease),border-color .2s,box-shadow .3s;
   animation:rise .55s var(--ease) both;
 }
-.cmp:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--tone) 40%,transparent);box-shadow:var(--shadow-lg)}
+@media (hover:hover){.cmp:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--tone) 40%,transparent);box-shadow:var(--shadow-lg)}}
 .cmp .ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;margin-bottom:14px;color:var(--tone);background:color-mix(in srgb,var(--tone) 13%,transparent)}
 .cmp .ic .i{width:16px;height:16px}
 .cmp .n{font-size:28px;font-weight:700;letter-spacing:-.035em;line-height:1;color:var(--tone);font-variant-numeric:tabular-nums}
@@ -554,9 +554,9 @@ body:not(.results-on) #runCard{max-width:720px;margin-inline:auto}
 .grp-h i{width:7px;height:7px;border-radius:99px;background:var(--tone)}
 .stats.mini{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
 .stats.mini .stat{padding:13px 14px;border-radius:var(--r-sm);box-shadow:none;background:var(--surface-2);cursor:default;animation:none}
-.stats.mini .stat:hover{transform:none;box-shadow:none}
+@media (hover:hover){.stats.mini .stat:hover{transform:none;box-shadow:none}}
 .stats.mini .stat.has-detail{cursor:pointer}
-.stats.mini .stat.has-detail:hover{border-color:color-mix(in srgb,var(--tone) 45%,transparent);background:var(--surface)}
+@media (hover:hover){.stats.mini .stat.has-detail:hover{border-color:color-mix(in srgb,var(--tone) 45%,transparent);background:var(--surface)}}
 .stats.mini .n{font-size:21px}
 .stats.mini .l{margin-top:5px;font-size:12px;line-height:1.35}
 #exploreCard .search{margin:16px 0 12px}
@@ -625,6 +625,34 @@ body:not(.results-on) #runCard{max-width:720px;margin-inline:auto}
 *{scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent}
 *::-webkit-scrollbar{width:10px;height:10px}
 *::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:99px;border:3px solid transparent;background-clip:content-box}
+
+/* ---------- Schermi touch ---------- */
+html{-webkit-tap-highlight-color:transparent}
+button,a,.tab,.snav,.drop,.wiz-check,.ch{touch-action:manipulation}
+.stat,.cmp,.tab,.snav,.tg-btn,.row a.open,.row .revert,.drop{transition-property:transform,background,border-color,box-shadow,color,opacity}
+.stat:active,.cmp:active{transform:scale(.97)}
+.tab:active,.snav:active,.tg-btn:active,.row a.open:active,.row .revert:active{transform:scale(.94)}
+@media (pointer:coarse){
+  .btn{height:46px}
+  .btn.sm,.toolbar .btn.sm{height:44px;padding:0 15px;font-size:13.5px}
+  .tab{height:44px;padding:0 9px 0 15px}
+  .tg-btn{width:44px;height:44px}
+  .lang-switch{height:44px}
+  .ls-opt{width:42px}
+  .lang-switch .ls-knob{width:42px}
+  .lang-switch.it .ls-knob{transform:translateX(42px)}
+  .row{padding-block:12px}
+  .row a.open{height:40px;padding:0 12px 0 14px}
+  .row .revert{width:40px;height:40px}
+  .search{height:48px}
+  .search input,.select select{font-size:16px}
+  .select select,.toolbar .btn.sm{height:48px}
+  .selrow .select select{height:46px}
+  .collapsible>.ch{min-height:44px}
+  .diag summary{padding:12px 0}
+  .foot .links a{padding:13px 6px}
+  .stat .go{opacity:.55;transform:none}
+}
 
 /* ---------- Tablet ---------- */
 @media (max-width:900px){
@@ -706,7 +734,7 @@ body:not(.results-on) #runCard{max-width:720px;margin-inline:auto}
 }
 @media (max-width:380px){
   .row a.open span{display:none}
-  .row a.open{padding:0;width:32px;justify-content:center}
+  .row a.open{padding:0;width:40px;justify-content:center}
   .kpis{gap:8px}
   .stat .n{font-size:24px}
 }

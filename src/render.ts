@@ -249,7 +249,9 @@ export function exportCSV(){
   const tab=(STATE._virtual && STATE.active==='_v')?STATE._virtual:currentTab();
   const rows=[[t('csv_username'),t('csv_profile'),t('csv_date')]];
   tab.items.forEach(e=>rows.push([e.username,e.href,fmtDate(e.ts)]));
-  const csv=rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  // celle che iniziano con = + - @ diventerebbero formule in Excel/Numbers: le neutralizzo con un apostrofo
+  const cell=(c)=>{ let v=String(c); if(/^[=+\-@\t\r]/.test(v)) v="'"+v; return `"${v.replace(/"/g,'""')}"`; };
+  const csv=rows.map(r=>r.map(cell).join(',')).join('\n');
   const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(["﻿"+csv],{type:'text/csv;charset=utf-8'}));
   a.download='instats_'+(tab.id||'list')+'.csv'; a.click(); toast(t('toast_csv'));
 }
@@ -264,7 +266,7 @@ export function renderWarn(b, der){
 }
 export function renderDiag(log, openIt){
   const el=$('#diag'); if(!log||!log.length){ el.innerHTML=''; return; }
-  const rows=log.map(l=>`<span class="dchip">${l.name} · <b>${l.cat}</b> · ${fmtNum(l.count)}</span>`).join('');
+  const rows=log.map(l=>`<span class="dchip">${escapeHtml(l.name)} · <b>${escapeHtml(l.cat)}</b> · ${fmtNum(l.count)}</span>`).join('');
   el.innerHTML=`<details ${openIt?'open':''}><summary>${t('diag_title')} (${log.length})</summary><div class="dwrap">${rows}</div></details>`;
 }
 export function escapeHtml(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
@@ -284,26 +286,26 @@ export function groupClass(g){ return ({profilo:'t-indigo',relazioni:'t-violet',
 export function renderStatsAll(scan, buckets){
   const card=$('#statsAllCard'), el=$('#statsAllBody');
   if(!scan||!scan.length){ card.classList.add('hidden'); return; }
-  const agg={};
+  const agg=Object.create(null);
   for(const s of scan){ if(s.count==null) continue; const a=agg[s.nb]||(agg[s.nb]={nb:s.nb,emoji:s.emoji,label:s.label,group:s.group,count:0}); a.count+=s.count; }
   // i conteggi delle relazioni usano la lista reale (deduplicata), così combaciano con le tab qui sotto
   const relMap={followers:'followers',following:'following',pending_follow_requests:'pending',recent_follow_requests:'recentReq',permanent_follow_requests:'recentReq',follow_requests_youve_received:'received',recently_unfollowed_profiles:'unfollowed',hide_story_from:'hideStory',removed_suggestions:'removedSug',close_friends:'close',blocked_profiles:'blocked',blocked_accounts:'blocked',restricted_profiles:'restricted'};
   for(const nb in relMap){ const b=buckets[relMap[nb]]; if(b&&agg[nb]) agg[nb].count=b.length; }
-  const byGroup={};
+  const byGroup=Object.create(null);
   for(const nb in agg){ (byGroup[agg[nb].group]=byGroup[agg[nb].group]||[]).push(agg[nb]); }
   let html='';
   for(const g of GROUP_ORDER){ const items=byGroup[g]; if(!items||!items.length) continue;
     items.sort((a,b)=>b.count-a.count);
     html+=`<div class="grp ${groupClass(g)}"><div class="grp-h"><i></i>${t('grp_'+g)}</div><div class="stats mini">`+
-      items.map(i=>{ const lab=i.label[LANG]||i.label.it; const drill=STAT_TAB[i.nb]?' has-detail':'';
-        return `<button type="button" class="stat${drill} ${groupClass(g)}" data-nb="${i.nb}" data-label="${escapeHtml(lab)}" title="${t('stat_click_hint')}"><span class="n">${fmtNum(i.count)}</span><span class="l">${lab}</span></button>`;
+      items.map(i=>{ const lab=i.label[LANG]||i.label.it; const drill=Object.prototype.hasOwnProperty.call(STAT_TAB,i.nb)?' has-detail':'';
+        return `<button type="button" class="stat${drill} ${groupClass(g)}" data-nb="${i.nb}" data-label="${escapeHtml(lab)}" title="${t('stat_click_hint')}"><span class="n">${fmtNum(i.count)}</span><span class="l">${escapeHtml(lab)}</span></button>`;
       }).join('')+`</div></div>`;
   }
   el.innerHTML=html; card.classList.remove('hidden');
   el.querySelectorAll('.stat[data-nb]').forEach((c:any)=>c.onclick=()=>openStatDetail(c.dataset.nb,c.dataset.label));
 }
 export function openStatDetail(nb,label){
-  const tab=STAT_TAB[nb];
+  const tab=Object.prototype.hasOwnProperty.call(STAT_TAB,nb)?STAT_TAB[nb]:'';
   if(tab && STATE.data){ const def=tabsDef(); if(def.find(x=>x.id===tab)){
     STATE._virtual=null; STATE.active=tab; STATE.query=''; const si=$('#searchInput'); if(si) si.value='';
     renderTabs(); renderList(); $('#tabs').scrollIntoView({behavior:'smooth',block:'start'}); return;
@@ -327,7 +329,7 @@ export function drawExplore(q){
   q=(q||'').toLowerCase();
   const rows=(STATE._scanSorted||[]).filter(s=>!q || s.file.toLowerCase().includes(q) || (s.label[LANG]||s.label.it).toLowerCase().includes(q));
   $('#exploreCount').textContent=fmtNum(rows.length);
-  $('#exploreBody').innerHTML=rows.map(s=>`<div class="exrow ${groupClass(s.group)}"><span class="exi"></span><span class="exl">${s.label[LANG]||s.label.it}</span><span class="exf">${escapeHtml(s.file)}</span><span class="exc">${s.count==null?'·':fmtNum(s.count)}</span></div>`).join('');
+  $('#exploreBody').innerHTML=rows.map(s=>`<div class="exrow ${groupClass(s.group)}"><span class="exi"></span><span class="exl">${escapeHtml(s.label[LANG]||s.label.it)}</span><span class="exf">${escapeHtml(s.file)}</span><span class="exc">${s.count==null?'·':fmtNum(s.count)}</span></div>`).join('');
 }
 
 /* ---------- Snapshot come file: scarica / carica ---------- */

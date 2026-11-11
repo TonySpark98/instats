@@ -1,5 +1,4 @@
 import JSZip from 'jszip';
-import { toast } from './state';
 import { t } from './i18n';
 import type { Entry, Buckets, ReadResult, Derived } from './types';
 
@@ -221,11 +220,11 @@ const RESERVED=new Set(['p','reel','reels','explore','stories','accounts','direc
 function smdFind(e:any, rx:RegExp){ const smd=e&&e.string_map_data; if(!smd) return null; for(const k in smd){ if(rx.test(k)) return smd[k]; } return null; }
 
 export async function readFiles(fileList: any): Promise<ReadResult>{
-  const buckets:any={}; const log:any[]=[]; const scan:any[]=[]; const profile:any={}; const interactions:any={};
+  const buckets:any={}; const log:any[]=[]; const scan:any[]=[]; const profile:any=Object.create(null); const interactions:any=Object.create(null);
   const base=(p)=>p.split('/').pop();
   const add=(cat,entries,name)=>{ if(cat&&entries.length){ (buckets[cat]=buckets[cat]||[]).push(...entries); } log.push({name:base(name),cat:cat||'?',count:entries?entries.length:0}); };
   const recordScan=(json,name)=>{
-    const nb=normBase(name); const meta=FILE_MAP[nb];
+    const nb=normBase(name); const meta=Object.prototype.hasOwnProperty.call(FILE_MAP,nb)?FILE_MAP[nb]:null;
     const arr=primaryArray(json); const count=arr?arr.length:null;
     scan.push({file:base(name), nb, emoji:meta?meta[0]:'📄', label:meta?{it:meta[1],en:meta[2]}:{it:humanize(nb),en:humanize(nb)}, group:meta?meta[3]:'altro', count});
     // dati profilo / creazione account
@@ -263,7 +262,6 @@ export async function readFiles(fileList: any): Promise<ReadResult>{
   for(const f of fileList){
     const lower=f.name.toLowerCase();
     if(lower.endsWith('.zip')){
-      if(typeof JSZip==='undefined'){ toast(t('toast_nozip')); continue; }
       const zip=await JSZip.loadAsync(f);
       const paths=Object.keys(zip.files).filter(p=>!zip.files[p].dir);
       if(!paths.length){ log.push({name:f.name,cat:'ZIP vuoto?',count:0}); }

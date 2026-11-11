@@ -13,7 +13,8 @@ Most "who unfollowed me" apps make you log in and then harvest your data.
 Instats never sees your account: it only reads the **official data export** that
 Instagram gives *you*, entirely **on your device**. The code is open, so you can
 verify that claim yourself — and a strict Content-Security-Policy makes the
-browser **block any network egress**, turning the promise into a guarantee.
+browser itself **refuse any connection to other servers** (fetch, beacons,
+images, scripts, fonts), so the promise doesn't rely on trust alone.
 
 ## Features
 **Relationships & analysis**
@@ -53,8 +54,9 @@ Your data never leaves the page.
 ## Privacy & security
 - No backend, no analytics, no tracking, no ads, no cookies.
 - All parsing happens in your browser; the export never touches a network.
-- **Strict CSP** (`connect-src 'self'`) prevents any external connection; `no-referrer` policy on outbound links.
-- All user-derived strings are HTML-escaped (no DOM-XSS surface).
+- **Strict CSP** (`connect-src 'self'`, no inline scripts) blocks any connection to other servers; `no-referrer` policy on outbound links. The only requests the page makes are for its own static files.
+- The app code makes **no network calls at all**; the shipped bundle includes **source maps**, so you can read the original code in your browser's DevTools.
+- Everything read from your export is treated as untrusted: HTML-escaped before display, profile links rebuilt as `https://www.instagram.com/<username>`, CSV cells neutralised against spreadsheet formulas.
 - Snapshots and "seen" marks live only in your browser's local storage — clear the site data to erase them.
 
 ## Develop
