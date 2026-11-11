@@ -26,6 +26,7 @@
     <div class="brand"><img src="./pwa-192x192.png" alt="" width="30" height="30" /><span>Instats</span></div>
 
     <nav id="sectionNav" class="snav-bar" role="tablist">
+      <span class="snav-ind" aria-hidden="true"></span>
       <button class="snav active" data-v="overview" role="tab"><i data-ic="pie"></i><span data-i18n="nav_overview">Panoramica</span></button>
       <button class="snav" data-v="relations" role="tab"><i data-ic="users"></i><span data-i18n="nav_relations">Relazioni</span></button>
       <button class="snav" data-v="interactions" role="tab"><i data-ic="heart"></i><span data-i18n="nav_interactions">Interazioni</span></button>
@@ -42,6 +43,7 @@
       <button id="themeToggle" class="tg-btn" title="Tema chiaro/scuro" aria-label="Tema chiaro/scuro"><i data-ic="moon"></i><i data-ic="sun"></i></button>
     </div>
   </div>
+  <span class="scroll-line" aria-hidden="true"></span>
 </header>
 
 <main class="wrap">
@@ -228,6 +230,16 @@
 </main>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<dialog class="dlg" id="confirmDlg" aria-labelledby="dlgTitle" aria-describedby="dlgText">
+  <span class="dlg-ic"><i data-ic="trash"></i></span>
+  <h2 id="dlgTitle" data-i18n="clear_snaps">Cancella cronologia</h2>
+  <p id="dlgText" class="dlg-txt" data-i18n="confirm_clear"></p>
+  <div class="dlg-btns">
+    <button class="btn ghost" type="button" data-r="no"><span data-i18n="dlg_cancel">Annulla</span></button>
+    <button class="btn danger-solid" type="button" data-r="ok"><i data-ic="trash"></i><span data-i18n="dlg_clear">Cancella</span></button>
+  </div>
+</dialog>
 
 <div class="loading" id="loading">
   <div class="box">

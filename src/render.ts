@@ -56,8 +56,18 @@ export function setView(v:string){
   if(SECTION_VIEWS.indexOf(v)<0) v='overview';
   (STATE as any).view=v;
   document.querySelectorAll('#results [data-view]').forEach((el:any)=>{ el.classList.toggle('view-hidden', el.getAttribute('data-view')!==v); });
-  document.querySelectorAll('#sectionNav .snav').forEach((el:any)=>{ el.classList.toggle('active', el.getAttribute('data-v')===v); });
-  const a:any=document.querySelector('#sectionNav .snav.active'); if(a&&a.scrollIntoView) a.scrollIntoView({block:'nearest',inline:'center'});
+  document.querySelectorAll('#sectionNav .snav').forEach((el:any)=>{ el.classList.toggle('active', el.getAttribute('data-v')===v); el.setAttribute('aria-selected', String(el.getAttribute('data-v')===v)); });
+  moveNavInd();
+  animateCounts(`#results [data-view="${v}"] :is(.kpis .stat,.ist,.cmp) .n`);
+}
+/* pillola che scorre sotto la sezione attiva (barra in alto e tab bar del telefono) */
+export function moveNavInd(){
+  const a=document.querySelector('#sectionNav .snav.active') as HTMLElement|null, ind=document.querySelector('#sectionNav .snav-ind') as HTMLElement|null;
+  if(!a||!ind||!a.offsetWidth) return;
+  const first=!ind.style.width; if(first) ind.style.transition='none';
+  ind.style.width=a.offsetWidth+'px'; ind.style.height=a.offsetHeight+'px';
+  ind.style.transform=`translate(${a.offsetLeft}px,${a.offsetTop}px)`;
+  if(first){ void ind.offsetWidth; ind.style.transition=''; }
 }
 function scrollActiveTabIntoView(){ const a:any=document.querySelector('#tabs .tab.active'); if(a&&a.scrollIntoView) a.scrollIntoView({block:'nearest',inline:'center'}); }
 
@@ -87,9 +97,9 @@ export function renderSummary(){
 function donutChart(segs:any[], total:number, centerN:string, centerL:string){
   const R=52, SW=12, C=2*Math.PI*R, GAP=segs.filter((x:any)=>x.v>0).length>1?3:0; let off=0;
   const track=`<circle cx="70" cy="70" r="${R}" fill="none" class="dn-track" stroke-width="${SW}"/>`;
-  const arcs = total>0 ? segs.map((s:any)=>{
+  const arcs = total>0 ? segs.map((s:any,i:number)=>{
     const len=(s.v/total)*C; const rot=(off/C)*360-90; off+=len; const vis=Math.max(0,len-GAP);
-    return vis>0?`<circle cx="70" cy="70" r="${R}" fill="none" stroke="${s.c}" stroke-width="${SW}" stroke-dasharray="${vis} ${C-vis}" transform="rotate(${rot} 70 70)"/>`:'';
+    return vis>0?`<circle class="dn-arc" cx="70" cy="70" r="${R}" fill="none" stroke="${s.c}" stroke-width="${SW}" stroke-dasharray="${vis} ${C-vis}" transform="rotate(${rot} 70 70)" style="--C:${C};animation-delay:${(i*0.18).toFixed(2)}s"/>`:'';
   }).join('') : '';
   const legend = segs.map((s:any)=>`<span class="lg"><i style="background:${s.c}"></i><span>${s.l}</span><b>${fmtNum(s.v)}</b><em>${total>0?Math.round(s.v/total*100):0}%</em></span>`).join('');
   return `<div class="donutwrap"><svg viewBox="0 0 140 140" class="donut" role="img" aria-hidden="true">${track}${arcs}<text x="70" y="68" text-anchor="middle" class="dt-n">${centerN}</text><text x="70" y="87" text-anchor="middle" class="dt-l">${centerL}</text></svg><div class="donut-legend">${legend}</div></div>`;
@@ -105,7 +115,6 @@ export function renderStats(){
     {c:'t-amber',ic:I.clock,n:(d.pending||[]).length,l:t('stat_pending'),tab:'pending'},
   ];
   $('#statsGrid').innerHTML = cells.map(s=>`<button type="button" class="stat ${s.c}" data-tab="${s.tab}"><span class="ic">${s.ic}</span><span class="go">${I.arrowUpRight}</span><span class="n">${fmtNum(s.n)}</span><span class="l">${s.l}</span></button>`).join('');
-  animateCounts();
   document.querySelectorAll('#statsGrid .stat').forEach((el:any)=>el.onclick=()=>{ STATE._virtual=null; STATE.active=el.dataset.tab; STATE.query=''; $('#searchInput').value=''; renderTabs(); renderList(); setView('relations'); document.querySelector('.tabs').scrollIntoView({behavior:'smooth',block:'start'}); });
 }
 export function renderTabs(){
@@ -200,7 +209,7 @@ export function renderCompare(){
   if(prevs.length===0){ sel.innerHTML=''; $('#cmpGrid').innerHTML=''; $('#cmpHint').innerHTML=t('cmp_first'); return; }
   sel.innerHTML = prevs.map((s,i)=>{ const dt=new Date(s.date).toLocaleString(LOC(),{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}); return `<option value="${i}">${dt} — ${s.followers.length} ${t('snap_foll')}</option>`; }).reverse().join('');
   sel.value=String(prevs.length-1);
-  drawCompare(); sel.onchange=drawCompare;
+  drawCompare(); sel.onchange=()=>{ drawCompare(); animateCounts('#cmpGrid .n'); };
 }
 export function drawCompare(){
   const snaps=loadSnaps(); const cur=snaps[snaps.length-1]; const prevs=snaps.slice(0,-1);
@@ -355,16 +364,19 @@ export function importSnapshotFile(file:any, done?:()=>void){
   r.readAsText(file);
 }
 
-/* Count-up elegante dei numeri delle stat card */
-function animateCounts(){
-  try{ if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; }catch(e){}
-  document.querySelectorAll('#statsGrid .stat .n').forEach((el:any)=>{
-    const target=parseInt(String(el.textContent||'0').replace(/[^0-9]/g,''),10)||0;
-    if(target<=0) return;
-    const dur=900, t0=performance.now();
-    el.textContent='0';
-    const tick=(now:number)=>{ const p=Math.min((now-t0)/dur,1); const e=1-Math.pow(1-p,3);
-      el.textContent=fmtNum(Math.round(target*e)); if(p<1) requestAnimationFrame(tick); };
+/* Count-up dei numeri delle tessere: tiene prefisso e suffisso ("+12", "−3", "45%") */
+function animateCounts(sel:string){
+  if(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll(sel).forEach((el:any)=>{
+    if(el._cuEnd!=null){ el.textContent=el._cuEnd; }        // animazione precedente interrotta: riparto dal valore finale
+    const m=/^(\D*)([\d.,\s]+?)(\D*)$/.exec(el.textContent||''); if(!m) return;
+    const target=parseInt(m[2].replace(/\D/g,''),10); if(!target) return;
+    const end=el.textContent, dur=Math.min(1100,600+target/4), t0=performance.now(), tok={};
+    el._cu=tok; el._cuEnd=end; el.textContent=m[1]+'0'+m[3];
+    const tick=(now:number)=>{ if(el._cu!==tok) return;
+      const p=Math.min((now-t0)/dur,1), e=1-Math.pow(1-p,3);
+      if(p<1){ el.textContent=m[1]+fmtNum(Math.round(target*e))+m[3]; requestAnimationFrame(tick); }
+      else { el.textContent=end; el._cuEnd=null; } };
     requestAnimationFrame(tick);
   });
 }

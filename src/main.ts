@@ -5,7 +5,7 @@ import {
   SNAP_KEY, pushSnapshot, renderAll, renderWarn, renderDiag,
   renderProfile, renderStatsAll, renderExplore, renderInteractions, renderCompare,
   renderList, renderListVirtual, renderTabs, exportCSV, fmtNum,
-  setupOpenedDelegation, downloadSnapshot, importSnapshotFile, setView
+  setupOpenedDelegation, downloadSnapshot, importSnapshotFile, setView, moveNavInd
 } from './render';
 import type { Lang } from './types';
 import { hydrateIcons } from './icons';
@@ -68,7 +68,7 @@ function init(){
   $('#csvBtn').onclick=exportCSV;
   $('#resetBtn').onclick=()=>{ STATE.data=null; STATE._virtual=null; $('#results').classList.add('hidden'); $('#setupCard').classList.remove('hidden'); $('#file').value=''; document.body.classList.remove('results-on'); goToStep(3); window.scrollTo({top:0,behavior:'smooth'}); };
   document.querySelectorAll('#sectionNav .snav').forEach((el:any)=>el.onclick=()=>{ setView(el.dataset.v); window.scrollTo({top:0,behavior:'smooth'}); });
-  $('#clearSnaps').onclick=()=>{ if(confirm(t('confirm_clear'))){ localStorage.removeItem(SNAP_KEY); renderCompare(); toast(t('toast_histcleared')); } };
+  $('#clearSnaps').onclick=async()=>{ if(await ask()){ localStorage.removeItem(SNAP_KEY); renderCompare(); toast(t('toast_histcleared')); } };
   $('#snapDownload').onclick=()=>downloadSnapshot();
   $('#snapUpload').onclick=()=>($('#snapFile') as any).click();
   $('#snapFile').onchange=(e:any)=>{ const f=e.target.files&&e.target.files[0]; if(f) importSnapshotFile(f, ()=>renderCompare()); e.target.value=''; };
@@ -82,7 +82,8 @@ function init(){
     requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.remove('theming'))); };
   const sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   applyTheme(localStorage.getItem(THEME_KEY)||(sysDark?'dark':'gradient'));
-  $('#themeToggle').onclick=()=>{ const th=document.body.classList.contains('dark')?'gradient':'dark'; localStorage.setItem(THEME_KEY,th); applyTheme(th); };
+  $('#themeToggle').onclick=()=>{ const th=document.body.classList.contains('dark')?'gradient':'dark'; localStorage.setItem(THEME_KEY,th);
+    const d:any=document; if(d.startViewTransition && !reduced()) d.startViewTransition(()=>applyTheme(th)); else applyTheme(th); };
 
   // Lingua ITA/ENG (slider)
   const setLang=(l:Lang|string)=>{ const lv:Lang=(l==='en')?'en':'it'; setLangValue(lv); localStorage.setItem('instats_lang',lv); applyI18n(); };
@@ -96,6 +97,33 @@ function init(){
   });
 
   window.addEventListener('beforeunload',(e:any)=>{ if(STATE.data){ e.preventDefault(); e.returnValue=''; } });
+
+  // Pillola della navigazione: si riposiziona se cambiano dimensioni, lingua o layout (barra in alto ↔ tab bar)
+  const ro=new ResizeObserver(()=>moveNavInd());
+  document.querySelectorAll('#sectionNav .snav').forEach(el=>ro.observe(el));
+
+  // Riflesso che segue il puntatore su tessere e card (solo mouse/trackpad)
+  if(window.matchMedia('(hover:hover) and (pointer:fine)').matches && !reduced()){
+    document.addEventListener('pointermove',(e:PointerEvent)=>{
+      const el=(e.target as Element).closest?.('.stat,.cmp,.ist,.drop,.runstep,.card') as HTMLElement|null; if(!el) return;
+      const r=el.getBoundingClientRect();
+      el.style.setProperty('--mx',(e.clientX-r.left)+'px'); el.style.setProperty('--my',(e.clientY-r.top)+'px');
+    },{passive:true});
+  }
+}
+const reduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Conferma con il dialog nativo (Esc o clic fuori = annulla); sostituisce confirm()
+function ask():Promise<boolean>{
+  const dlg=$('#confirmDlg') as HTMLDialogElement;
+  return new Promise(res=>{
+    const done=(ok:boolean)=>{ dlg.onclick=null; dlg.oncancel=null; dlg.close(); res(ok); };
+    dlg.onclick=(e:any)=>{ const b=e.target.closest('[data-r]'); if(b) return done(b.dataset.r==='ok');
+      const r=dlg.getBoundingClientRect(); if(e.target===dlg && (e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)) done(false); };
+    dlg.oncancel=(e)=>{ e.preventDefault(); done(false); };
+    dlg.showModal();
+    (dlg.querySelector('[data-r="no"]') as HTMLElement).focus();
+  });
 }
 document.addEventListener('DOMContentLoaded', init);
 

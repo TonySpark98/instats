@@ -3,7 +3,8 @@ import type { Lang } from './types';
 import { I } from './icons';
 import {
   renderSummary, renderStats, renderCompare, renderTabs, renderList,
-  renderTabsWithVirtual, renderListVirtual, renderProfile, renderStatsAll, renderExplore
+  renderTabsWithVirtual, renderListVirtual, renderProfile, renderStatsAll, renderExplore,
+  renderInteractions, renderWarn, renderDiag
 } from './render';
 
 /* ---------- Traduzioni IT / EN ---------- */
@@ -122,7 +123,7 @@ export const I18N = {
     toast_nodata:`Non ho trovato follower/seguiti. Controlla di aver caricato lo ZIP giusto.`,
     toast_readerr:`Errore nella lettura del file. Prova con i singoli file JSON.`,
     toast_badjson:`File JSON non valido:`,
-    toast_histcleared:`Cronologia cancellata.`, confirm_clear:`Cancellare tutta la cronologia degli snapshot salvati su questo browser?`,
+    toast_histcleared:`Cronologia cancellata.`, confirm_clear:`Cancellare tutta la cronologia degli snapshot salvati su questo browser?`, dlg_cancel:`Annulla`, dlg_clear:`Cancella`,
     csv_username:`username`, csv_profile:`profilo`, csv_date:`data`,
   },
   en:{
@@ -239,7 +240,7 @@ export const I18N = {
     toast_nodata:`No followers/following found. Check you uploaded the right ZIP.`,
     toast_readerr:`Error reading the file. Try the individual JSON files.`,
     toast_badjson:`Invalid JSON file:`,
-    toast_histcleared:`History cleared.`, confirm_clear:`Clear all snapshot history saved in this browser?`,
+    toast_histcleared:`History cleared.`, confirm_clear:`Clear all snapshot history saved in this browser?`, dlg_cancel:`Cancel`, dlg_clear:`Clear`,
     csv_username:`username`, csv_profile:`profile`, csv_date:`date`,
   }
 };
@@ -261,5 +262,8 @@ export function applyI18n(){
     else { renderTabs(); renderList(); }
     if(STATE.profile) renderProfile(STATE.profile);
     if(STATE.scan){ renderStatsAll(STATE.scan, STATE.data); renderExplore(STATE.scan); }
+    if(STATE.interactions) renderInteractions(STATE.interactions, STATE.data);
+    renderWarn(STATE.data, STATE.derived);
+    const dg=document.querySelector('#diag details'); renderDiag(STATE._log, !!(dg && (dg as HTMLDetailsElement).open));
   }
 }
