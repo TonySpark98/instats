@@ -8,6 +8,7 @@ import {
   setupOpenedDelegation, downloadSnapshot, importSnapshotFile, setView
 } from './render';
 import type { Lang } from './types';
+import { hydrateIcons } from './icons';
 
 /* ---------- Eventi / orchestrazione ---------- */
 function showLoading(){ const el=$('#loading'); if(el) el.classList.add('show'); }
@@ -39,6 +40,7 @@ function goToStep(n:number){
 }
 
 function init(){
+  hydrateIcons();
   applyI18n();
   setupOpenedDelegation();
 
@@ -54,6 +56,7 @@ function init(){
 
   const drop=$('#drop'), file=$('#file');
   drop.onclick=()=>file.click();
+  drop.onkeydown=(e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); file.click(); } };
   file.onchange=()=>handleFiles(file.files);
   ['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over');}));
   ['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over');}));
@@ -72,12 +75,13 @@ function init(){
 
   // Tema chiaro/scuro
   const THEME_KEY='instats_theme';
-  const applyTheme=(th)=>{ const dark=(th==='dark'); document.body.classList.add('theming'); document.body.classList.toggle('dark',dark); $('#themeToggle').textContent=dark?'☀️':'🌙';
-    const col = dark ? '#160a26' : '#f4f1fb';
+  const applyTheme=(th)=>{ const dark=(th==='dark'); document.body.classList.add('theming'); document.body.classList.toggle('dark',dark);
+    const col = dark ? '#09090b' : '#f7f7f8';
     document.documentElement.style.background = col;                 // evita il bianco nell'overscroll iOS
     const tc=document.querySelector('meta[name="theme-color"]'); if(tc) tc.setAttribute('content', col);  // tinta UI Safari
     requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.remove('theming'))); };
-  applyTheme(localStorage.getItem(THEME_KEY)||'gradient');
+  const sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(localStorage.getItem(THEME_KEY)||(sysDark?'dark':'gradient'));
   $('#themeToggle').onclick=()=>{ const th=document.body.classList.contains('dark')?'gradient':'dark'; localStorage.setItem(THEME_KEY,th); applyTheme(th); };
 
   // Lingua ITA/ENG (slider)
@@ -95,4 +99,4 @@ function init(){
 }
 document.addEventListener('DOMContentLoaded', init);
 
-console.info('%cInstats','font:800 14px sans-serif;color:#7c3aed','· open source · github.com/TonySpark98/instats');
+console.info('%cInstats','font:700 14px sans-serif;color:#c13584','· open source · github.com/TonySpark98/instats');

@@ -2,6 +2,7 @@ import { STATE, $, toast } from './state';
 import { t, LANG, LOC } from './i18n';
 import { GROUP_ORDER, STAT_TAB, isOpened, setOpened, normU } from './parser';
 import type { Entry, TabDef } from './types';
+import { I } from './icons';
 
 /* ---------- Snapshot ---------- */
 export const SNAP_KEY='instats_snapshots_v1';
@@ -18,7 +19,7 @@ export function pushSnapshot(d){
 }
 
 /* ---------- Avatar ---------- */
-export const AV_GRADS=[['#833ab4','#fd1d1d'],['#405de6','#5851db'],['#0891b2','#22d3ee'],['#16a34a','#4ade80'],['#d97706','#fbbf24'],['#c13584','#fd1d1d'],['#7c3aed','#ec4899']];
+export const AV_GRADS=[['#ffb347','#f5426c'],['#f5426c','#c13584'],['#c13584','#6c5ce7'],['#6c5ce7','#3b82f6'],['#06b6d4','#6366f1'],['#10b981','#06b6d4'],['#f59e0b','#ef4444']];
 export function avatar(username){
   let h=0; for(let i=0;i<username.length;i++) h=(h*31+username.charCodeAt(i))>>>0;
   const g=AV_GRADS[h%AV_GRADS.length];
@@ -75,8 +76,8 @@ export function renderSummary(){
   if(el){
     const mutual=(x&&x.mutuals?x.mutuals.length:0), notfb=(x&&x.notFollowingBack?x.notFollowingBack.length:0);
     el.innerHTML = donutChart([
-      {v:mutual,c:'#22c55e',l:t('stat_mutual')},
-      {v:notfb, c:'#ef4444',l:t('stat_notfb')}
+      {v:mutual,c:'var(--c-green)',l:t('stat_mutual')},
+      {v:notfb, c:'var(--c-red)',l:t('stat_notfb')}
     ], ng, fmtNum(ng), t('m_following'));
   }
   const bel=$('#summaryBars');
@@ -84,27 +85,28 @@ export function renderSummary(){
 }
 /* Donut SVG riusabile (segmenti impilati via stroke-dasharray) */
 function donutChart(segs:any[], total:number, centerN:string, centerL:string){
-  const R=54, SW=15, C=2*Math.PI*R; let off=0;
+  const R=52, SW=12, C=2*Math.PI*R, GAP=segs.filter((x:any)=>x.v>0).length>1?3:0; let off=0;
+  const track=`<circle cx="70" cy="70" r="${R}" fill="none" class="dn-track" stroke-width="${SW}"/>`;
   const arcs = total>0 ? segs.map((s:any)=>{
-    const len=(s.v/total)*C; const rot=(off/C)*360-90; off+=len;
-    return `<circle cx="70" cy="70" r="${R}" fill="none" stroke="${s.c}" stroke-width="${SW}" stroke-dasharray="${len} ${C-len}" transform="rotate(${rot} 70 70)"/>`;
-  }).join('') : `<circle cx="70" cy="70" r="${R}" fill="none" stroke="rgba(128,128,128,.25)" stroke-width="${SW}"/>`;
-  const legend = segs.map((s:any)=>`<span class="lg"><i style="background:${s.c}"></i>${s.l} <b>${fmtNum(s.v)}</b></span>`).join('');
-  return `<div class="donutwrap"><svg viewBox="0 0 140 140" class="donut" role="img" aria-hidden="true">${arcs}<text x="70" y="66" text-anchor="middle" class="dt-n">${centerN}</text><text x="70" y="86" text-anchor="middle" class="dt-l">${centerL}</text></svg><div class="donut-legend">${legend}</div></div>`;
+    const len=(s.v/total)*C; const rot=(off/C)*360-90; off+=len; const vis=Math.max(0,len-GAP);
+    return vis>0?`<circle cx="70" cy="70" r="${R}" fill="none" stroke="${s.c}" stroke-width="${SW}" stroke-dasharray="${vis} ${C-vis}" transform="rotate(${rot} 70 70)"/>`:'';
+  }).join('') : '';
+  const legend = segs.map((s:any)=>`<span class="lg"><i style="background:${s.c}"></i><span>${s.l}</span><b>${fmtNum(s.v)}</b><em>${total>0?Math.round(s.v/total*100):0}%</em></span>`).join('');
+  return `<div class="donutwrap"><svg viewBox="0 0 140 140" class="donut" role="img" aria-hidden="true">${track}${arcs}<text x="70" y="68" text-anchor="middle" class="dt-n">${centerN}</text><text x="70" y="87" text-anchor="middle" class="dt-l">${centerL}</text></svg><div class="donut-legend">${legend}</div></div>`;
 }
 export function renderStats(){
   const d=STATE.data, x=STATE.derived;
   const cells=[
-    {c:'s-foll',ic:'👥',n:(d.followers||[]).length,l:t('stat_followers'),tab:'followers'},
-    {c:'s-fing',ic:'➡️',n:(d.following||[]).length,l:t('stat_following'),tab:'following'},
-    {c:'s-nofb',ic:'❌',n:x.notFollowingBack.length,l:t('stat_notfb'),tab:'notfb'},
-    {c:'s-fan', ic:'💜',n:x.fans.length,l:t('stat_fans'),tab:'fans'},
-    {c:'s-mut', ic:'🤝',n:x.mutuals.length,l:t('stat_mutual'),tab:'mutual'},
-    {c:'s-pend',ic:'⏳',n:(d.pending||[]).length,l:t('stat_pending'),tab:'pending'},
+    {c:'t-indigo',ic:I.users,n:(d.followers||[]).length,l:t('stat_followers'),tab:'followers'},
+    {c:'t-violet',ic:I.userPlus,n:(d.following||[]).length,l:t('stat_following'),tab:'following'},
+    {c:'t-red',ic:I.userX,n:x.notFollowingBack.length,l:t('stat_notfb'),tab:'notfb'},
+    {c:'t-cyan',ic:I.heart,n:x.fans.length,l:t('stat_fans'),tab:'fans'},
+    {c:'t-green',ic:I.repeat,n:x.mutuals.length,l:t('stat_mutual'),tab:'mutual'},
+    {c:'t-amber',ic:I.clock,n:(d.pending||[]).length,l:t('stat_pending'),tab:'pending'},
   ];
-  $('#statsGrid').innerHTML = cells.map(s=>`<div class="stat ${s.c}" data-tab="${s.tab}"><div class="ic">${s.ic}</div><div class="n">${fmtNum(s.n)}</div><div class="l">${s.l}</div></div>`).join('');
+  $('#statsGrid').innerHTML = cells.map(s=>`<button type="button" class="stat ${s.c}" data-tab="${s.tab}"><span class="ic">${s.ic}</span><span class="go">${I.arrowUpRight}</span><span class="n">${fmtNum(s.n)}</span><span class="l">${s.l}</span></button>`).join('');
   animateCounts();
-  document.querySelectorAll('.stat').forEach((el:any)=>el.onclick=()=>{ STATE._virtual=null; STATE.active=el.dataset.tab; STATE.query=''; $('#searchInput').value=''; renderTabs(); renderList(); setView('relations'); document.querySelector('.tabs').scrollIntoView({behavior:'smooth',block:'start'}); });
+  document.querySelectorAll('#statsGrid .stat').forEach((el:any)=>el.onclick=()=>{ STATE._virtual=null; STATE.active=el.dataset.tab; STATE.query=''; $('#searchInput').value=''; renderTabs(); renderList(); setView('relations'); document.querySelector('.tabs').scrollIntoView({behavior:'smooth',block:'start'}); });
 }
 export function renderTabs(){
   const def=tabsDef();
@@ -128,7 +130,7 @@ export function renderList(){
   const wrap=$('#list');
   if(!items.length){
     const done=STATE.hideOpened && total>0;
-    wrap.innerHTML=`<div class="empty"><div class="big">${done?'🎉':'🙌'}</div><div><b>${done?t('empty_allopened'):t('empty_none_title')}</b><br>${done?'':(q?t('empty_search'):t('empty_list'))}</div></div>`;
+    wrap.innerHTML=`<div class="empty"><div class="big">${done?I.check:(q?I.search:I.inbox)}</div><div><b>${done?t('empty_allopened'):t('empty_none_title')}</b><br>${done?'':(q?t('empty_search'):t('empty_list'))}</div></div>`;
     return;
   }
   const actLabel = tab.action || t('open_btn');
@@ -153,9 +155,9 @@ function updateProgress(){
 /* costruisce una riga; segna visivamente i profili già aperti */
 export function rowHtml(e:any, actClass:string, actLabel:string, meta:string){
   const opened=isOpened(e.username);
-  const seen = opened?`<span class="seen-badge">${t('seen_badge')}</span>`:'';
-  const revert = opened?`<button class="revert" type="button" title="${escapeHtml(t('unseen_title'))}" data-u="${escapeHtml(e.username)}">↩</button>`:'';
-  return `<div class="row${opened?' opened':''}" data-u="${escapeHtml(e.username)}">${avatar(e.username)}<div class="info"><div class="u">@${escapeHtml(e.username)}${seen}</div>${meta}</div>${revert}<a class="${actClass}" href="${escapeHtml(e.href)}" target="_blank" rel="noopener">${actLabel}</a></div>`;
+  const seen = opened?`<span class="seen-badge">${I.check}${t('seen_badge')}</span>`:'';
+  const revert = opened?`<button class="revert" type="button" title="${escapeHtml(t('unseen_title'))}" aria-label="${escapeHtml(t('unseen_title'))}" data-u="${escapeHtml(e.username)}">${I.undo}</button>`:'';
+  return `<div class="row${opened?' opened':''}" data-u="${escapeHtml(e.username)}">${avatar(e.username)}<div class="info"><div class="u">@${escapeHtml(e.username)}${seen}</div>${meta}</div>${revert}<a class="${actClass}" href="${escapeHtml(e.href)}" target="_blank" rel="noopener"><span>${actLabel}</span>${I.arrowUpRight}</a></div>`;
 }
 
 /* ---------- Delega eventi lista: segna/ripristina "già aperto" ---------- */
@@ -182,10 +184,10 @@ function refreshRow(row:any,u:string){
   row.classList.toggle('opened',opened);
   const uEl=row.querySelector('.u');
   if(uEl){ const old=uEl.querySelector('.seen-badge'); if(old) old.remove();
-    if(opened){ const b=document.createElement('span'); b.className='seen-badge'; b.textContent=t('seen_badge'); uEl.appendChild(b); } }
+    if(opened){ const b=document.createElement('span'); b.className='seen-badge'; b.innerHTML=I.check+t('seen_badge'); uEl.appendChild(b); } }
   const existing=row.querySelector('.revert');
   if(opened && !existing){ const a=row.querySelector('a.open'); const btn=document.createElement('button');
-    btn.className='revert'; btn.type='button'; btn.title=t('unseen_title'); btn.setAttribute('data-u',u); btn.textContent='↩';
+    btn.className='revert'; btn.type='button'; btn.title=t('unseen_title'); btn.setAttribute('aria-label',t('unseen_title')); btn.setAttribute('data-u',u); btn.innerHTML=I.undo;
     if(a) row.insertBefore(btn,a); else row.appendChild(btn); }
   else if(!opened && existing){ existing.remove(); }
 }
@@ -212,10 +214,10 @@ export function drawCompare(){
   const youFollowed=cur.following.filter(u=>!prevG.has(u.toLowerCase()));
   STATE._cmp={lostFollowers,newFollowers,youUnfollowed,youFollowed};
   $('#cmpGrid').innerHTML =
-    `<div class="cmp c-up" data-cmp="newFollowers"><div class="n">+${newFollowers.length}</div><div class="l">${t('cmp_newf')}</div></div>`+
-    `<div class="cmp c-down" data-cmp="lostFollowers"><div class="n">−${lostFollowers.length}</div><div class="l">${t('cmp_lost')}</div></div>`+
-    `<div class="cmp c-newf" data-cmp="youFollowed"><div class="n">+${youFollowed.length}</div><div class="l">${t('cmp_youf')}</div></div>`+
-    `<div class="cmp c-unf" data-cmp="youUnfollowed"><div class="n">−${youUnfollowed.length}</div><div class="l">${t('cmp_youunf')}</div></div>`;
+    `<button type="button" class="cmp t-green" data-cmp="newFollowers"><span class="ic">${I.trendUp}</span><span class="n">${newFollowers.length?'+'+fmtNum(newFollowers.length):'0'}</span><span class="l">${t('cmp_newf')}</span></button>`+
+    `<button type="button" class="cmp t-red" data-cmp="lostFollowers"><span class="ic">${I.trendDown}</span><span class="n">${lostFollowers.length?'−'+fmtNum(lostFollowers.length):'0'}</span><span class="l">${t('cmp_lost')}</span></button>`+
+    `<button type="button" class="cmp t-indigo" data-cmp="youFollowed"><span class="ic">${I.userPlus}</span><span class="n">${youFollowed.length?'+'+fmtNum(youFollowed.length):'0'}</span><span class="l">${t('cmp_youf')}</span></button>`+
+    `<button type="button" class="cmp t-amber" data-cmp="youUnfollowed"><span class="ic">${I.userMinus}</span><span class="n">${youUnfollowed.length?'−'+fmtNum(youUnfollowed.length):'0'}</span><span class="l">${t('cmp_youunf')}</span></button>`;
   const dt=new Date(prev.date).toLocaleString(LOC(),{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
   $('#cmpHint').innerHTML = t('cmp_hint_compare').replace('{date}',dt);
   document.querySelectorAll('.cmp[data-cmp]').forEach((el:any)=>el.onclick=()=>showCmpList(el.dataset.cmp, STATE._cmp[el.dataset.cmp]||[]));
@@ -238,7 +240,7 @@ export function renderListVirtual(){
   let items=tab.items.slice(); const q=STATE.query.trim().toLowerCase();
   if(q) items=items.filter(e=>e.username.toLowerCase().includes(q));
   const wrap=$('#list');
-  if(!items.length){ wrap.innerHTML=`<div class="empty"><div class="big">✨</div><div>${t('empty_cmp')}</div></div>`; return; }
+  if(!items.length){ wrap.innerHTML=`<div class="empty"><div class="big">${I.sparkles}</div><div>${t('empty_cmp')}</div></div>`; return; }
   wrap.innerHTML=items.map(e=>rowHtml(e,'open',t('open_btn'),'')).join('');
 }
 
@@ -278,7 +280,7 @@ export function renderProfile(p){
 }
 
 /* ---------- Statistiche complete (raggruppate) ---------- */
-export function groupClass(g){ return ({profilo:'s-foll',relazioni:'s-fing',contenuti:'s-mut',attivita:'s-fan',interessi:'s-pend',ads:'s-nofb',sicurezza:'s-foll',altro:'s-fing'})[g]||'s-fing'; }
+export function groupClass(g){ return ({profilo:'t-indigo',relazioni:'t-violet',contenuti:'t-green',attivita:'t-pink',interessi:'t-amber',ads:'t-red',sicurezza:'t-cyan',altro:'t-gray'})[g]||'t-gray'; }
 export function renderStatsAll(scan, buckets){
   const card=$('#statsAllCard'), el=$('#statsAllBody');
   if(!scan||!scan.length){ card.classList.add('hidden'); return; }
@@ -292,9 +294,9 @@ export function renderStatsAll(scan, buckets){
   let html='';
   for(const g of GROUP_ORDER){ const items=byGroup[g]; if(!items||!items.length) continue;
     items.sort((a,b)=>b.count-a.count);
-    html+=`<div class="grp"><div class="grp-h">${t('grp_'+g)}</div><div class="stats">`+
+    html+=`<div class="grp ${groupClass(g)}"><div class="grp-h"><i></i>${t('grp_'+g)}</div><div class="stats mini">`+
       items.map(i=>{ const lab=i.label[LANG]||i.label.it; const drill=STAT_TAB[i.nb]?' has-detail':'';
-        return `<div class="stat${drill} ${groupClass(g)}" data-nb="${i.nb}" data-label="${escapeHtml(lab)}" title="${t('stat_click_hint')}"><div class="ic">${i.emoji||''}</div><div class="n">${fmtNum(i.count)}</div><div class="l">${lab}</div></div>`;
+        return `<button type="button" class="stat${drill} ${groupClass(g)}" data-nb="${i.nb}" data-label="${escapeHtml(lab)}" title="${t('stat_click_hint')}"><span class="n">${fmtNum(i.count)}</span><span class="l">${lab}</span></button>`;
       }).join('')+`</div></div>`;
   }
   el.innerHTML=html; card.classList.remove('hidden');
@@ -325,7 +327,7 @@ export function drawExplore(q){
   q=(q||'').toLowerCase();
   const rows=(STATE._scanSorted||[]).filter(s=>!q || s.file.toLowerCase().includes(q) || (s.label[LANG]||s.label.it).toLowerCase().includes(q));
   $('#exploreCount').textContent=fmtNum(rows.length);
-  $('#exploreBody').innerHTML=rows.map(s=>`<div class="exrow"><span class="exi">${s.emoji}</span><span class="exl">${s.label[LANG]||s.label.it}</span><span class="exf">${escapeHtml(s.file)}</span><span class="exc">${s.count==null?'·':fmtNum(s.count)}</span></div>`).join('');
+  $('#exploreBody').innerHTML=rows.map(s=>`<div class="exrow ${groupClass(s.group)}"><span class="exi"></span><span class="exl">${s.label[LANG]||s.label.it}</span><span class="exf">${escapeHtml(s.file)}</span><span class="exc">${s.count==null?'·':fmtNum(s.count)}</span></div>`).join('');
 }
 
 /* ---------- Snapshot come file: scarica / carica ---------- */
@@ -368,16 +370,16 @@ function animateCounts(){
 /* Bar chart orizzontale delle categorie principali (barre animate) */
 function barChart(d:any, x:any){
   const rows=[
-    {l:t('stat_followers'), v:(d.followers||[]).length, c:'#6366f1'},
-    {l:t('stat_following'), v:(d.following||[]).length, c:'#a855f7'},
-    {l:t('stat_mutual'),    v:(x&&x.mutuals?x.mutuals.length:0), c:'#22c55e'},
-    {l:t('stat_notfb'),     v:(x&&x.notFollowingBack?x.notFollowingBack.length:0), c:'#ef4444'},
-    {l:t('stat_fans'),      v:(x&&x.fans?x.fans.length:0), c:'#06b6d4'},
-    {l:t('stat_pending'),   v:(d.pending||[]).length, c:'#f59e0b'},
+    {l:t('stat_followers'), v:(d.followers||[]).length, c:'var(--c-indigo)'},
+    {l:t('stat_following'), v:(d.following||[]).length, c:'var(--c-violet)'},
+    {l:t('stat_mutual'),    v:(x&&x.mutuals?x.mutuals.length:0), c:'var(--c-green)'},
+    {l:t('stat_notfb'),     v:(x&&x.notFollowingBack?x.notFollowingBack.length:0), c:'var(--c-red)'},
+    {l:t('stat_fans'),      v:(x&&x.fans?x.fans.length:0), c:'var(--c-cyan)'},
+    {l:t('stat_pending'),   v:(d.pending||[]).length, c:'var(--c-amber)'},
   ].filter((r:any)=>r.v>0);
   const max=Math.max(1, ...rows.map((r:any)=>r.v));
   return '<div class="bars">'+rows.map((r:any,i:number)=>
-    '<div class="bar-row"><span class="bar-label">'+r.l+'</span>'+
+    '<div class="bar-row"><span class="bar-label"><i style="background:'+r.c+'"></i>'+r.l+'</span>'+
     '<div class="bar-track"><div class="bar-fill" style="width:'+(r.v/max*100).toFixed(1)+'%;background:'+r.c+';animation-delay:'+(i*0.08).toFixed(2)+'s"></div></div>'+
     '<span class="bar-val">'+fmtNum(r.v)+'</span></div>'
   ).join('')+'</div>';
@@ -395,17 +397,17 @@ export function renderInteractions(interactions:any, buckets:any){
   const totalInt=all.reduce((s:number,d:any)=>s+d.total,0);
   card.classList.remove('hidden');
   $('#interactStat').innerHTML =
-    `<div class="ist"><div class="n">${fmtNum(all.length)}</div><div class="l">${t('int_accounts')}</div></div>`+
-    `<div class="ist"><div class="n">${fmtNum(totalInt)}</div><div class="l">${t('int_total')}</div></div>`+
-    (followers.length?`<div class="ist"><div class="n">${pct}%</div><div class="l">${t('int_reach').replace('{n}',fmtNum(interactedF.length)).replace('{m}',fmtNum(followers.length))}</div></div>`:'');
+    `<div class="ist t-pink"><span class="ic">${I.users}</span><div class="n">${fmtNum(all.length)}</div><div class="l">${t('int_accounts')}</div></div>`+
+    `<div class="ist t-violet"><span class="ic">${I.heart}</span><div class="n">${fmtNum(totalInt)}</div><div class="l">${t('int_total')}</div></div>`+
+    (followers.length?`<div class="ist t-indigo"><span class="ic">${I.pie}</span><div class="n">${pct}%</div><div class="l">${t('int_reach').replace('{n}',fmtNum(interactedF.length)).replace('{m}',fmtNum(followers.length))}</div><div class="ist-bar"><i style="width:${pct}%"></i></div></div>`:'');
   $('#interactTop').innerHTML = sorted.slice(0,12).map(interRow).join('');
 }
 function interRow(s:any){
   const href='https://www.instagram.com/'+encodeURIComponent(s.username);
   const parts:string[]=[];
-  if(s.storyLike)parts.push('❤️ '+fmtNum(s.storyLike)+' '+t('int_lbl_storyLike'));
-  if(s.storyReact)parts.push('🎯 '+fmtNum(s.storyReact)+' '+t('int_lbl_storyReact'));
-  if(s.comment)parts.push('💬 '+fmtNum(s.comment)+' '+t('int_lbl_comment'));
-  if(s.likedComment)parts.push('👍 '+fmtNum(s.likedComment)+' '+t('int_lbl_likedComment'));
-  return `<div class="row" data-u="${escapeHtml(s.username)}">${avatar(s.username)}<div class="info"><div class="u">@${escapeHtml(s.username)}</div><div class="meta">${parts.join(' · ')}</div></div><span class="intbadge" title="${escapeHtml(t('int_count'))}">${fmtNum(s.total)}</span><a class="open" href="${escapeHtml(href)}" target="_blank" rel="noopener">${t('open_btn')}</a></div>`;
+  if(s.storyLike)parts.push(fmtNum(s.storyLike)+' '+t('int_lbl_storyLike'));
+  if(s.storyReact)parts.push(fmtNum(s.storyReact)+' '+t('int_lbl_storyReact'));
+  if(s.comment)parts.push(fmtNum(s.comment)+' '+t('int_lbl_comment'));
+  if(s.likedComment)parts.push(fmtNum(s.likedComment)+' '+t('int_lbl_likedComment'));
+  return `<div class="row" data-u="${escapeHtml(s.username)}">${avatar(s.username)}<div class="info"><div class="u">@${escapeHtml(s.username)}</div><div class="meta">${parts.join(' · ')}</div></div><span class="intbadge" title="${escapeHtml(t('int_count'))}">${fmtNum(s.total)}</span><a class="open" href="${escapeHtml(href)}" target="_blank" rel="noopener"><span>${t('open_btn')}</span>${I.arrowUpRight}</a></div>`;
 }

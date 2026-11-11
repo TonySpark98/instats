@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c1b22"/><stop offset="1" stop-color="#09090c"/></linearGradient>
+    <radialGradient id="glow" cx="0.3" cy="0.95" r="0.75"><stop offset="0" stop-color="#e1306c" stop-opacity=".38"/><stop offset=".55" stop-color="#833ab4" stop-opacity=".12"/><stop offset="1" stop-color="#5b51d8" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gl" gradientUnits="userSpaceOnUse" x1="230" y1="800" x2="800" y2="190"><stop offset="0" stop-color="#ffb347"/><stop offset=".32" stop-color="#f5426c"/><stop offset=".62" stop-color="#c13584"/><stop offset="1" stop-color="#6c5ce7"/></linearGradient>
+    <linearGradient id="hl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <clipPath id="sq"><rect width="1024" height="1024" rx="230"/></clipPath>
+  </defs>
+  <g clip-path="url(#sq)">
+    <rect width="1024" height="1024" fill="url(#bg)"/>
+    <rect width="1024" height="1024" fill="url(#glow)"/>
+    <rect width="1024" height="1024" fill="url(#hl)"/>
+    <g transform="translate(512 512) scale(1) translate(-512 -500)">
+    <rect x="227" y="610" width="150" height="190" rx="75" fill="url(#gl)"/>
+    <rect x="437" y="470" width="150" height="330" rx="75" fill="url(#gl)"/>
+    <rect x="647" y="400" width="150" height="400" rx="75" fill="url(#gl)"/>
+    <circle cx="722" cy="262" r="78" fill="url(#gl)"/>
+  </g>
+  </g>
+</svg>

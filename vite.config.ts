@@ -25,8 +25,8 @@ export default defineConfig({
         short_name: 'Instats',
         description:
           'Analyze your Instagram followers and following from the official data export. 100% on your device — no login, no upload.',
-        theme_color: '#7c3aed',
-        background_color: '#0a0a0a',
+        theme_color: '#09090b',
+        background_color: '#09090b',
         display: 'standalone',
         orientation: 'portrait',
         icons: [

@@ -36,8 +36,9 @@ browser **block any network egress**, turning the promise into a guarantee.
 - A **donut chart** and stat cards summarise your follow health at a glance
 
 **Experience**
-- **Premium UI**: animated multi-colour gradient, frosted-glass cards, smooth section/step animations (respects `prefers-reduced-motion`)
-- **Light & dark** themes
+- **Premium UI**: quiet neutral design, line icons, the brand gradient used only where it matters, smooth animations (respects `prefers-reduced-motion`)
+- **Floating tab bar** on phones, segmented navigation on desktop
+- **Light & dark** themes (follows your system by default)
 - **Italian & English** (follows your browser language; switchable)
 - **Installable PWA**, works fully **offline**
 - A clear notice + browser prompt warns that refreshing clears the in-memory analysis (saved snapshots remain)
