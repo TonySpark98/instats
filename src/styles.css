@@ -113,54 +113,65 @@ body.results-on .ambient::before{animation-play-state:paused}
 }
 body.dark .ambient::after{background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.2px)}
 
-/* ---------- Barra in alto ---------- */
+/* ---------- Barra in alto: capsula di vetro sospesa, come la barra del sito principale ---------- */
 .topbar{
-  position:sticky;top:0;z-index:40;
-  padding-top:env(safe-area-inset-top);
-  border-bottom:1px solid var(--line);
+  position:sticky;z-index:40;top:calc(12px + env(safe-area-inset-top));
+  width:calc(100% - 28px);max-width:1088px;margin:calc(12px + env(safe-area-inset-top)) auto 0;
+  border-radius:999px;border:1px solid var(--line-strong);
+  box-shadow:0 10px 34px -18px rgba(16,16,24,.28);
 }
-/* vetro su uno strato a parte: un backdrop-filter sulla barra farebbe da contenitore
+body.dark .topbar{border-color:rgba(255,255,255,.1);box-shadow:0 14px 40px -20px rgba(0,0,0,.75)}
+/* vetro su uno strato a parte: un backdrop-filter (o un transform) sulla barra farebbe da contenitore
    alla tab bar fissa del telefono, che resterebbe agganciata in alto */
 .topbar::before{
-  content:"";position:absolute;inset:0;z-index:-1;background:var(--glass);
+  content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--glass);
   -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
 }
-.scroll-line{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--grad);transform:scaleX(0);transform-origin:left;pointer-events:none}
+/* filo di luce sul bordo alto del vetro */
+.topbar::after{
+  content:"";position:absolute;left:14%;right:14%;top:-1px;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);
+}
+body.dark .topbar::after{background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent)}
+/* il filo d'avanzamento corre sul tratto dritto del bordo basso */
+.scroll-line{position:absolute;left:28px;right:28px;bottom:-1px;height:2px;border-radius:2px;background:var(--grad);transform:scaleX(0);transform-origin:left;pointer-events:none}
 @supports (animation-timeline:scroll()){
   .scroll-line{animation:progress linear both;animation-timeline:scroll(root)}
   .topbar{animation:elevate linear both;animation-timeline:scroll(root);animation-range:0 90px}
 }
 .topbar-in{
-  max-width:1088px;margin:0 auto;height:60px;
-  padding:0 max(24px,env(safe-area-inset-right)) 0 max(24px,env(safe-area-inset-left));
-  display:flex;align-items:center;gap:16px;
+  min-height:58px;padding:3px 9px 3px 18px;
+  display:flex;align-items:center;gap:14px;
 }
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:-.02em;margin-right:auto}
 .brand img{width:30px;height:30px;border-radius:8px;display:block;box-shadow:0 1px 2px rgba(0,0,0,.18)}
 body.dark .brand img,body.dark .foot-brand img{box-shadow:0 0 0 1px rgba(255,255,255,.12)}
-.toggles{display:flex;align-items:center;gap:8px;margin-left:auto}
+.toggles{display:flex;align-items:center;gap:6px;margin-left:auto}
+@media (min-width:821px){body.results-on .toggles{padding-left:12px;border-left:1px solid var(--line)}}
 
+/* lingua: la pillola scorre sotto quella scelta, come nel sito principale (qui nel colore pieno di Instats) */
 .lang-switch{
   position:relative;display:grid;grid-template-columns:1fr 1fr;
   height:34px;padding:3px;border-radius:999px;cursor:pointer;user-select:none;
-  background:var(--surface-2);border:1px solid var(--line);
+  background:color-mix(in srgb,var(--text) 5%,transparent);box-shadow:inset 0 0 0 1px var(--line);
 }
 .lang-switch .ls-knob{
   position:absolute;top:3px;bottom:3px;left:3px;width:36px;border-radius:999px;
-  background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.04);
-  transition:transform .35s var(--ease);
+  background:var(--ink);box-shadow:0 3px 10px -3px rgba(16,16,24,.45);
+  transition:transform .5s var(--ease);
 }
-body.dark .lang-switch .ls-knob{background:var(--surface-3);box-shadow:none}
+body.dark .lang-switch .ls-knob{box-shadow:0 3px 12px -3px rgba(0,0,0,.7)}
 .lang-switch.it .ls-knob{transform:translateX(36px)}
-.ls-opt{position:relative;width:36px;display:grid;place-items:center;font-size:11.5px;font-weight:700;letter-spacing:.05em;color:var(--muted);transition:color .2s}
-.lang-switch.en .ls-opt[data-l="en"],.lang-switch.it .ls-opt[data-l="it"]{color:var(--text)}
+.ls-opt{position:relative;width:36px;display:grid;place-items:center;font-size:11.5px;font-weight:700;letter-spacing:.05em;color:var(--muted);transition:color .3s}
+.lang-switch.en .ls-opt[data-l="en"],.lang-switch.it .ls-opt[data-l="it"]{color:var(--on-ink)}
 
 .tg-btn{
-  width:34px;height:34px;border-radius:999px;display:grid;place-items:center;cursor:pointer;
-  background:var(--surface-2);border:1px solid var(--line);color:var(--text-2);
-  transition:background .2s,transform .2s var(--ease);
+  width:38px;height:38px;border-radius:999px;display:grid;place-items:center;cursor:pointer;
+  background:transparent;border:0;color:var(--text-2);
+  transition:background .25s,transform .2s var(--ease);
 }
-@media (hover:hover){.tg-btn:hover{background:var(--surface-3)}}
+.tg-btn .i{transition:transform .5s var(--ease)}
+@media (hover:hover){.tg-btn:hover{background:color-mix(in srgb,var(--text) 7%,transparent)}.tg-btn:hover .i{transform:rotate(20deg)}}
 .tg-btn:active{transform:scale(.94)}
 .tg-btn .i{width:17px;height:17px}
 .tg-btn .i:nth-of-type(2){display:none}
@@ -169,17 +180,18 @@ body.dark .tg-btn .i:nth-of-type(2){display:block}
 
 /* Navigazione sezioni: segmentata in alto (desktop), tab bar flottante (telefono) */
 .snav-bar{display:none}
+/* dentro la capsula le sezioni non hanno una seconda cornice: resta solo la pillola che scorre */
 body.results-on .snav-bar{
   position:relative;isolation:isolate;
-  display:flex;gap:2px;padding:4px;border-radius:999px;
-  background:var(--surface-2);border:1px solid var(--line);
+  display:flex;gap:2px;padding:3px;border-radius:999px;
+  background:transparent;border:1px solid transparent;
 }
 .snav-ind{
   position:absolute;left:0;top:0;z-index:0;border-radius:999px;pointer-events:none;
-  background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.1),0 0 0 .5px rgba(0,0,0,.04);
+  background:color-mix(in srgb,var(--text) 7%,transparent);box-shadow:none;
   transition:transform .5s var(--ease),width .5s var(--ease),height .5s var(--ease);
 }
-body.dark .snav-ind{background:var(--surface-3);box-shadow:none}
+body.dark .snav-ind{background:color-mix(in srgb,var(--text) 9%,transparent);box-shadow:none}
 .snav{
   position:relative;z-index:1;
   display:flex;align-items:center;gap:7px;height:34px;padding:0 14px;border:0;border-radius:999px;
@@ -645,7 +657,7 @@ body:not(.results-on) #runCard{max-width:720px;margin-inline:auto}
 @keyframes sheen{to{background-position:100% 50%}}
 @keyframes drift{to{transform:translate(-47%,4vh) scale(1.08)}}
 @keyframes progress{to{transform:scaleX(1)}}
-@keyframes elevate{to{box-shadow:0 12px 32px -20px rgba(0,0,0,.35)}}
+@keyframes elevate{to{top:calc(8px + env(safe-area-inset-top));max-width:1024px;box-shadow:0 16px 40px -18px rgba(16,16,24,.4)}}
 @keyframes turn{to{--ang:360deg}}
 @property --ang{syntax:'<angle>';inherits:false;initial-value:0deg}
 .hero .grad-text{background-size:220% 100%;animation:sheen 7s ease-in-out infinite alternate}
@@ -778,7 +790,8 @@ button,a,.tab,.snav,.drop,.wiz-check,.ch{touch-action:manipulation}
 
 @media (max-width:640px){
   body{font-size:14.5px}
-  .topbar-in{height:54px;padding:0 max(16px,env(safe-area-inset-right)) 0 max(16px,env(safe-area-inset-left))}
+  .topbar{width:calc(100% - 20px);top:calc(10px + env(safe-area-inset-top));margin-top:calc(10px + env(safe-area-inset-top))}
+  .topbar-in{min-height:52px;padding:3px 6px 3px 14px}
   .wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
   .hero{padding:40px 0 26px}
   .hero h1{margin-top:18px}
